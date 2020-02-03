@@ -1,0 +1,98 @@
+@font-face { font-family: 'Lato'; font-style: normal; font-weight: 400; font-display: swap; src: local('Lato Regular'), local('Lato-Regular'), url(static/font.ttf) format('truetype'); } 
+a:link, a:visited{color:blue;text-decoration:none;}
+a:link:hover { text-decoration:underline; }
+h1, h2, h3, h4, h5{border-bottom:1px solid #CCCCCC;clear:left;color:#222;font-weight:normal; margin-top: 0px;}
+h3,h4,h5{border-bottom:medium none;}
+h1{font-size:210%;}
+h2{font-size:170%;}
+h3{font-size:160%;}
+h4{font-size:140%;}
+h5{font-size:120%;}
+body{display:flex;flex-wrap:wrap;background:#76B0C8;background-image: -moz-linear-gradient(#3e6182 0%,#76b0c8 50%);background-image: -webkit-gradient(linear,left top,left 50%,from(#3e6182),to(#76b0c8));background-attachment:fixed, fixed, fixed, fixed;background-repeat: no-repeat;color:#222;font-family:'Lato',sans-serif;font-size:11pt;line-height:1.5;margin:1.5em;}
+nav { width:262px; background-color:white;padding-right:30px;padding-left:10px;padding-top:10px}
+main { width:700px; background-color:white;padding-right:20px;text-align:justify}
+li { padding-bottom:5px; }
+#mobiletitle { display: none; }
+#menugal {background:none; border: 0px; line-height:2em; }
+#menugal { padding-top: 0px; padding-bottom: 0px; }
+#menugal ul { list-style-type:none; margin-bottom:3px; margin-left: 0px; padding-bottom:0px; padding-left:5px;}
+#menugal li { text-align:left;font-size:13pt; font-weight:bold;background-color:#efefef; margin-bottom: 5px; }
+#menugal li:first-child { border-radius: 10px 10px 0px 0px; }
+#menugal li:first-child a:hover { border-radius: 10px 10px 0px 0px; }
+#menugal li:last-child { border-radius: 0px 0px 10px 10px; }
+#menugal li:last-child a:hover { border-radius: 0px 0px 10px 10px; }
+#menugal li b { padding-left: 5px; color: black; }
+#menugal a { display:block; padding-left: 5px; font-weight:bold}
+#menugal li a:hover { color:white;background-color:#222; }
+#menugal li ul { padding: 0px; }
+#menugal li ul li { border-radius: 0px; font-weight: normal; padding-bottom:2px; margin-bottom:1px; border-bottom: 0px solid black; }
+#menugal li ul li:first-child a:hover { border-radius: 0px; }
+#menugal li ul li:last-child a:hover { border-radius: 0px; }
+#menugal li ul li a { background-color:white;border-bottom: 0px; font-size:11pt; text-align:left;margin-left:20px;}
+.boite{border-radius:10px 10px 10px 10px; }
+.boite{margin-top:20px;}
+.boite a:hover { color: red; text-decoration: none; }
+.boite{background:#efefef;}
+.boite a {display:block;}
+.boite ul { margin-bottom:0px; }
+.boite a { color:black; }
+table { border-collapse: collapse; }
+/***/
+.rsstilde { position: relative; width: 80%; }
+.rsslink { float:right; font-size:120%; width: 80px; font-weight:bold; text-align: center; padding-top: 70px; background-image: url(rss.png); background-repeat: no-repeat; background-position: 10px 5px; }
+.rsslink:hover { text-decoration:none;color:blue; -moz-transition-duration:.2s; -moz-transform:scale(1.4); -webkit-transform: scale(1.4); -webkit-transition-duration:.2s; }
+.rssfeed { margin-bottom: 2em; }
+.rssitem { line-height: 1.2em;  margin-bottom: 1em; padding: 10px;}
+.rssitem { background-color: #fafafa; }
+.rsstitle { font-size: 110%; font-weight: bold; }
+.rssdate { font-style: italic; margin-bottom: 1em; }
+.rssdesc { margin-left: 20px; padding-left: 10px;}
+.rssedit { display: none; }
+.rssitem:target .rssedit { display:block; }
+.rssitem:target .rssedit + a { display:none; }
+.rsseditlink { font-weight:bold; margin-left:95%; }
+/**/
+dl.NoticeRes { border-top: 1px solid white; border-bottom: 1px solid white; }
+dl.NoticeRes:hover { border-top:1px solid black; border-bottom:1px solid black; }
+input,textarea,select{font-family:inherit;}
+.big { font-size: 150%; border-left: 10px solid #eebb55; border-right: 10px solid #eebb55; padding-left: 10px; padding-right: 10px; }
+.colonne { padding-left:20px;padding-right:20px; width: 45%; float: left; }
+.clear { clear:both; }
+.bright { border-right: 1px solid black; }
+.bleft { border-left: 1px solid black; }
+.centre { text-align:center; }
+.p130 { font-size:130%; }
+
+@media print {
+nav { display: none; }
+
+}
+
+@media screen and (max-width:750px) {
+#mobiletitle {
+	display: block;
+	text-align: center;
+}
+
+#mobilemenulink {
+	display:block;
+	background-color:#3e6182;
+	font-size:140%;
+	color:white;
+	width:80%;
+	padding: 1em;
+	margin-top: 1em;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+body {
+	margin: 0px !important;
+}
+
+ul {
+	display:block;
+	padding: 5px;
+}
+}
+

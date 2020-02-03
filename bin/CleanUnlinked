@@ -1,0 +1,4 @@
+for f in annonces/* benchmarks/* documents/* liens/* logos/* niouses/* rencontres/* stagesoutheses/* data/media/*; do
+	echo -n "$f:"
+	find data/pages -type f | xargs cat | grep -c `basename "$f"`
+done

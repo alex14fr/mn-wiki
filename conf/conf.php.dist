@@ -1,0 +1,18 @@
+<?php
+$secret1="change";
+$secret2="this";
+$pageDir="data/pages";
+$atticDir="data/attic";
+$mediaDir="data/media";
+$metaDir="data/meta";
+$mediaPrefix="data/media/";
+$pagePrefix="parse.php?id=";
+$pageSuffix="";
+//$pagePrefix="";
+//$pageSuffix=".html";
+//$mediaPrefix="media";
+$ext_ok=array("pdf","csv","txt","jpg","jpeg","gif","png","webp","avi","mp4","ogv","mkv","tex","zip","tar","gz","tgz","bz2","tbz2","xz","txz","7z","doc","docx","xls","xlsx","odt");
+$mailFrom="wiki noreply <noreply@nonexistent.tld>";
+$mailNotify=array("admin@my.site.tld");
+$baseUrl="https://my.site.tld/";
+

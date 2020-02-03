@@ -1,0 +1,16 @@
+#!/bin/sh
+set -x
+outdir=static
+#wget "http://www.math.univ-toulouse.fr/UPS_A_Hispa_Brasil/sweep.php" -O -
+wget -O $outdir/hal.html.full "http://haltools.inrialpes.fr/Public/afficheRequetePubli.php?labos_exp=GDR MASCOT-NUM&CB_auteur=oui&CB_titre=oui&CB_article=oui&langue=Anglais&tri_exp=annee_publi&tri_exp3=date_publi&ordre_aff=TA&Fen=Aff&css=http://www.gdr-mascotnum.fr/static/stylehal.css" 
+egrep -v "<!DOCTYPE|w3\.org\/TR\/xhtml1|VisuGen\.css|<title|</head|<html|<meta|<body|<head|</body|</html" ~/gdr-mascotnum/static/hal.html.full > $outdir/hal.html 
+rm $outdir/hal.html.full 
+cp $ourdir/hal.html $outdir/hal.html.unfiltered
+while read l; do
+bin/filter.pl "$l" < $outdir/hal.html > $outdir/hal.html.tmp
+mv $outdir/hal.html.tmp $outdir/hal.html
+done < data/Publis.Blacklist
+setfacl -m user:apache:rwx $outdir/hal.html
+wget -O $outdir/feedext.rss http://mascot-num.blogspot.com/feeds/posts/default
+php flux.php
+
