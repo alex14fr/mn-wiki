@@ -40,7 +40,7 @@ function auth_getgroups() {
 	$lspl=auth_getline($_SESSION['auth_user']);
 	if($lspl)
 		return(explode(',',$lspl[4]));
-	return(false);
+	return(array());
 }
 
 function auth_isContrib() {

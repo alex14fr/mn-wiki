@@ -1,11 +1,13 @@
 <?php
-//if($_SERVER["REMOTE_USER"]=="")
-//	exit;
+include_once "auth.php";
+include_once "utils.php";
+include_once "conf/conf.php";
+
+if(!auth_isContrib())
+	exit;
 
 $ip=$_SERVER["REMOTE_ADDR"];
 $ip=$ip." (".gethostbyaddr($ip).")";
-include_once "utils.php";
-include_once "conf/conf.php";
 
 function check_allowed($fn) {
 	global $ext_ok;
