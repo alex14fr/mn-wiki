@@ -294,15 +294,25 @@ function render_page_cache($page, $rev="") {
 	}
 }
 
-function render_page_full($page, $rev="") {
-	global $title,$toc;
-	$pageId=san_pageId($page);
-	$rp=render_page_cache($page,$rev);
-	$pgh=str_replace(array("~~ID~~","~~TITLE~~","~~SIDEBAR~~"),
-						  array($pageId, $title, render_page_cache("sidebar")),
+function render_html($str,$title="") {
+	global $pageId;
+	if(!empty($_SESSION['auth_user'])) {
+		$actions="<a href=?do=edit&id=$pageId>Edit this page</a>".
+					"<a href=?do=logout>Logout ".$_SESSION['auth_user']."</a>";
+	} else {
+		$actions="<a href=?do=login>Login / Register</a>";
+	}
+	$pgh=str_replace(array("~~ACTIONS~~","~~TITLE~~","~~SIDEBAR~~"),
+						  array($actions, $title, render_page_cache("sidebar")),
 						  file_get_contents("conf/htmlhead.tmpl"));
-	return $pgh.$rp.file_get_contents("conf/htmlfoot.tmpl");
+	return $pgh.$str.file_get_contents("conf/htmlfoot.tmpl");
+}
 
+function render_page_full($page, $rev="") {
+	global $title;
+	$pageId=san_pageId($page);
+	$rp=render_page_cache($pageId,$rev);
+	return render_html($rp, $title);
 }
 
 

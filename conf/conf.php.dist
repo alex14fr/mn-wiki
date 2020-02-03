@@ -1,6 +1,7 @@
 <?php
 $secret1="change";
 $secret2="this";
+$secret3="too";
 $pageDir="data/pages";
 $atticDir="data/attic";
 $mediaDir="data/media";

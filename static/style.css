@@ -81,6 +81,9 @@ li {
 .boite a:hover { color: red; text-decoration: none; }
 .boite ul { margin-bottom:0px; }
 
+.formtable { margin-bottom: 10px; }
+.formtable td { padding:10px; }
+.center { text-align: center; }
 /***/
 .rsstilde { position: relative; width: 80%; }
 .rssfeed { margin-bottom: 2em; }
