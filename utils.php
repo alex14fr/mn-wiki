@@ -1,5 +1,13 @@
 <?php
 
+function str_replace_first($search,$replace,$subject) {
+	$pos = strpos($subject, $search);
+	if ($pos !== false) {
+		    return substr_replace($subject, $replace, $pos, strlen($search));
+	}
+	return $subject;
+}
+
 function san_pageId($id) {
 	$id=strtolower($id);
 	$id=substr($id,0,47);

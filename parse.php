@@ -22,7 +22,7 @@ function parse_inline($l, $parseTags=true) {
 			case "*":
 			case "_":
 			case "/":
-				if($l[$i+1]==$l[$i] && $parseTags) {
+				if($i+1<$n && $l[$i+1]==$l[$i] && $parseTags) {
 					$c=$l[$i];
 					$i+=2;
 					$s="";
@@ -65,8 +65,10 @@ function parse_inline($l, $parseTags=true) {
 					if($c=="{") {
 						$mmex=explode("?",$mm[0]);
 						$baseurl=$mmex[0];
-						$wid=$mmex[1];
-						$wid=preg_replace("/[^0-9]/","",$wid);
+						if(count($mmex)>1) {
+							$wid=$mmex[1];
+							$wid=preg_replace("/[^0-9]/","",$wid);
+						}
 						$u=strlen($baseurl)-4;
 						if(strripos($baseurl,".png")==$u || 
 							strripos($baseurl,".gif")==$u || 
@@ -134,7 +136,7 @@ function parse_inline($l, $parseTags=true) {
 	return($out);
 }
 
-function exit_li() {
+function exit_par() {
 	global $list_lvl, $in_tbl;
 	$out="";
 	for(; $list_lvl>0; $list_lvl--) 
@@ -153,9 +155,14 @@ function parse_line($l) {
 
 	if($n==0) {
 		if($list_lvl>0 || $in_tbl) 
-			return exit_li();
+			return exit_par();
 		else 
 			return "<p>";
+	}
+
+	if(substr($l,0,10)=="/* toc */ ") {
+		$l=substr($l,10);
+		$n=strlen($l);
 	}
 
 	for($i=0; $i<$n; $i++) {
@@ -225,7 +232,7 @@ function parse_line($l) {
 				return $out;
 
 			default:
-				$eli=exit_li();
+				$eli=exit_par();
 				$pil=parse_inline($l);
 				$br="";
 				if(strlen($pil)>0) $br="<br>";
@@ -240,7 +247,7 @@ function parse_line($l) {
 function render_page($page, $rev="") {
 	global $list_lvl, $title, $title_lvl, $toc, $curAnchor, $pageId, $sectok;
 	include_once "conf/conf.php";
-	global $secret1, $secret2;
+	global $secret1, $secret2, $pageDir, $atticDir;
 	$list_lvl=0;
 	$pageId=san_pageId($page);
 	$title=$pageId;
@@ -251,7 +258,7 @@ function render_page($page, $rev="") {
 	$out="";
 	$sectok=md5($secret1.$pageId.$secret2);
 	if(empty($rev)) {
-		$fd=fopen("data/pages/$pageId.txt","r");
+		$fd=fopen("$pageDir/$pageId.txt","r");
 		if(!$fd) 
 			die("err");
 		while($line=fgets($fd)) 
@@ -259,48 +266,43 @@ function render_page($page, $rev="") {
 		fclose($fd);
 	}
 	else {
-		$fd=gzopen(file_get_contents("data/attic/$pageId.$rev.gz"),"a");
+		$fd=gzopen(file_get_contents("$atticDir/$pageId.$rev.gz"),"a");
 		if(!$fd)
 			die("err");
 		while($line=gzgets($fd))
 			$out.=parse_line($line);
 		fclose($fd);
 	}
+	$out=str_replace_first("~~TOC~~",$toc,$out);
+	$out=str_replace("~~TOC~~","",$out);
 	return($out);
+}
+
+function render_page_cache($page, $rev="") {
+	global $pageDir, $cacheDir;
+	$pageId=san_pageId($page);
+	if(!empty($rev) || 
+		!file_exists("$cacheDir/$pageId") || 
+		filemtime("$cacheDir/$pageId")<filemtime("$pageDir/$pageId.txt")) {
+			$rp=render_page($pageId,$rev);
+			if(empty($rev) && !empty($cacheDir)) {
+				file_put_contents("$cacheDir/$pageId",$rp);
+			}
+			return($rp);
+	} else {
+			return(file_get_contents("$cacheDir/$pageId"));
+	}
 }
 
 function render_page_full($page, $rev="") {
 	global $title,$toc;
 	$pageId=san_pageId($page);
-	$rp=render_page($page,$rev);
-	$rp=preg_replace("/~~TOC~~/",$toc,$rp,1);
-	$rp=preg_replace("/~~TOC~~/","",$rp);
-	$pgh=preg_replace("/~~ID~~/",$pageId,file_get_contents("conf/htmlhead.tmpl"));
-	$pgh=preg_replace("/~~TITLE~~/",$title,$pgh);
-	$pgh=preg_replace("/~~SIDEBAR~~/",render_page("sidebar"),$pgh);
+	$rp=render_page_cache($page,$rev);
+	$pgh=str_replace(array("~~ID~~","~~TITLE~~","~~SIDEBAR~~"),
+						  array($pageId, $title, render_page_cache("sidebar")),
+						  file_get_contents("conf/htmlhead.tmpl"));
 	return $pgh.$rp.file_get_contents("conf/htmlfoot.tmpl");
 
 }
 
-print render_page_full($_GET['id'],$_GET['rev']);
 
-/*
-print parse_line("~~FORM~~");
-print parse_line("~~div testcla~~ bonjour ~~/div~~");
-print parse_inline("{{http://www.microsoft.com/a.png}} {{:test.png}} {{test.pdf|taiste}} {{test.txt}}");
-print parse_inline("[[truc@fr.fr]] hello [[truc]] [[bouh@fr.com]]");
-print parse_inline("[[http://www.google.fr\"aha|ma<chin]] hello");
-print parse_inline("hello **world** truc muche *much* //machin// __souligne **gras** //ouh//__");
-print parse_line("===== test =====");
-print parse_line("==== test1 ====");
-print parse_line("== test kikoo ==");
-print parse_line("  - hello");
-print parse_line("  - taiste");
-print parse_line("    - imbrique");
-print parse_line("    - imbrique2");
-print parse_line("  - out");
-print parse_line("");
-print $toc;
-
-
-*/
