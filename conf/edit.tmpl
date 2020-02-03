@@ -1,0 +1,13 @@
+<h1>Edit ~~ID~~</h1>
+<form method=post action=doku.php>
+<input type=hidden name=do value=edit>
+<input type=hidden name=id value=~~ID~~>
+<textarea name=txt rows=15 cols=60>~~TXT~~</textarea>
+<br>
+summary of changes: <input name=summary>
+<br>
+<input type=submit value=Save>
+</form>
+<p>
+Locked until ~~LOCK_UNTIL~~ <a href=doku.php?do=release&id=~~ID~~>Cancel edition</a> &nbsp; <a target=_new href=upload.php>File manager/uploader</a>
+

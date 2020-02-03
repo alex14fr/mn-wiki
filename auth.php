@@ -46,7 +46,7 @@ function auth_login($login, $pass) {
 function auth_getgroups() {
 	$lspl=auth_getline($_SESSION['auth_user']);
 	if($lspl)
-		return(explode(',',$lspl[4]));
+		return(explode(',',trim($lspl[4])));
 	return(array());
 }
 
@@ -65,7 +65,7 @@ function auth_logout() {
 function gensalt() {
 	global $secret1,$secret2;
 	if(function_exists("openssl_random_pseudo_bytes")) {
-		$rnd=openssl_random_pseudo_bytes(8,true);
+		$rnd=openssl_random_pseudo_bytes(8);
 	} else {
 		mt_srand(time());
 		$rnd=mt_rand();

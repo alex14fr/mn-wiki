@@ -107,9 +107,9 @@ function parse_inline($l, $parseTags=true) {
 						$cl=str_replace("\"","",explode(" ",$s)[1]);
 						$out.="<div class=\"$cl\">";
 					} else if(strpos($s,"FORM")!==false) {
-						$out.="<ul><li><a href=/lib/exe/inscription.php?action=voir&id=$pageId&sectok=$sectok>List of participants";
-						if(strpos($s,"expire")!==false) 
-							$out.="<li><a href=/lib/exe/inscription.php?id=$pageId&sectok=$sectok>Registration form";
+						$out.="<ul><li><a href=event.php?action=view&id=$pageId&sectok=$sectok>List of participants";
+						if($s!="FORM expire")
+							$out.="<li><a href=event.php?id=$pageId&sectok=$sectok>Registration form";
 						$out.="</ul>";
 					} else if($s=="HAL") {
 						$out.=file_get_contents("static/hal.html");
@@ -258,17 +258,24 @@ function render_page($page, $rev="") {
 	$out="";
 	$sectok=md5($secret1.$pageId.$secret2);
 	if(empty($rev)) {
-		$fd=fopen("$pageDir/$pageId.txt","r");
-		if(!$fd) 
-			die("err");
+		$fnam="$pageDir/$pageId.txt";
+		if(!is_readable($fnam)) {
+			header("HTTP/1.1 404 Not found");
+			print "Page $pageId not found. ";
+			if(!empty($_SESSION['auth_user'])) {
+				print "<a href=doku.php?do=edit&id=$pageId>Create this page</a>";
+			}
+			exit;
+		}
+		$fd=fopen($fnam,"r");
+		if(!$fd) die("err");
 		while($line=fgets($fd)) 
 			$out.=parse_line($line);
 		fclose($fd);
 	}
 	else {
-		$fd=gzopen(file_get_contents("$atticDir/$pageId.$rev.gz"),"a");
-		if(!$fd)
-			die("err");
+		$fd=gzopen("$atticDir/$pageId.$rev.txt.gz","r");
+		if(!$fd) die("err");
 		while($line=gzgets($fd))
 			$out.=parse_line($line);
 		fclose($fd);
@@ -294,13 +301,16 @@ function render_page_cache($page, $rev="") {
 	}
 }
 
-function render_html($str,$title="") {
-	global $pageId;
-	if(!empty($_SESSION['auth_user'])) {
-		$actions="<a href=?do=edit&id=$pageId>Edit this page</a>".
-					"<a href=?do=logout>Logout ".$_SESSION['auth_user']."</a>";
-	} else {
-		$actions="<a href=?do=login>Login / Register</a>";
+function render_html($str,$pageId="",$title="") {
+	$actions="";
+	if(!empty($pageId)) {
+		if(!empty($_SESSION['auth_user'])) {
+			$actions="<a href=?do=edit&id=$pageId>Edit this page</a>".
+						"<a href=?do=revisions&id=$pageId>Old revisions</a>".
+						"<a href=?do=logout>Logout ".$_SESSION['auth_user']."</a>";
+		} else {
+			$actions="<a href=?do=login>Login / Register</a>";
+		}
 	}
 	$pgh=str_replace(array("~~ACTIONS~~","~~TITLE~~","~~SIDEBAR~~"),
 						  array($actions, $title, render_page_cache("sidebar")),
@@ -312,7 +322,7 @@ function render_page_full($page, $rev="") {
 	global $title;
 	$pageId=san_pageId($page);
 	$rp=render_page_cache($pageId,$rev);
-	return render_html($rp, $title);
+	return render_html($rp, $page, $title);
 }
 
 

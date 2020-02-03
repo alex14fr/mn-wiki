@@ -2,9 +2,10 @@
 include_once "auth.php";
 include_once "utils.php";
 include_once "conf/conf.php";
-
-if(!auth_isContrib())
-	exit;
+session_start();
+if(!auth_isContrib()) {
+	die("not authorized yet");
+}
 
 $ip=$_SERVER["REMOTE_ADDR"];
 $ip=$ip." (".gethostbyaddr($ip).")";
@@ -25,39 +26,39 @@ if($_FILES['fich']) {
 	$desti=san_filename($desti);
 	check_allowed($desti);
 	if(!move_uploaded_file($_FILES["fich"]["tmp_name"], "$mediaDir/$desti")) 
-		die("erreur d'upload");
-	mail_notify('Fichier ajouté : '.$desti, "Le fichier:\r\n\r\n   $url/$mediaDir/$desti\r\n\r\na été ajouté par ".$_SERVER['REMOTE_USER']. ' ; IP='.$ip.'). ' );
+		die("upload error");
+	sendNotify('File added : '.$desti, "File\r\n\r\n   $baseUrl/$mediaPrefix/$desti\r\n\r\n has been added by ".$_SERVER['REMOTE_USER']. ' ; IP='.$ip.'). ','' );
 }
 
 if($_GET['delete']) {
-	mail_notify('Fichier supprimé : '.$_GET['delete'], 'Le fichier '.$_GET['delete'].' a été supprimé par '.$_SERVER['REMOTE_USER']. ' ; IP='.$ip.'). ');
+	sendNotify('File deleted : '.$_GET['delete'], 'File '.$_GET['delete'].' has been deleted by '.$_SERVER['REMOTE_USER']. ' ; IP='.$ip.'). ','');
 	unlink("$mediaDir/".basename($_GET['delete']));
 }
 
 ?>
 <!doctype html>
 <body>
-<h2>Envoi de fichiers</h2>
+<h2>File manager</h2>
 <form enctype='multipart/form-data' method='post'>
 <label>
-Fichier :
+File :
 <input type="file" name="fich">
 </label>
 </div>
 <div>
 <label>
-Nom (laisser vide pour nom par défaut) : 
+Name (leave empty for default name) : 
 <input name="nom">
 </div>
-<input type=submit value=Envoyer>
+<input type=submit value=Send>
 </form>
-<h2>Liste des fichiers</h2>
+<h2>File list</h2>
 <ul>
 <?php
 $d=scandir('data/media/');
 foreach($d as $dd) {
 	if($dd != '.' && $dd != '..')
-		print "<li><a href='$mediaDir/$dd'>$dd</a> <button href='?delete=$dd'>Supprimer</button>";
+		print "<li><a href='$mediaDir/$dd'>$dd</a> <button href='?delete=$dd'>Delete</button>";
 }
 ?>
 </ul>

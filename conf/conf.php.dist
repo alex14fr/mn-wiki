@@ -7,6 +7,8 @@ $atticDir="data/attic";
 $mediaDir="data/media";
 $metaDir="data/meta";
 $cacheDir="data/cache2";
+$lockDir="data/locks";
+$dbevents="data/events_register.sqlite";
 $mediaPrefix="data/media/";
 $pagePrefix="doku.php?id=";
 $pageSuffix="";

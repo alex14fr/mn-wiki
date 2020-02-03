@@ -77,14 +77,14 @@ function diff($old, $new){
         diff(array_slice($old, $omax + $maxlen), array_slice($new, $nmax + $maxlen)));
 }
 
-function htmlDiff($old, $new){
+function textDiff($old, $new){
     $ret = '';
     $diff = diff(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
     foreach($diff as $k){
         if(is_array($k))
-            $ret .= (!empty($k['d'])?"<del>".implode(' ',$k['d'])."</del> ":'').
-                (!empty($k['i'])?"<ins>".implode(' ',$k['i'])."</ins> ":'');
-        else $ret .= $k . ' ';
+            $ret .= (!empty($k['d'])?"- ".implode(' ',$k['d'])."\n":'').
+                (!empty($k['i'])?"+ ".implode(' ',$k['i'])."\n":'');
+        /* else  $ret .= $k . ' ' ; */
     }
     return $ret;
 }
