@@ -1,4 +1,6 @@
 <?php
+include_once "canonical.php";
+
 error_reporting(E_STRICT|E_ALL);
 include_once "parse.php";
 include_once "auth.php";

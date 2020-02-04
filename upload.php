@@ -1,4 +1,5 @@
 <?php
+include_once "canonical.php";
 include_once "auth.php";
 include_once "utils.php";
 include_once "conf/conf.php";
