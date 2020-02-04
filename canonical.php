@@ -10,4 +10,3 @@ if(file_exists("conf/canonical.php")) {
 			  exit;
 	}
 }
-?>
