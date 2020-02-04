@@ -1,6 +1,6 @@
 <?php
-include_once "canonical.php";
 include_once "utils.php";
+canonical();
 include_once "auth.php";
 session_start();
 

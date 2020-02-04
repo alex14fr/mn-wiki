@@ -1,7 +1,7 @@
 <?php
-include_once "canonical.php";
-include_once "auth.php";
 include_once "utils.php";
+canonical();
+include_once "auth.php";
 include_once "conf/conf.php";
 session_start();
 if(!auth_isContrib()) {

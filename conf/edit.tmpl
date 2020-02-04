@@ -2,12 +2,17 @@
 <form method=post action=doku.php>
 <input type=hidden name=do value=edit>
 <input type=hidden name=id value=~~ID~~>
-<textarea name=txt rows=15 cols=60>~~TXT~~</textarea>
-<br>
-summary of changes: <input name=summary>
-<br>
-<input type=submit value=Save>
-</form>
-<p>
-Locked until ~~LOCK_UNTIL~~ <a href=doku.php?do=release&id=~~ID~~>Cancel edition</a> &nbsp; <a target=_new href=upload.php>File manager/uploader</a>
+<div style=display:flex>
+<div style=flex-grow:1;width:100%;padding-right:5px>
+	<textarea oninput=update() name=txt id=txt style=width:100%;height:70vh>~~TXT~~</textarea>
+	<br>
+	summary of changes: <input name=summary>
+	<br>
+	<input type=submit value=Save>
+	</form>
+</div>
+<div id=preview style=flex-grow:1;width:100%;height:70vh;overflow-y:scroll></div>
+</div>
+	Locked until ~~LOCK_UNTIL~~ <a href=doku.php?do=release&id=~~ID~~>Cancel edition</a> &nbsp; <a target=_new href=upload.php>File manager/uploader</a>
+<script src=static/edit.js></script>
 

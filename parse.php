@@ -244,6 +244,19 @@ function parse_line($l) {
 
 }
 
+function render_str($str) {
+	global $list_lvl, $title, $title_lvl, $toc, $curAnchor;
+	$list_lvl=0;
+	$toc="";
+	$curAnchor=0;
+	$out="";
+	foreach(explode("\n",$str) as $l) 
+		$out.=parse_line($l);
+	$out=str_replace_first("~~TOC~~",$toc,$out);
+	$out=str_replace("~~TOC~~","",$out);
+	return($out);
+}
+
 function render_page($page, $rev="") {
 	global $list_lvl, $title, $title_lvl, $toc, $curAnchor, $pageId, $sectok;
 	include_once "conf/conf.php";
