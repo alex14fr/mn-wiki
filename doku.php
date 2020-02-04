@@ -20,8 +20,8 @@ if(!empty($_GET['do'])) {
 		case "release":
 			if($_SESSION['auth_user']) {
 				$pageId=san_pageId($_GET['id']);
-				if(file_get_contents("data/locks/$pageId")==$_SESSION['auth_user']) {
-					unlink("data/locks/$pageId");
+				if(file_get_contents("$lockDir/$pageId")==$_SESSION['auth_user']) {
+					unlink("$lockDir/$pageId");
 					header("Location: doku.php?id=$pageId");
 				}
 				exit;
@@ -30,8 +30,7 @@ if(!empty($_GET['do'])) {
 		case "edit":
 			if(!auth_isContrib()) { die("not yet authorized"); }
 			$pageId=san_pageId($_GET['id']);
-			$lockfile="data/locks/$pageId";
-			$locktime=300;
+			$lockfile="$lockDir/$pageId";
 			if(file_exists($lockfile)) 
 				$locked_until=filemtime($lockfile)+$locktime;
 			else
@@ -137,7 +136,7 @@ if(!empty($_POST['do'])) {
 			$ps=trim(substr($_POST['summary'],0,50));
 			$cline="$mt\t".$_SERVER['REMOTE_ADDR']."\tE\t$pageId\t".$_SESSION['auth_user']."\t".$ps."\n";
 			file_put_contents("$metaDir/$pageId.changes",$cline,FILE_APPEND|LOCK_EX);
-			unlink("data/locks/$pageId");
+			unlink("$lockDir/$pageId");
 			sendNotify("Page $pageId changed", "
 			Username:     ".$_SESSION['auth_user']."
 			IP:           ".$_SERVER['REMOTE_ADDR']."
