@@ -289,10 +289,11 @@ function render_page_cache($page, $rev="") {
 	global $pageDir, $cacheDir;
 	$pageId=san_pageId($page);
 	if(!empty($rev) || 
+		$rev!="" ||
 		!file_exists("$cacheDir/$pageId") || 
 		filemtime("$cacheDir/$pageId")<filemtime("$pageDir/$pageId.txt")) {
 			$rp=render_page($pageId,$rev);
-			if(empty($rev) && !empty($cacheDir)) {
+			if((empty($rev)||$rev=="") && !empty($cacheDir)) {
 				file_put_contents("$cacheDir/$pageId",$rp);
 			}
 			return($rp);
@@ -307,6 +308,7 @@ function render_html($str,$pageId="",$title="") {
 		if(!empty($_SESSION['auth_user'])) {
 			$actions="<a href=doku.php?do=edit&id=$pageId>Edit this page</a>".
 						"<a href=doku.php?do=revisions&id=$pageId>Old revisions</a>".
+						(auth_isAdmin() ? "<a href=doku.php?do=edit&id=sidebar>Edit sidebar</a>" : "").
 						"<a href=doku.php?do=logout>Logout ".$_SESSION['auth_user']."</a>";
 		} else {
 			$actions="<a href=doku.php?do=login>Login / Register</a>";
