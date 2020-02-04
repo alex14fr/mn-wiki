@@ -143,7 +143,7 @@ if(!empty($_POST['do'])) {
 			IP:           ".$_SERVER['REMOTE_ADDR']."
 
 			Old revision: ".$baseUrl."/doku.php?id=$pageId&rev=$oldmt
-			New revision: ".$baseUrl."/doku.php?id=$pageId&rev=$mt
+			New revision: ".$baseUrl."/doku.php?id=$pageId
 
 			".textDiff($oldtext,$newtext),"");
 			
