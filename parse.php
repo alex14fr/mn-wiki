@@ -88,7 +88,7 @@ function parse_inline($l, $parseTags=true) {
 						$out.="<a href=\"".$mm[0]."\">".parse_inline($mm[1],$ptags)."</a>";
 					}
 					else {
-						$out.="<img ".($wid ? "width=$wid " : "")."src=\"".$mm[0]."\">";
+						$out.="<img ".(!empty($wid) ? "width=$wid " : "")."src=\"".$mm[0]."\">";
 					}
 				} else {
 					$out.=$l[$i];
@@ -223,7 +223,7 @@ function parse_line($l) {
 							$in_link=false;
 						$s.=$l[$i];
 					}
-					if($l[$i+1]=="|") {
+					if($i+1<$n && $l[$i+1]=="|") {
 						$out.="<td colspan=2>".parse_inline($s);
 						$i+=2;
 					} else if($s!="")
