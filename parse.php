@@ -171,7 +171,7 @@ function parse_line($l) {
 				$head_lvl=0;
 				for(; $l[$i]=="=" && $i++<$n; $head_lvl++);
 				$header="";
-				for(; $l[$i]!="=" && $i<$n; $header.=$l[$i++]);
+				for(; $l[$i]!="=" && $i+1<$n; $header.=$l[$i++]);
 				if($head_lvl>=5) $head_lvl=1;
 				else $head_lvl=6-$head_lvl;
 				$txt=parse_inline($header);
