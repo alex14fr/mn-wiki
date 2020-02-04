@@ -1,5 +1,5 @@
 <?php
-if(file_exists("conf/canonical.php") {
+if(file_exists("conf/canonical.php")) {
 	include_once "conf/canonical.php";
 
 	if($_SERVER["HTTP_X_FORWARDED_HOST"]!=$canonicalHost) {
