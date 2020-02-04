@@ -108,6 +108,29 @@ input,textarea,select{font-family:inherit;}
 .centre { text-align:center; }
 .p130 { font-size:130%; }
 
+.greenbox,.redbox,.bluebox {
+	margin-left:5px;
+	margin-right:5px;
+	padding:10px;
+	border-radius: 10px;
+}
+
+.redbox {
+	background-color:#ffcccc;
+}
+
+.bluebox {
+	background-color: #cce6ff;
+}
+
+.greenbox {
+	background-color: #ccffcc;
+}
+
+.yellowbox {
+	background-color: #ffffcc;
+}
+
 @media print {
 	nav { display: none; }
 

@@ -107,9 +107,9 @@ function parse_inline($l, $parseTags=true) {
 						$cl=str_replace("\"","",explode(" ",$s)[1]);
 						$out.="<div class=\"$cl\">";
 					} else if(strpos($s,"FORM")!==false) {
-						$out.="<ul><li><a href=event.php?action=view&id=$pageId&sectok=$sectok>List of participants";
+						$out.="<ul><li><a href=event.php?action=view&id=$pageId&sectok=$sectok>List of participants</a>";
 						if($s!="FORM expire")
-							$out.="<li><a href=event.php?id=$pageId&sectok=$sectok>Registration form";
+							$out.="<li><a href=event.php?id=$pageId&sectok=$sectok>Registration form</a>";
 						$out.="</ul>";
 					} else if($s=="HAL") {
 						$out.=file_get_contents("static/hal.html");
@@ -305,11 +305,11 @@ function render_html($str,$pageId="",$title="") {
 	$actions="";
 	if(!empty($pageId)) {
 		if(!empty($_SESSION['auth_user'])) {
-			$actions="<a href=?do=edit&id=$pageId>Edit this page</a>".
-						"<a href=?do=revisions&id=$pageId>Old revisions</a>".
-						"<a href=?do=logout>Logout ".$_SESSION['auth_user']."</a>";
+			$actions="<a href=doku.php?do=edit&id=$pageId>Edit this page</a>".
+						"<a href=doku.php?do=revisions&id=$pageId>Old revisions</a>".
+						"<a href=doku.php?do=logout>Logout ".$_SESSION['auth_user']."</a>";
 		} else {
-			$actions="<a href=?do=login>Login / Register</a>";
+			$actions="<a href=doku.php?do=login>Login / Register</a>";
 		}
 	}
 	$pgh=str_replace(array("~~ACTIONS~~","~~TITLE~~","~~SIDEBAR~~"),

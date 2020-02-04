@@ -31,8 +31,10 @@ if($_FILES['fich']) {
 }
 
 if($_GET['delete']) {
-	sendNotify('File deleted : '.$_GET['delete'], 'File '.$_GET['delete'].' has been deleted by '.$_SERVER['REMOTE_USER']. ' ; IP='.$ip.'). ','');
-	unlink("$mediaDir/".basename($_GET['delete']));
+	if(substr($dd,0,1) != '.') {
+		sendNotify('File deleted : '.$_GET['delete'], 'File '.$_GET['delete'].' has been deleted by '.$_SERVER['REMOTE_USER']. ' ; IP='.$ip.'). ','');
+		unlink("$mediaDir/".basename($_GET['delete']));
+	}
 }
 
 ?>
@@ -57,7 +59,7 @@ Name (leave empty for default name) :
 <?php
 $d=scandir('data/media/');
 foreach($d as $dd) {
-	if($dd != '.' && $dd != '..')
+	if(substr($dd,0,1) != '.')
 		print "<li><a href='$mediaDir/$dd'>$dd</a> <button href='?delete=$dd'>Delete</button>";
 }
 ?>

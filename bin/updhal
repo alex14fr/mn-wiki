@@ -5,7 +5,7 @@ outdir=static
 wget -O $outdir/hal.html.full "http://haltools.inrialpes.fr/Public/afficheRequetePubli.php?labos_exp=GDR MASCOT-NUM&CB_auteur=oui&CB_titre=oui&CB_article=oui&langue=Anglais&tri_exp=annee_publi&tri_exp3=date_publi&ordre_aff=TA&Fen=Aff&css=http://www.gdr-mascotnum.fr/static/stylehal.css" 
 egrep -v "<!DOCTYPE|w3\.org\/TR\/xhtml1|VisuGen\.css|<title|</head|<html|<meta|<body|<head|</body|</html" ~/gdr-mascotnum/static/hal.html.full > $outdir/hal.html 
 rm $outdir/hal.html.full 
-cp $ourdir/hal.html $outdir/hal.html.unfiltered
+cp $outdir/hal.html $outdir/hal.html.unfiltered
 while read l; do
 bin/filter.pl "$l" < $outdir/hal.html > $outdir/hal.html.tmp
 mv $outdir/hal.html.tmp $outdir/hal.html
