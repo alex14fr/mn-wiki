@@ -4,7 +4,7 @@ Yet another PHP wiki that tries to keep it simple...
 
 ## License
 
-Copyright 2020 Alexandre Janon
+Copyright 2020 Alexandre Janon <alex14fr@gmail.com>
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
