@@ -70,7 +70,7 @@ li {
 #menugal li ul { padding: 0px; }
 #menugal li ul li { border-radius: 0px; font-weight: normal; padding-bottom:2px; margin-bottom:1px; border-bottom: 0px solid black; }
 #menugal li ul li a { background-color:white;border-bottom: 0px; font-size:11pt; text-align:left;margin-left:20px;}
-#menugal li ul li:first-child a:hover, #menugal li ul li:last-child a:hover { border-radius: 0px; }
+#menugal li ul li a:hover { border-radius: 0px !important; }
 
 .boite{
 	border-radius:10px 10px 10px 10px; 
