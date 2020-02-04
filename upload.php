@@ -60,7 +60,7 @@ Name (leave empty for default name) :
 $d=scandir('data/media/');
 foreach($d as $dd) {
 	if(substr($dd,0,1) != '.')
-		print "<li><a href='$mediaDir/$dd'>$dd</a> <button href='?delete=$dd'>Delete</button>";
+		print "<li><tt>{{".$dd."}}</tt><a href='$mediaDir/$dd' target=_new>View</a> <button href='?delete=$dd'>Delete</button>";
 }
 ?>
 </ul>
