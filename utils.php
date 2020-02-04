@@ -103,3 +103,7 @@ function textDiff($old, $new){
     return $ret;
 }
 
+function readtmpl($id) {
+	$id=san_pageId($id);
+	return str_replace("\n","",file_get_contents("conf/$id.tmpl"));
+}

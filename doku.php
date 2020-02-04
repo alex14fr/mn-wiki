@@ -10,7 +10,7 @@ if(!empty($_GET['do'])) {
 		case "register":
 		case "resendpwd":
 		case "login":
-			print render_html(file_get_contents("conf/".$_GET['do'].".tmpl"));
+			print render_html(readtmpl($_GET['do']));
 			exit;
 		case "reinitpwd":
 			exit;
@@ -53,7 +53,7 @@ if(!empty($_GET['do'])) {
 				}
 			}
 			clearstatcache();
-			$tmpl=file_get_contents("conf/edit.tmpl");
+			$tmpl=readtmpl("edit");
 			$tmpl=str_replace(array("~~ID~~","~~TXT~~","~~LOCK_UNTIL~~"),
 									array($pageId,$pagetxt,date('H:i:s T',filemtime($lockfile)+$locktime)),$tmpl);
 			print render_html($tmpl);

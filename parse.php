@@ -329,8 +329,8 @@ function render_html($str,$pageId="",$title="") {
 	}
 	$pgh=str_replace(array("~~ACTIONS~~","~~TITLE~~","~~SIDEBAR~~"),
 						  array($actions, $title, render_page_cache("sidebar")),
-						  file_get_contents("conf/htmlhead.tmpl"));
-	return $pgh.$str.file_get_contents("conf/htmlfoot.tmpl");
+						  readtmpl("htmlhead"));
+	return $pgh.$str.readtmpl("htmlfoot");
 }
 
 function render_page_full($page, $rev="") {
