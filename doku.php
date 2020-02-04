@@ -61,15 +61,15 @@ if(!empty($_GET['do'])) {
 		case "revisions":
 			if(!auth_isContrib()) { die("not yet authorized"); }
 			$pageId=san_pageId($_GET['id']);
-			$out="<h1>Revisions of ".$pageId."</h1><table border=0>";
+			$out="<h1>Revisions of ".$pageId."</h1><ul>";
 			$chgset=array_reverse(file("$metaDir/$pageId.changes"));
 			$first=true;
 			foreach($chgset as $chg) {
 				$chgs=explode("\t",$chg);
-				$out.="<tr><td>".date('y/m/d H:i',$chgs[0]).
+				$out.="<li>".date('y/m/d H:i',$chgs[0]).
 				" <a href=doku.php?id=$pageId&rev=".($first ? "" : $chgs[0]).">View</a>".
 				" <a href=doku.php?id=$pageId&rev=".($first ? "" : $chgs[0])."&do=edit>Revert</a>".
-				" <td>".$chgs[5].
+				" ".$chgs[5].
 				" <span style=color:#888>".$chgs[4]." (".$chgs[1].")</span>";
 				if($first)
 					$first=false;
