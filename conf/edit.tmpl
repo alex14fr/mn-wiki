@@ -4,11 +4,11 @@
 <input type=hidden name=id value=~~ID~~>
 <div style=display:flex>
 <div style=flex-grow:1;width:100%;padding-right:5px>
-	<textarea oninput=update() name=txt id=txt style=width:100%;height:70vh>~~TXT~~</textarea>
+	<textarea name=txt id=txt style=width:100%;height:70vh>~~TXT~~</textarea>
 	<br>
 	summary of changes: <input name=summary>
 	<br>
-	<input type=submit value=Save>
+	<input type=submit value=Save> <input type=button value="Update preview" onclick=update()>
 	</form>
 </div>
 <div id=preview style=flex-grow:1;width:100%;height:70vh;overflow-y:scroll></div>

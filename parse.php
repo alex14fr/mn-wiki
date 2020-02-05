@@ -34,7 +34,7 @@ function parse_inline($l, $parseTags=true) {
 							$inlink=false;
 						$s.=$l[$i];
 					}
-					$s.=$l[$i];
+					if($i<$n) $s.=$l[$i];
 					$i+=2;
 					$out.="<".$tags[$c].">".parse_inline($s)."</".$tags[$c].">";
 				} else {
@@ -50,9 +50,9 @@ function parse_inline($l, $parseTags=true) {
 					if($c=="[") $clC="]";
 					else if($c=="{") $clC="}";
 					for(; $i<$n-1 && $l[$i]!=$clC && $l[$i+1]!=$clC; $i++) $s.=$l[$i];
-					$s.=$l[$i];
+					if($i<$n) $s.=$l[$i];
 					$i+=2;
-					if($s[0]==":") 
+					if(!empty($s) && $s[0]==":") 
 						$s=substr($s,1);
 					$mm=explode("|",$s);
 					$ptags=true;
