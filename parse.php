@@ -104,7 +104,8 @@ function parse_inline($l, $parseTags=true) {
 					if($s=="/div") {
 						$out.="</div>";
 					} else if(strpos($s,"div")!==false) {
-						$cl=str_replace("\"","",explode(" ",$s)[1]);
+						$sxplod=explode(" ",$s);
+						$cl=str_replace("\"","",$sxplod[1]);
 						$out.="<div class=\"$cl\">";
 					} else if(strpos($s,"FORM")!==false) {
 						$out.="<ul><li><a href=event.php?action=view&id=$pageId&sectok=$sectok>List of participants</a>";
@@ -188,7 +189,7 @@ function parse_line($l) {
 
 			case "-":
 				if($i++<$n && $l[$i]=="-")
-					return "<hr noshade>";
+					return "<hr>";
 
 			case " ":
 				$spc_cnt=0;
@@ -276,7 +277,7 @@ function render_page($page, $rev="") {
 			header("HTTP/1.1 404 Not found");
 			print "Page $pageId not found. ";
 			if(!empty($_SESSION['auth_user'])) {
-				print "<a href=doku.php?do=edit&id=$pageId>Create this page</a>";
+				print "<a href=\"doku.php?do=edit&id=$pageId\">Create this page</a>";
 			}
 			exit;
 		}
@@ -293,6 +294,7 @@ function render_page($page, $rev="") {
 			$out.=parse_line($line);
 		fclose($fd);
 	}
+	$out.=exit_par();
 	$out=str_replace_first("~~TOC~~",$toc,$out);
 	$out=str_replace("~~TOC~~","",$out);
 	return($out);
@@ -322,12 +324,12 @@ function render_html($str,$pageId="",$title="") {
 	$actions="";
 	if(!empty($pageId)) {
 		if(!empty($_SESSION['auth_user'])) {
-			$actions="<a href=doku.php?do=edit&id=$pageId>Edit this page</a>".
-						"<a href=doku.php?do=revisions&id=$pageId>Old revisions</a>".
-						(auth_isAdmin() ? "<a href=doku.php?do=edit&id=sidebar>Edit sidebar</a>" : "").
-						"<a href=doku.php?do=logout&id=$pageId>Logout ".$_SESSION['auth_user']."</a>";
+			$actions="<a href=\"doku.php?do=edit&id=$pageId\">Edit this page</a>".
+						"<a href=\"doku.php?do=revisions&id=$pageId\">Old revisions</a>".
+						(auth_isAdmin() ? "<a href=\"doku.php?do=edit&id=sidebar\">Edit sidebar</a>" : "").
+						"<a href=\"doku.php?do=logout&id=$pageId\">Logout ".$_SESSION['auth_user']."</a>";
 		} else {
-			$actions="<a href=doku.php?do=login&id=$pageId>Login / Register</a>";
+			$actions="<a href=\"doku.php?do=login&id=$pageId\">Login / Register</a>";
 		}
 	}
 	$pgh=str_replace(array("~~ACTIONS~~","~~TITLE~~","~~SIDEBAR~~"),

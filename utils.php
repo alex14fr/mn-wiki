@@ -105,5 +105,10 @@ function textDiff($old, $new){
 
 function readtmpl($id) {
 	$id=san_pageId($id);
-	return str_replace("\n","",file_get_contents("conf/$id.tmpl"));
+	$out=str_replace("\n","",file_get_contents("conf/$id.tmpl"));
+	if($id=="htmlhead")
+		$out=str_replace("<!doctype html>","<!doctype html>\n",$out);
+	return $out;
 }
+
+
