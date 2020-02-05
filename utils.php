@@ -36,7 +36,7 @@ function san_pageRev($rev) {
 function san_filename($fn) {
 	$fn=basename($fn);
 	$fn=strtolower($fn);
-	$fn=substr($fn,0,64);
+	$fn=substr($fn,0,255);
 	return preg_replace("/[^a-z0-9\-_\.]/","",$fn);
 }
 

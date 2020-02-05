@@ -32,9 +32,10 @@ if($_FILES['fich']) {
 }
 
 if($_GET['delete']) {
+	$dd=san_filename($_GET['delete']);	
 	if(substr($dd,0,1) != '.') {
-		sendNotify('File deleted : '.$_GET['delete'], 'File '.$_GET['delete'].' has been deleted by '.$_SERVER['REMOTE_USER']. ' ; IP='.$ip.'). ','');
-		unlink("$mediaDir/".basename($_GET['delete']));
+		sendNotify('File deleted : '.$dd, 'File '.$dd.' has been deleted by '.$_SERVER['REMOTE_USER']. ' ; IP='.$ip.'). ','');
+		unlink("$mediaDir/$dd");
 	}
 }
 

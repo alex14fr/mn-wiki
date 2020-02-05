@@ -26,6 +26,7 @@ function auth_hashpass($login, $pass) {
 }
 
 function auth_login($login, $pass) {
+	$login=san_filename($login);
 	$lspl=auth_getline($login);
 	if($lspl) {
 		$hashpass=$lspl[1];
@@ -82,6 +83,7 @@ function genrepwhash($login, $curpwd) {
 function auth_resendpwd1($email) {
 	global $secret1, $secret2, $secret3, $pwdFile;
 	global $baseUrl, $mailFrom;
+	$email=san_csv($email);
 	$crlf="\r\n";
 	$fd=fopen($pwdFile,"r");
 	if(!$fd) {

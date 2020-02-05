@@ -301,6 +301,9 @@ function render_page($page, $rev="") {
 function render_page_cache($page, $rev="") {
 	global $pageDir, $cacheDir;
 	$pageId=san_pageId($page);
+	if(!empty($rev)) {
+		$rev=preg_replace("/[^0-9]/","",$rev);
+	}
 	if(!empty($rev) || 
 		$rev!="" ||
 		!file_exists("$cacheDir/$pageId") || 

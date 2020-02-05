@@ -84,11 +84,15 @@ if(!empty($_GET['do'])) {
 			exit;
 		case "resendpwd2":
 			if(empty($_GET['u']) || empty($_GET['tok'])) die("resendpwd2 error 1");
-			auth_resendpwd2($_GET['u'], $_GET['tok']);
+			$u=san_filename($_GET['u']);
+			$tok=san_filename($_GET['tok']);
+			auth_resendpwd2($u, $tok);
 			print "An email with your new password has been sent. ";
 			exit;
 		case "addcontributor":
-			auth_addcontributor($_GET['login'],$_GET['mail'],$_GET['hash']);
+			$u=san_filename($_GET['login']);
+			$h=san_filename($_GET['hash']);
+			auth_addcontributor($u,$_GET['mail'],$h);
 			print "added as contributor";
 			exit;
 		default:
@@ -140,7 +144,7 @@ if(!empty($_POST['do'])) {
 			file_put_contents("$pageDir/$pageId.txt", $newtext);
 			clearstatcache();
 			$mt=filemtime("$pageDir/$pageId.txt");
-			$ps=trim(substr($_POST['summary'],0,50));
+			$ps=trim(substr($_POST['summary'],0,64));
 			$cline="$mt\t".$_SERVER['REMOTE_ADDR']."\tE\t$pageId\t".$_SESSION['auth_user']."\t".$ps."\n";
 			file_put_contents("$metaDir/$pageId.changes",$cline,FILE_APPEND|LOCK_EX);
 			unlink("$lockDir/$pageId");

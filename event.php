@@ -153,7 +153,7 @@ if($_POST['nom'] ) {
 Your registration has been taken into account.
 
 Name: ".$nom.", ".$prenom."
-Affiliation: ".$_POST["affil"]."
+Affiliation: ".$affil."
 Email: ".$email."
 
 For more information, please consult ".$baseUrl."/doku.php?id=$id","From: $mailFrom\r\nContent-type: text/plain;charset=utf8\r\n");
