@@ -1,16 +1,25 @@
 <?php
 error_reporting(E_STRICT|E_ALL);
+
 include_once "utils.php";
 canonical();
+
 include_once "parse.php";
 include_once "auth.php";
+
 session_start();
+
+if(empty($_GET['id'])) 
+	$pageId='index';
+else 
+	$pageId=san_pageId($_GET['id']);
+
 if(!empty($_GET['do'])) {
 	switch($_GET['do']) {
 		case "register":
 		case "resendpwd":
 		case "login":
-			print render_html(readtmpl($_GET['do']));
+			print render_html(str_replace("~~ID~~",$pageId,readtmpl($_GET['do'])));
 			exit;
 		case "reinitpwd":
 			exit;
@@ -19,7 +28,6 @@ if(!empty($_GET['do'])) {
 			break;
 		case "release":
 			if($_SESSION['auth_user']) {
-				$pageId=san_pageId($_GET['id']);
 				if(file_get_contents("$lockDir/$pageId")==$_SESSION['auth_user']) {
 					unlink("$lockDir/$pageId");
 					header("Location: doku.php?id=$pageId");
@@ -29,7 +37,6 @@ if(!empty($_GET['do'])) {
 			break;
 		case "edit":
 			if(!auth_isContrib()) { die("not yet authorized"); }
-			$pageId=san_pageId($_GET['id']);
 			$lockfile="$lockDir/$pageId";
 			if(file_exists($lockfile)) 
 				$locked_until=filemtime($lockfile)+$locktime;
@@ -59,7 +66,6 @@ if(!empty($_GET['do'])) {
 			exit;
 		case "revisions":
 			if(!auth_isContrib()) { die("not yet authorized"); }
-			$pageId=san_pageId($_GET['id']);
 			$out="<h1>Revisions of ".$pageId."</h1><ul>";
 			$chgset=array_reverse(file("$metaDir/$pageId.changes"));
 			$first=true;
@@ -100,7 +106,8 @@ if(!empty($_POST['do'])) {
 			if(!auth_login($_POST['u'], $_POST['p'])) {
 				die("wrong username or password");
 			}
-			header("Location: doku.php");
+			if(empty($_POST['id'])) $_POST['id']='index';
+			header("Location: doku.php?id=".san_pageId($_POST['id']));
 			exit;
 
 		case "resendpwd":

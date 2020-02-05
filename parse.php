@@ -322,9 +322,9 @@ function render_html($str,$pageId="",$title="") {
 			$actions="<a href=doku.php?do=edit&id=$pageId>Edit this page</a>".
 						"<a href=doku.php?do=revisions&id=$pageId>Old revisions</a>".
 						(auth_isAdmin() ? "<a href=doku.php?do=edit&id=sidebar>Edit sidebar</a>" : "").
-						"<a href=doku.php?do=logout>Logout ".$_SESSION['auth_user']."</a>";
+						"<a href=doku.php?do=logout&id=$pageId>Logout ".$_SESSION['auth_user']."</a>";
 		} else {
-			$actions="<a href=doku.php?do=login>Login / Register</a>";
+			$actions="<a href=doku.php?do=login&id=$pageId>Login / Register</a>";
 		}
 	}
 	$pgh=str_replace(array("~~ACTIONS~~","~~TITLE~~","~~SIDEBAR~~"),
