@@ -44,7 +44,7 @@ function parse_inline($l, $parseTags=true) {
 			case "[":
 			case "{":
 				$c=$l[$i];
-				if($l[$i+1]==$c) {
+				if($i+1<$n && $l[$i+1]==$c) {
 					$i+=2;
 					$s="";
 					if($c=="[") $clC="]";
@@ -95,7 +95,7 @@ function parse_inline($l, $parseTags=true) {
 				}
 				break;
 			case "~":
-				if($l[$i]==$l[$i+1]) {
+				if($i+1<$n && $l[$i]==$l[$i+1]) {
 					$i+=2;
 					$s="";
 					for(; $i<$n && $l[$i]=="~"; $i++);
@@ -123,7 +123,7 @@ function parse_inline($l, $parseTags=true) {
 				}
 				break;
 			case "\\":
-				if($l[$i+1]=="\\") $i=$i+2;
+				if($i+1<$n && $l[$i+1]=="\\") $i=$i+2;
 				else $out.=$l[$i];
 				break;
 			default:
