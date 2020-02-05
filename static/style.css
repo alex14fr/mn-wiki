@@ -322,6 +322,12 @@ input, textarea, select {
 
 }
 
+@media screen and (min-width: 1497px) {
+	main {
+		max-width: 70%;
+	}
+}
+
 @media screen and (max-width:860px) {
 	#leftsidebar {
 		display: none;
