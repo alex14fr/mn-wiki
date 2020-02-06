@@ -4,7 +4,7 @@ include_once "conf/conf.php";
 function canonical() {
 	if(file_exists("conf/canonical.php")) {
 		include_once "conf/canonical.php";
-
+		if(empty($canonicalProto)) $canonicalProto=$_SERVER["REQUEST_SCHEME"];
 		if($_SERVER["HTTP_X_FORWARDED_HOST"]!=$canonicalHost) {
 				  $destination="$canonicalProto://$canonicalHost".$_SERVER["REQUEST_URI"];
 				  header("HTTP/1.1 301 Moved Permanently");
