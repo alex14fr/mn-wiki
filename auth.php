@@ -179,7 +179,7 @@ function auth_register($u, $p, $p2, $n, $e) {
 	file_put_contents($pwdFile,$line,FILE_APPEND|LOCK_EX);
 
    $hash=hash('sha256',$secret3.$u);
-   sendNotify("Moderation request","New user registered on wiki : \r\n
+   sendNotify("register","Moderation request","New user registered on wiki : \r\n
    Username:    $u
    Real name:   $n
    Email:       $e
@@ -197,7 +197,7 @@ function auth_addcontributor($login,$mail,$hash) {
 	if(strpos($lspl[4],"contributor")!==false) { die("already a contributor"); }
 	$lspl[4]="contributor,".$lspl[4];
 	auth_changeUser($login,implode(":",$lspl));
-	sendNotify("Edit rights granted","To username $login","");
+	sendNotify("register","Edit rights granted","To username $login","");
 	$mailtxt="The administrator of the wiki at $baseUrl has accepted 
 you as a contributor.
 

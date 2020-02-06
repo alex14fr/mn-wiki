@@ -148,7 +148,7 @@ if(!empty($_POST['do'])) {
 			$cline="$mt\t".$_SERVER['REMOTE_ADDR']."\tE\t$pageId\t".$_SESSION['auth_user']."\t".$ps."\n";
 			file_put_contents("$metaDir/$pageId.changes",$cline,FILE_APPEND|LOCK_EX);
 			unlink("$lockDir/$pageId");
-			sendNotify("Page $pageId changed", "
+			sendNotify("change","Page $pageId changed", "
 			Username:     ".$_SESSION['auth_user']."
 			IP:           ".$_SERVER['REMOTE_ADDR']."
 

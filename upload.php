@@ -28,13 +28,13 @@ if($_FILES['fich']) {
 	check_allowed($desti);
 	if(!move_uploaded_file($_FILES["fich"]["tmp_name"], "$mediaDir/$desti")) 
 		die("upload error");
-	sendNotify('File added : '.$desti, "File\r\n\r\n   $baseUrl/$mediaPrefix/$desti\r\n\r\n has been added by ".$_SERVER['REMOTE_USER']. ' ; IP='.$ip.'). ','' );
+	sendNotify("change",'File added : '.$desti, "File\r\n\r\n   $baseUrl/$mediaPrefix/$desti\r\n\r\n has been added by ".$_SERVER['REMOTE_USER']. ' ; IP='.$ip.'). ','' );
 }
 
 if($_GET['delete']) {
 	$dd=san_filename($_GET['delete']);	
 	if(substr($dd,0,1) != '.') {
-		sendNotify('File deleted : '.$dd, 'File '.$dd.' has been deleted by '.$_SERVER['REMOTE_USER']. ' ; IP='.$ip.'). ','');
+		sendNotify("change",'File deleted : '.$dd, 'File '.$dd.' has been deleted by '.$_SERVER['REMOTE_USER']. ' ; IP='.$ip.'). ','');
 		unlink("$mediaDir/$dd");
 	}
 }
