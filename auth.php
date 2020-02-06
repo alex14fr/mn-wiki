@@ -168,11 +168,13 @@ function auth_register($u, $p, $p2, $n, $e) {
 	if($u!=san_filename($u)) {
 		die("invalid username: must be <64 chars long, lowercase, a-z 0-9 - _ .");
 	}
+	if($e!=san_csv($e)) {
+		die("mail address contains invalid characters");
+	}
 	if(auth_getline($u)) {
 		die("login already exists");
 	}
 	$n=san_csv($n);
-	$e=san_csv($e);
 	$hash=auth_hashPass($u, $p);
 	$line="$u:$hash:$n:$e:user\n";
 	if(!is_writable($pwdFile)) { die("can't open passwd file for writing"); }
