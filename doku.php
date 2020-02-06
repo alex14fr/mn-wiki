@@ -30,7 +30,7 @@ if(!empty($_GET['do'])) {
 			if($_SESSION['auth_user']) {
 				if(file_get_contents("$lockDir/$pageId")==$_SESSION['auth_user']) {
 					unlink("$lockDir/$pageId");
-					header("Location: doku.php?id=$pageId");
+					header("Location: ".pageLink($pageId));
 				}
 				exit;
 			}
@@ -111,7 +111,7 @@ if(!empty($_POST['do'])) {
 				die("wrong username or password");
 			}
 			if(empty($_POST['id'])) $_POST['id']='index';
-			header("Location: doku.php?id=".san_pageId($_POST['id']));
+			header("Location: ".pageLink(san_pageId($_POST['id'])));
 			exit;
 
 		case "resendpwd":
@@ -153,11 +153,11 @@ if(!empty($_POST['do'])) {
 			IP:           ".$_SERVER['REMOTE_ADDR']."
 
 			Old revision: ".$baseUrl."/doku.php?id=$pageId&rev=$oldmt
-			New revision: ".$baseUrl."/doku.php?id=$pageId
+			New revision: ".pageLink($pageId,true)."
 
 			".textDiff($oldtext,$newtext),"");
 			
-			header("Location: doku.php?id=$pageId");
+			header("Location: ".pageLink($pageId));
 			exit;
 	}
 }

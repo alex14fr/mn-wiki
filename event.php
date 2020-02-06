@@ -102,7 +102,7 @@ function listeInscrits() {
 }
 
 function formInscription() {
-	global $id, $secret1, $secret2;
+	global $id, $secret1, $secret2,$captch;
 ?>
 <form method="post">
 <input type="hidden" name="id" value="<?php echo $id; ?>">
@@ -121,7 +121,7 @@ function formInscription() {
 
 function backl() {
 	global $id;
-	print "<p><a href=doku.php?id=$id>&lt;&lt; Back</a><p>";
+	print "<p><a href=".pageLink($id).">&lt;&lt; Back</a><p>";
 }
 
 $id=san_pageId($_REQUEST['id']);
@@ -137,18 +137,19 @@ try {
 	die ('db error'.$e->getMessage());
 }
 
-if($_POST['nom'] ) {
+if(!empty($_POST['nom'])) {
 	if(checkRecaptcha()) {
 		$prenom=protect(htmlspecialchars(preg_replace("/,/"," ",$_POST["prenom"])));
 		$affil=protect(htmlspecialchars(preg_replace("/,/"," ",$_POST["affil"])));
 		$nom=protect(htmlspecialchars(preg_replace("/,/"," ",$_POST["nom"])));
 		$email=protect(htmlspecialchars(preg_replace("/,/"," ",$_POST["email"])));
 		$id=protect($id);
-		array_push($mailNotify, $email);
+		$mnotif=$mailNotify["change"];
+		array_push($mnotif, $email);
 
 		db_query("INSERT INTO inscrits (idrencontre,nomprenom,mail,affiliation) VALUES('$id','".ucname(strtolower($nom.' '.$prenom))."','$email','$affil')");
 
-		foreach($mailNotify as $notif) 
+		foreach($mnotif as $notif) 
 			mail($notif, "Registration to $id", "
 Your registration has been taken into account.
 
@@ -156,7 +157,7 @@ Name: ".$nom.", ".$prenom."
 Affiliation: ".$affil."
 Email: ".$email."
 
-For more information, please consult ".$baseUrl."/doku.php?id=$id","From: $mailFrom\r\nContent-type: text/plain;charset=utf8\r\n");
+For more information, please consult ".pageLink($id,true),"From: $mailFrom\r\nContent-type: text/plain;charset=utf8\r\n");
 		$msg='Your registration has been taken into account. ';
 	}
 
@@ -166,12 +167,12 @@ For more information, please consult ".$baseUrl."/doku.php?id=$id","From: $mailF
 
 	print $msg;
 
-	print "<p><a href=/$id.html>&lt;&lt; Back</a>";
+	print "<p><a href=".pageLink($id).">&lt;&lt; Back</a>";
 
 	exit;
 }
 
-if($_REQUEST['action']=='view') 
+if(!empty($_REQUEST['action'])) 
 	listeInscrits();
 else
 	formInscription();

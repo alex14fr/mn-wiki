@@ -111,4 +111,7 @@ function readtmpl($id) {
 	return $out;
 }
 
-
+function pageLink($id,$incbase=false) {
+	global $baseUrl,$pagePrefix,$pageSuffix; 
+	return  ($incbase ? $baseUrl : "").$pagePrefix.$id.$pageSuffix;
+}
