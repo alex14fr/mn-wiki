@@ -29,14 +29,16 @@ if(!empty($_FILES['fich'])) {
 	if(!move_uploaded_file($_FILES["fich"]["tmp_name"], "$mediaDir/$desti")) 
 		die("upload error");
 	sendNotify("change",'File added : '.$desti, "File\r\n\r\n   $baseUrl/$mediaPrefix/$desti\r\n\r\n has been added by ".$_SESSION['auth_user']. ' ; IP='.$ip.'). ','' );
+	$msg="File {{".$desti."}} added.";
 }
 
-if(!empty($_GET['delete'])) {
-	$dd=san_filename($_GET['delete']);	
+if(!empty($_POST['delete'])) {
+	$dd=san_filename($_POST['delete']);	
 	chk_xtok();
 	if(substr($dd,0,1) != '.') {
 		sendNotify("change",'File deleted : '.$dd, 'File '.$dd.' has been deleted by '.$_SESSION['auth_user']. ' ; IP='.$ip.'). ','');
 		unlink("$mediaDir/$dd");
+		$msg="File $dd deleted.";
 	}
 }
 
@@ -45,8 +47,9 @@ gen_xtok();
 ?>
 <!doctype html>
 <body>
+<?php if(!empty($msg)) { print "<b>$msg</b>"; } ?>
 <h2>File manager</h2>
-<form enctype='multipart/form-data' method='post'>
+<form enctype=multipart/form-data method=post>
 <?php print pr_xtok(); ?>
 <label>
 File :
@@ -62,11 +65,13 @@ Name (leave empty for default name) :
 </form>
 <h2>File list</h2>
 <ul>
+<form method=post>
+<?php print pr_xtok(); ?>
 <?php
 $d=scandir('data/media/');
 foreach($d as $dd) {
 	if(substr($dd,0,1) != '.')
-		print "<li><tt>{{".$dd."}}</tt> <a href=\"$mediaDir/$dd\" target=_new>View</a> <a href=\"?delete=$dd&xtok=".$_SESSION['xtok']."\">Delete</a>";
+		print "<li><tt>{{".$dd."}}</tt> <a href=\"$mediaDir/$dd\" target=_new>View</a> <button type=submit name=delete value=\"$dd\">Delete</button>";
 }
 ?>
 </ul>
