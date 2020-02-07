@@ -63,18 +63,6 @@ function auth_logout() {
 	$_SESSION['auth_user']='';
 }
 
-function gensalt() {
-	global $secret1,$secret2;
-	if(function_exists("openssl_random_pseudo_bytes")) {
-		$rnd=openssl_random_pseudo_bytes(8);
-	} else {
-		mt_srand(time());
-		$rnd=mt_rand();
-	}
-	$s="$1$".substr(md5($secret1.$rnd.$secret2.microtime()),0,8)."$";
-	return $s;
-}
-
 function genrepwhash($login, $curpwd) {
 	global $secret1, $secret2, $secret3;
 	return hash('sha256',$secret3.$login.$secret2.$curpwd.$secret1);

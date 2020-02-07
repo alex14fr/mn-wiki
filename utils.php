@@ -51,6 +51,53 @@ function sendNotify($reason, $subj, $body, $hdrs) {
 	}
 }
 
+function gensalt() {
+	global $secret1,$secret2;
+	if(function_exists("openssl_random_pseudo_bytes")) {
+		$rnd=openssl_random_pseudo_bytes(8);
+	} else {
+		mt_srand(time());
+		$rnd=mt_rand();
+	}
+	$s="$1$".substr(md5($secret1.$rnd.$secret2.microtime()),0,8)."$";
+	return $s;
+}
+
+function readtmpl($id) {
+	$id=san_pageId($id);
+	$out=str_replace("\n","",file_get_contents("conf/$id.tmpl"));
+	if($id=="htmlhead")
+		$out=str_replace("<!doctype html>","<!doctype html>\n",$out);
+	return $out;
+}
+
+function pageLink($id,$incbase=false) {
+	global $baseUrl,$pagePrefix,$pageSuffix; 
+	return  ($incbase ? $baseUrl : "").$pagePrefix.$id.$pageSuffix;
+}
+
+function gen_xtok() {
+	if(function_exists("openssl_random_pseudo_bytes")) {
+		$tok=sha1(openssl_random_pseudo_bytes(8));
+	} else {
+		$tok = hash("sha256",$secret1.microtime().mt_rand());
+	}
+	$_SESSION['xtok'] = $tok;
+}
+
+function pr_xtok() {
+	return "<input type=hidden name=xtok value=".$_SESSION['xtok'].">";
+}
+
+function chk_xtok() {
+	if(empty($_REQUEST['xtok'])||empty($_SESSION['xtok'])||$_REQUEST['xtok']!=$_SESSION['xtok']) {
+		die('xtok verification failed');
+	}
+}
+
+
+
+
 /*
     Paul's Simple Diff Algorithm v 0.1
     (C) Paul Butler 2007 <http://www.paulbutler.org/>
@@ -103,15 +150,5 @@ function textDiff($old, $new){
     return $ret;
 }
 
-function readtmpl($id) {
-	$id=san_pageId($id);
-	$out=str_replace("\n","",file_get_contents("conf/$id.tmpl"));
-	if($id=="htmlhead")
-		$out=str_replace("<!doctype html>","<!doctype html>\n",$out);
-	return $out;
-}
+/**************************************/
 
-function pageLink($id,$incbase=false) {
-	global $baseUrl,$pagePrefix,$pageSuffix; 
-	return  ($incbase ? $baseUrl : "").$pagePrefix.$id.$pageSuffix;
-}

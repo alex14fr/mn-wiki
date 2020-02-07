@@ -37,6 +37,7 @@ if(!empty($_GET['do'])) {
 			break;
 		case "edit":
 			if(!auth_isContrib()) { die("not yet authorized"); }
+			gen_xtok();
 			$lockfile="$lockDir/$pageId";
 			if(file_exists($lockfile)) 
 				$locked_until=filemtime($lockfile)+$locktime;
@@ -60,8 +61,8 @@ if(!empty($_GET['do'])) {
 			}
 			clearstatcache();
 			$tmpl=readtmpl("edit");
-			$tmpl=str_replace(array("~~ID~~","~~TXT~~","~~LOCK_UNTIL~~"),
-									array($pageId,$pagetxt,date('H:i:s T',filemtime($lockfile)+$locktime)),$tmpl);
+			$tmpl=str_replace(array("~~XTOK~~","~~ID~~","~~TXT~~","~~LOCK_UNTIL~~"),
+									array(pr_xtok(),$pageId,$pagetxt,date('H:i:s T',filemtime($lockfile)+$locktime)),$tmpl);
 			print render_html($tmpl);
 			exit;
 		case "revisions":
@@ -133,6 +134,7 @@ if(!empty($_POST['do'])) {
 
 		case "edit":
 			if(!auth_isContrib()) { die("not yet authorized"); }
+			chk_xtok();
 			$pageId=san_pageId($_POST['id']);
 			if(is_readable("$pageDir/$pageId.txt")) {
 				$oldmt=filemtime("$pageDir/$pageId.txt");
