@@ -1,6 +1,5 @@
 <?php
 include "conf/conf.php";
-$pwdFile="conf/users.auth.php";
 
 function auth_getline($login) {
 	global $pwdFile;
@@ -45,6 +44,7 @@ function auth_login($login, $pass) {
 }
 
 function auth_getgroups() {
+	if(empty($_SESSION['auth_user'])) return(array());
 	$lspl=auth_getline($_SESSION['auth_user']);
 	if($lspl)
 		return(explode(',',trim($lspl[4])));
