@@ -45,7 +45,7 @@ function san_csv($string) {
 }
 
 function sendNotify($reason, $subj, $body) {
-	global $mailNotify, $mailFrom;
+	global $mailNotify;
 	foreach($mailNotify[$reason] as $to) {
 		xmail($to, $subj, $body);
 	}
