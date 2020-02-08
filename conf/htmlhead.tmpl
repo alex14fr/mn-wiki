@@ -3,26 +3,27 @@
 <head>
 <meta charset=utf-8>
 <title>~~TITLE~~ [GdR MASCOT-NUM]</title>
+<link rel=preload href=static/font.ttf as=font type=font/ttf>
 <link rel=stylesheet href=static/style.css>
 <meta name=viewport content="width=device-width">
 <link rel="shortcut icon" href=data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASykAAKWUfwDz8e8AVjYPAI55XwDSyb8A497YAGhLKQCBaU0AqpqGAHhePwDGvK8AmYZvAJqHcAD///8A///IERFOP////hEbERFH//+hERIRERR/9xEREhEREUP5ERESERERFTERERIRERERwYLRUlEhkpEhNXhiYfEleCthhGJh8RU4K2GEYmHxxrGhOXsyMfl9UTSy0SKRItLU+hERERERERz/UREREREUz//yEREREVP///9+gRvn//8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA>
 <script>
 function switchMenuMobile() {
-var lfsb=document.getElementById("leftsidebar");
-if(lfsb.style.display=="" || lfsb.style.display=="none") {
-lfsb.style.display="block";
-document.getElementById("mobilemenulink").innerHTML="Cacher le menu";
-} else {
-lfsb.style.display="none";
-document.getElementById("mobilemenulink").innerHTML="Voir le menu";
-}
+	var lfsb=document.getElementById("leftsidebar");
+	if(lfsb.style.display=="" || lfsb.style.display=="none") {
+		lfsb.style.display="block";
+		document.getElementById("mobilemenulink").innerHTML="Hide menu";
+	} else {
+		lfsb.style.display="none";
+		document.getElementById("mobilemenulink").innerHTML="Show menu";
+	}
 }
 </script>
 </head>
 <body>
 <nav>
 <a href=/><img src=static/logo.webp height=99 width=262 alt="Groupement de recherche MASCOT-NUM"></a><p>
-<a id=mobilemenulink href=# onclick=switchMenuMobile()>Voir le menu</a>
+<a id=mobilemenulink href=# onclick=switchMenuMobile()>Show menu</a>
 <div id=leftsidebar>
 <div class=boite id=menugal>
 ~~SIDEBAR~~
