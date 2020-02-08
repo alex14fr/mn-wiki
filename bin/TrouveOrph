@@ -1,2 +1,7 @@
-cd data/pages
-for f in ../media/* ; do g=`echo "$f" | sed -e "s/..\/media\///g"`; h=`grep -i -l $g *.txt`; if [ -z "$h" ]; then echo $g $h; fi; done
+#!/bin/sh
+for f in data/media/* ; do 
+	g=`basename "$f"`; 
+	if ! grep -i -q $g data/pages/*.txt; then 
+		echo $g; 
+	fi; 
+done
