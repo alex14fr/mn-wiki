@@ -1,5 +1,5 @@
 <?php
-include "conf/conf.php";
+include_once "conf/conf.php";
 
 function auth_getline($login) {
 	global $pwdFile;
