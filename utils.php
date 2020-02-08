@@ -44,10 +44,10 @@ function san_csv($string) {
 	return trim(preg_replace('/[\x00-\x1f:<>&%,;]+/','',$string));
 }
 
-function sendNotify($reason, $subj, $body, $hdrs) {
+function sendNotify($reason, $subj, $body) {
 	global $mailNotify, $mailFrom;
 	foreach($mailNotify[$reason] as $to) {
-		mail($to, $subj, $body, "From: $mailFrom\r\nContent-type: text/plain;charset=utf-8\r\n".$hdrs);
+		xmail($to, $subj, $body);
 	}
 }
 

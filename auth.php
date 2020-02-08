@@ -87,7 +87,7 @@ function auth_resendpwd1($email) {
 			$login=$lspl[0];
 			$sectok=genrepwhash($login, $lspl[1]);
 			$mailtext=" Someone (probably you) claimed for lost credentials for the Wiki at $baseUrl . ".$crlf.$crlf." Your username is $login. ".$crlf.$crlf." To reset your password, please visit $baseUrl/doku.php?do=resendpwd2&u=$login&tok=$sectok ".$crlf.$crlf." If not, you can safely ignore this message. ";
-			mail($email, "Password reset", $mailtext, "From: $mailFrom\r\nContent-type: text/plain;charset=utf8");
+			xmail($email, "Password reset", $mailtext);
 			return(true);
 		}
 	}
@@ -146,7 +146,7 @@ function auth_resendpwd2($login, $tok) {
 	$newpass=generatePassword();
 	$mailto=$lspl[3];
 	auth_changePassword($login, $newpass);
-	mail($mailto, "Your password", "Your password is : $newpass", "From: $mailFrom");
+	xmail($mailto, "Your password", "Your password is : $newpass");
 }
 
 function auth_register($u, $p, $p2, $n, $e) {
@@ -175,7 +175,7 @@ function auth_register($u, $p, $p2, $n, $e) {
    Email:       $e
    IP:          ".$_SERVER['REMOTE_ADDR']." (".gethostbyname($_SERVER['REMOTE_ADDR']).")\r\n
 Visit the following link to grant him edit rights:\r\n 
-    $baseUrl/doku.php?do=addcontributor&login=$u&mail=$e&hash=$hash","");
+    $baseUrl/doku.php?do=addcontributor&login=$u&mail=$e&hash=$hash");
 }
 
 
@@ -187,7 +187,7 @@ function auth_addcontributor($login,$mail,$hash) {
 	if(strpos($lspl[4],"contributor")!==false) { die("already a contributor"); }
 	$lspl[4]="contributor,".$lspl[4];
 	auth_changeUser($login,implode(":",$lspl));
-	sendNotify("register","Edit rights granted","To username $login","");
+	sendNotify("register","Edit rights granted","To username $login");
 	$mailtxt="The administrator of the wiki at $baseUrl has accepted 
 you as a contributor.
 
@@ -203,7 +203,7 @@ and choose 'Edit this page' on the left. If this link does not appear, use the
 Login link first (your login is $login).
 
 Yours faithfully.";
-		mail($mail,"Edit rights granted",$mailtxt,"From: $mailFrom");
+		xmail($mail,"Edit rights granted",$mailtxt);
 
 }
 

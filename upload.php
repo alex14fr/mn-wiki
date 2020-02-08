@@ -28,7 +28,7 @@ if(!empty($_FILES['fich'])) {
 	chk_xtok();
 	if(!move_uploaded_file($_FILES["fich"]["tmp_name"], "$mediaDir/$desti")) 
 		die("upload error");
-	sendNotify("change",'File added : '.$desti, "File\r\n\r\n   $baseUrl/$mediaPrefix/$desti\r\n\r\n has been added by ".$_SESSION['auth_user']. ' ; IP='.$ip.'). ','' );
+	sendNotify("change",'File added : '.$desti, "File\r\n\r\n   $baseUrl/$mediaPrefix/$desti\r\n\r\n has been added by ".$_SESSION['auth_user']. ' ; IP='.$ip.'). ');
 	$msg="File {{".$desti."}} added.";
 }
 
@@ -36,7 +36,7 @@ if(!empty($_POST['delete'])) {
 	$dd=san_filename($_POST['delete']);	
 	chk_xtok();
 	if(substr($dd,0,1) != '.') {
-		sendNotify("change",'File deleted : '.$dd, 'File '.$dd.' has been deleted by '.$_SESSION['auth_user']. ' ; IP='.$ip.'). ','');
+		sendNotify("change",'File deleted : '.$dd, 'File '.$dd.' has been deleted by '.$_SESSION['auth_user']. ' ; IP='.$ip.'). ');
 		unlink("$mediaDir/$dd");
 		$msg="File $dd deleted.";
 	}

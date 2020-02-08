@@ -143,6 +143,7 @@ if(!empty($_POST['nom'])) {
 		$affil=protect(htmlspecialchars(preg_replace("/,/"," ",$_POST["affil"])));
 		$nom=protect(htmlspecialchars(preg_replace("/,/"," ",$_POST["nom"])));
 		$email=protect(htmlspecialchars(preg_replace("/,/"," ",$_POST["email"])));
+		$email=san_csv($email);
 		$id=protect($id);
 		$mnotif=$mailNotify["change"];
 		array_push($mnotif, $email);
@@ -150,14 +151,14 @@ if(!empty($_POST['nom'])) {
 		db_query("INSERT INTO inscrits (idrencontre,nomprenom,mail,affiliation) VALUES('$id','".ucname(strtolower($nom.' '.$prenom))."','$email','$affil')");
 
 		foreach($mnotif as $notif) 
-			mail($notif, "Registration to $id", "
+			xmail($notif, "Registration to $id", "
 Your registration has been taken into account.
 
 Name: ".$nom.", ".$prenom."
 Affiliation: ".$affil."
 Email: ".$email."
 
-For more information, please consult ".pageLink($id,true),"From: $mailFrom\r\nContent-type: text/plain;charset=utf8\r\n");
+For more information, please consult ".pageLink($id,true));
 		$msg='Your registration has been taken into account. ';
 	}
 

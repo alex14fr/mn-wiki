@@ -17,7 +17,9 @@ $pageSuffix="";
 //$pageSuffix=".html";
 //$mediaPrefix="media";
 $ext_ok=array("pdf","csv","txt","jpg","jpeg","gif","png","webp","avi","mp4","ogv","mkv","tex","zip","tar","gz","tgz","bz2","tbz2","xz","txz","7z","doc","docx","xls","xlsx","odt");
-$mailFrom="wiki noreply <noreply@nonexistent.tld>";
+function xmail($to,$subj,$content) {
+	return mail($to,$subj,$content,"From: wiki noreply <noreply@nonexistent.tld>\nContent-type: text/plain;charset=utf-8\n");
+}
 $mailNotify=array("change"=>array("notify.change@my.site.tld"),
 						"register"=>array("notify.register@my.site.tld"));
 $baseUrl="https://my.site.tld/";

@@ -157,7 +157,7 @@ if(!empty($_POST['do'])) {
 			Old revision: ".$baseUrl."/doku.php?id=$pageId&rev=$oldmt
 			New revision: ".pageLink($pageId,true)."
 
-			".textDiff($oldtext,$newtext),"");
+			".textDiff($oldtext,$newtext));
 			
 			header("Location: ".pageLink($pageId));
 			exit;
