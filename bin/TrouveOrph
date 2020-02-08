@@ -1,2 +1,2 @@
-cd ~/gdr-mascotnum/data/pages
+cd data/pages
 for f in ../media/* ; do g=`echo "$f" | sed -e "s/..\/media\///g"`; h=`grep -i -l $g *.txt`; if [ -z "$h" ]; then echo $g $h; fi; done
