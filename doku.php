@@ -151,13 +151,15 @@ if(!empty($_POST['do'])) {
 			file_put_contents("$metaDir/$pageId.changes",$cline,FILE_APPEND|LOCK_EX);
 			unlink("$lockDir/$pageId");
 			sendNotify("change","Page $pageId changed", "
-			Username:     ".$_SESSION['auth_user']."
-			IP:           ".$_SERVER['REMOTE_ADDR']."
+Username:     ".$_SESSION['auth_user']."
+IP:           ".$_SERVER['REMOTE_ADDR']."
 
-			Old revision: ".$baseUrl."/doku.php?id=$pageId&rev=$oldmt
-			New revision: ".pageLink($pageId,true)."
+Summary:      ".$ps."
 
-			".textDiff($oldtext,$newtext));
+Old revision: ".$baseUrl."/doku.php?id=$pageId&rev=$oldmt
+New revision: ".pageLink($pageId,true)."
+
+".textDiff($oldtext,$newtext));
 			
 			header("Location: ".pageLink($pageId));
 			exit;
