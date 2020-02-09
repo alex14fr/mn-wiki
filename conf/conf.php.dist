@@ -9,6 +9,7 @@ $mediaDir="data/media";
 $metaDir="data/meta";
 $cacheDir="ephemeral/cache";
 $lockDir="ephemeral/locks";
+$locktime=300;
 $dbevents="data/events_register.sqlite";
 $mediaPrefix="data/media/";
 $pagePrefix="doku.php?id=";
