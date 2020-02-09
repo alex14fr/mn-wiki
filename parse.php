@@ -273,7 +273,7 @@ function render_page($page, $rev="") {
 	$sectok=md5($secret1.$pageId.$secret2);
 	if(empty($rev)) {
 		$fnam="$pageDir/$pageId.txt";
-		if(!is_exists($fnam)) {
+		if(!file_exists($fnam)) {
 			header("HTTP/1.1 404 Not found");
 			print "Page $pageId not found. ";
 			if(!empty($_SESSION['auth_user'])) {
