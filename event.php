@@ -30,16 +30,6 @@ function ucname($string) {
 	return $string;
 }
 
-function db_query($qry) {
-	global $db;
-	try {
-		return($db->query($qry));
-	} catch(PDOException $e) {
-		print 'erreur db: '.$e->getMessage();
-	}
-	print($db->errorInfo());
-}
-
 function protect($str) {
 	$str=str_replace(';','',$str);
 	$str=str_replace('\'','',$str);
@@ -56,6 +46,7 @@ function listeInscrits() {
 	global $inscrits;
 	global $msg;	
 	global $id;
+	global $db;
 	$fich="data/rencontres.$id";
 	if(file_exists($fich)) 
 		$inscrits=file($fich,FILE_SKIP_EMPTY_LINES);
@@ -68,8 +59,8 @@ function listeInscrits() {
 			array_push($inscrits2,ucname(strtolower($nompre)).",".$affil.",".$email."\n");
 		}
 	}
-	$r=db_query("SELECT * FROM inscrits WHERE idrencontre='$id'");
-	foreach($r as $l) {
+	$res=$db->query("SELECT * FROM inscrits WHERE idrencontre='".$db->escapeString($id)."'");
+	while($l=$res->fetchArray()) {
 		array_push($inscrits2,$l['nomprenom'].','.$l['affiliation'].','.$l['mail']);
 	}
 
@@ -132,9 +123,9 @@ print "<h1>Event ".$id."</h1>";
 backl();
 
 try {
-	$db=new PDO("sqlite:$dbevents");
-} catch(PDOException $e) {
-	die ('db error'.$e->getMessage());
+	$db=new SQLite3("$dbevents");
+} catch(Exception $e) {
+	die("db error ".$e->getMessage());
 }
 
 if(!empty($_POST['nom'])) {
@@ -148,7 +139,9 @@ if(!empty($_POST['nom'])) {
 		$mnotif=$mailNotify["change"];
 		array_push($mnotif, $email);
 
-		db_query("INSERT INTO inscrits (idrencontre,nomprenom,mail,affiliation) VALUES('$id','".ucname(strtolower($nom.' '.$prenom))."','$email','$affil')");
+		if(!   $db->exec("INSERT INTO inscrits (idrencontre,nomprenom,mail,affiliation) VALUES('".$db->escapeString($id)."','".$db->escapeString(ucname(strtolower($nom.' '.$prenom)))."','".$db->escapeString($email)."','".$db->escapeString($affil)."')") ) {
+			die("db error insert ".$db->lastErrorMsg());
+		}
 
 		foreach($mnotif as $notif) 
 			xmail($notif, "Registration to $id", "
