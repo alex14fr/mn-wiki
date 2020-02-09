@@ -1,3 +1,5 @@
 <IfModule deflate_module>
-SetOutputFilter DEFLATE
+	<FilesMatch "(\.js|\.css|\.html|\.ttf)$">
+	SetOutputFilter DEFLATE
+	</FilesMatch>
 </IfModule>
