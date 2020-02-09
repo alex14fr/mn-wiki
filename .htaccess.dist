@@ -1,4 +1,4 @@
-<IfModule mod_rewrite>
+<IfModule rewrite_module>
 RewriteEngine on
 RewriteRule pecnum(.*) pecnum$1 [L]
 RewriteRule google(.*) google$1 [L]
@@ -11,7 +11,7 @@ RewriteRule ^media/(.*)$ data/media/$1 [L]
 RewriteRule ([a-zA-Z0-9_\-]*)\.html index.php?id=$1 [L]
 </IfModule>
 
-<IfModule mod_php7>
+<IfModule php7_module>
 #php_flag display_errors on
 php_flag zlib.output_compression on
 php_flag session.cookie_httponly on
