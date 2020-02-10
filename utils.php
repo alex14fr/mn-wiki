@@ -41,7 +41,7 @@ function san_filename($fn) {
 }
 
 function san_csv($string) {
-	return trim(preg_replace('/[\x00-\x1f:<>&%,;]+/','',$string));
+	return preg_replace("/[^ a-zA-Z0-9\-_\.@éèçàäëüïöûùÉÈÇÀÄËÜÏÖÂÊÎÔÛÙ]/","",$string);
 }
 
 function sendNotify($reason, $subj, $body) {
