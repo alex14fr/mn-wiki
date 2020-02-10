@@ -66,7 +66,7 @@ function pageLink($id,$incbase=false) {
 
 function gen_xtok($namespace="") {
 	if(function_exists("openssl_random_pseudo_bytes")) {
-		$tok=sha1(openssl_random_pseudo_bytes(8));
+		$tok=sha1(openssl_random_pseudo_bytes(32));
 	} else {
 		$tok = hash("sha256",$secret1.microtime().mt_rand());
 	}
@@ -79,7 +79,7 @@ function pr_xtok($namespace="") {
 
 function chk_xtok($namespace="") {
 	$k="xtok-$namespace";
-	if(empty($_REQUEST[$k])||empty($_SESSION[k])||!hash_equals($_SESSION[k],$_REQUEST['xtok'])) {
+	if(empty($_REQUEST[$k])||empty($_SESSION[$k])||!hash_equals($_SESSION[$k],$_REQUEST['xtok'])) {
 		die('xtok verification failed');
 	}
 }
