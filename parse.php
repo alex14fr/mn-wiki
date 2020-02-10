@@ -151,7 +151,7 @@ function exit_par() {
 function parse_line($l) {
 	global $list_lvl, $title, $toc, $curAnchor, $in_tbl, $title_lvl, $head_lvl;
 
-	$l=rtrim($l);
+	$l=rtrim(htmlspecialchars($l));
 	$n=strlen($l);
 
 	if($n==0) {
