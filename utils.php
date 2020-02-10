@@ -51,18 +51,6 @@ function sendNotify($reason, $subj, $body) {
 	}
 }
 
-function gensalt() {
-	global $secret1,$secret2;
-	if(function_exists("openssl_random_pseudo_bytes")) {
-		$rnd=openssl_random_pseudo_bytes(8);
-	} else {
-		mt_srand(time());
-		$rnd=mt_rand();
-	}
-	$s="$1$".substr(md5($secret1.$rnd.$secret2.microtime()),0,8)."$";
-	return $s;
-}
-
 function readtmpl($id) {
 	$id=san_pageId($id);
 	$out=str_replace("\n","",file_get_contents("conf/$id.tmpl"));
@@ -90,7 +78,7 @@ function pr_xtok() {
 }
 
 function chk_xtok() {
-	if(empty($_REQUEST['xtok'])||empty($_SESSION['xtok'])||$_REQUEST['xtok']!=$_SESSION['xtok']) {
+	if(empty($_REQUEST['xtok'])||empty($_SESSION['xtok'])||!hash_equals($_SESSION['xtok'],$_REQUEST['xtok'])) {
 		die('xtok verification failed');
 	}
 }

@@ -97,7 +97,7 @@ function formInscription() {
 ?>
 <form method="post">
 <input type="hidden" name="id" value="<?php echo $id; ?>">
-<input type=hidden name=sectok value=<?php print md5($secret1.$id.$secret2); ?>>
+<input type=hidden name=sectok value=<?php print hash("sha256",$secret1.$id.$secret2); ?>>
 <table style="margin-left:20px;margin-right:20px;border-collapse:collapse;border:1px solid black" border="0">
 <tr><td><label for="nom">Family name</label><td><input id="nom" name="nom">
 <tr><td><label for="prenom">First name</label><td><input id="prenom" name="prenom">
@@ -116,7 +116,7 @@ function backl() {
 }
 
 $id=san_pageId($_REQUEST['id']);
-if($_REQUEST['sectok']!=md5($secret1.$id.$secret2)) { print "E"; exit; }
+if(!hash_equals(hash("sha256",$secret1.$id.$secret2),$_REQUEST['sectok'])) { print "E"; exit; }
 
 print str_replace(array("~~TITLE~~","~~SIDEBAR~~","~~ACTIONS~~"),"",file_get_contents("conf/htmlhead.tmpl"));
 print "<h1>Event ".$id."</h1>";

@@ -20,9 +20,6 @@ function auth_getline($login) {
 }
 
 function auth_hashpass($login, $pass) {
-		/* old php 
-		$salt=gensalt();
-		return crypt($pass,$salt); */
 		return password_hash($pass, PASSWORD_DEFAULT);
 }
 
@@ -31,10 +28,6 @@ function auth_login($login, $pass) {
 	$lspl=auth_getline($login);
 	if($lspl) {
 		$hashpass=$lspl[1];
-		/* old php
-		$salt=substr($hashpass,0,12);
-		$cryp=crypt($pass,$salt);
-		if($cryp==$hashpass) { */
 		if(password_verify($pass,$hashpass)) {
 			$_SESSION['auth_user']=$login;
 			auth_changePassword($login, $pass);
@@ -187,7 +180,7 @@ Visit the following link to grant him edit rights:\r\n
 function auth_addcontributor($login,$mail,$hash) {
 	global $secret3, $baseUrl, $mailFrom;
 	$hashok=hash('sha256',$secret3.$login);
-	if($hashok!=$hash) { die('invalid link'); }
+	if(!hash_equals($hashok,$hash)) { die('invalid link'); }
 	$lspl=auth_getline($login);
 	if(strpos($lspl[4],"contributor")!==false) { die("already a contributor"); }
 	$lspl[4]="contributor,".$lspl[4];

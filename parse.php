@@ -270,7 +270,7 @@ function render_page($page, $rev="") {
 	$curAnchor=0;
 	$rev=san_pageRev($rev);
 	$out="";
-	$sectok=md5($secret1.$pageId.$secret2);
+	$sectok=hash("sha256",$secret1.$pageId.$secret2);
 	if(empty($rev)) {
 		$fnam="$pageDir/$pageId.txt";
 		if(!is_readable($fnam)) {
