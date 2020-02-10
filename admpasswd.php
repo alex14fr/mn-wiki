@@ -16,7 +16,7 @@ if(!empty($_POST['newpf'])) {
 		file_put_contents($pwdFile,$oldpf);
 		die("error: lock out");
 	}
-	print "OK<p>";
+	print "OK <a href=index.php>Back</a><p>";
 }
 
 gen_xtok();
