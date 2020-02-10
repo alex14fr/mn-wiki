@@ -26,18 +26,34 @@ if(!empty($_FILES['fich'])) {
 	$desti=san_filename($desti);
 	check_allowed($desti);
 	chk_xtok();
+	if(empty($desti)) { die("error : empty destination filename"); }
+	if($_FILES['fich']['error']) {
+		die("upload error ".$_FILES['fich']['error']);
+	}
+	if(file_exists("$mediaDir/$desti")) {
+		$oldcnt=file_get_contents("$mediaDir/$desti");
+		if(!$oldcnt) { die("error : can't read file to be overwritten - please change destination filename"); }
+		if(!file_put_contents("$mediaDir/.attic/chg-".md5($oldcnt)."-$dd",$oldcnt)) {
+			die("error : can't save file to be overwritten - please change destination filename");
+		}
+	}
 	if(!move_uploaded_file($_FILES["fich"]["tmp_name"], "$mediaDir/$desti")) 
-		die("upload error");
-	sendNotify("change",'File added : '.$desti, "File\r\n\r\n   $baseUrl/$mediaPrefix/$desti\r\n\r\n has been added by ".$_SESSION['auth_user']. ' ; IP='.$ip.'). ');
+		die("move_uploaded_file error");
+	sendNotify("change",'File added : '.$desti, "File\r\n\r\n   $baseUrl$mediaPrefix/$desti\r\n\r\n has been added by ".$_SESSION['auth_user']. ' ; IP='.$ip.'). ');
 	$msg="File {{".$desti."}} added.";
 }
 
 if(!empty($_POST['delete'])) {
 	$dd=san_filename($_POST['delete']);	
+	if(empty($dd)) { die("empty filename"); }
 	chk_xtok();
 	if(substr($dd,0,1) != '.') {
+		$oldcnt=file_get_contents("$mediaDir/$dd");
+		if(!$oldcnt) { die("can't read file to be deleted"); }
+		$newname="$mediaDir/.attic/del-".md5($oldcnt)."-$dd";
+		if(!rename("$mediaDir/$dd", $newname)) { die("error during deletion"); }
+		touch($newname);
 		sendNotify("change",'File deleted : '.$dd, 'File '.$dd.' has been deleted by '.$_SESSION['auth_user']. ' ; IP='.$ip.'). ');
-		unlink("$mediaDir/$dd");
 		$msg="File $dd deleted.";
 	}
 }
