@@ -22,6 +22,6 @@ if(!empty($_POST['newpf'])) {
 gen_xtok("admpasswd");
 print "<form method=post><input type=hidden name=hashold value=".
 	hash("sha256",file_get_contents($pwdFile)).">".pr_xtok("admpasswd").
-	"<textarea name=newpf rows=25 cols=100 wrap=soft style=white-space:pre;font-size:120%;overflow-wrap:normal;overflow-x:scroll>".
+	"<textarea name=newpf wrap=soft style=white-space:pre;font-size:100%;width:100%;height:90%;overflow-wrap:normal;overflow-x:scroll>".
 	file_get_contents($pwdFile)."</textarea><p><input type=submit></form>";
 
