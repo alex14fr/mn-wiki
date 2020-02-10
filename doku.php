@@ -37,7 +37,7 @@ if(!empty($_GET['do'])) {
 			break;
 		case "edit":
 			if(!auth_isContrib()) { die("not yet authorized"); }
-			gen_xtok();
+			gen_xtok("edit");
 			$lockfile="$lockDir/$pageId";
 			if(file_exists($lockfile)) 
 				$locked_until=filemtime($lockfile)+$locktime;
@@ -62,7 +62,7 @@ if(!empty($_GET['do'])) {
 			clearstatcache();
 			$tmpl=readtmpl("edit");
 			$tmpl=str_replace(array("~~XTOK~~","~~ID~~","~~TXT~~","~~LOCK_UNTIL~~"),
-									array(pr_xtok(),$pageId,$pagetxt,date('H:i:s T',filemtime($lockfile)+$locktime)),$tmpl);
+									array(pr_xtok("edit"),$pageId,$pagetxt,date('H:i:s T',filemtime($lockfile)+$locktime)),$tmpl);
 			print render_html($tmpl);
 			exit;
 		case "revisions":
@@ -72,7 +72,7 @@ if(!empty($_GET['do'])) {
 			$first=true;
 			foreach($chgset as $chg) {
 				$chgs=explode("\t",$chg);
-				$out.="<li>".date('y/m/d H:i',$chgs[0]).
+				$out.="<li>".date('y/m/d H:i T',$chgs[0]).
 				" <a href=doku.php?id=$pageId&rev=".($first ? "" : $chgs[0]).">View</a>".
 				" <a href=doku.php?id=$pageId&rev=".($first ? "" : $chgs[0])."&do=edit>Revert</a>".
 				" ".$chgs[5].
@@ -134,7 +134,7 @@ if(!empty($_POST['do'])) {
 
 		case "edit":
 			if(!auth_isContrib()) { die("not yet authorized"); }
-			chk_xtok();
+			chk_xtok("edit");
 			$pageId=san_pageId($_POST['id']);
 			if(is_readable("$pageDir/$pageId.txt")) {
 				$oldmt=filemtime("$pageDir/$pageId.txt");
@@ -146,13 +146,13 @@ if(!empty($_POST['do'])) {
 			file_put_contents("$pageDir/$pageId.txt", $newtext);
 			clearstatcache();
 			$mt=filemtime("$pageDir/$pageId.txt");
-			$ps=trim(substr($_POST['summary'],0,64));
-			$cline="$mt\t".$_SERVER['REMOTE_ADDR']."\tE\t$pageId\t".$_SESSION['auth_user']."\t".$ps."\n";
+			$ps=substr(san_csv($_POST['summary']),0,64);
+			$cline="$mt\t$clientIp\tE\t$pageId\t".$_SESSION['auth_user']."\t".$ps."\n";
 			file_put_contents("$metaDir/$pageId.changes",$cline,FILE_APPEND|LOCK_EX);
 			unlink("$lockDir/$pageId");
 			sendNotify("change","Page $pageId changed", "
 Username:     ".$_SESSION['auth_user']."
-IP:           ".$_SERVER['REMOTE_ADDR']."
+IP:           ".$clientIp."
 
 Summary:      ".$ps."
 

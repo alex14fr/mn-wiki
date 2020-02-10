@@ -64,21 +64,22 @@ function pageLink($id,$incbase=false) {
 	return  ($incbase ? $baseUrl : "").$pagePrefix.$id.$pageSuffix;
 }
 
-function gen_xtok() {
+function gen_xtok($namespace="") {
 	if(function_exists("openssl_random_pseudo_bytes")) {
 		$tok=sha1(openssl_random_pseudo_bytes(8));
 	} else {
 		$tok = hash("sha256",$secret1.microtime().mt_rand());
 	}
-	$_SESSION['xtok'] = $tok;
+	$_SESSION["xtok-$namespace"] = $tok;
 }
 
-function pr_xtok() {
-	return "<input type=hidden name=xtok value=".$_SESSION['xtok'].">";
+function pr_xtok($namespace="") {
+	return "<input type=hidden name=xtok value=".$_SESSION["xtok-$namespace"].">";
 }
 
-function chk_xtok() {
-	if(empty($_REQUEST['xtok'])||empty($_SESSION['xtok'])||!hash_equals($_SESSION['xtok'],$_REQUEST['xtok'])) {
+function chk_xtok($namespace="") {
+	$k="xtok-$namespace";
+	if(empty($_REQUEST[$k])||empty($_SESSION[k])||!hash_equals($_SESSION[k],$_REQUEST['xtok'])) {
 		die('xtok verification failed');
 	}
 }

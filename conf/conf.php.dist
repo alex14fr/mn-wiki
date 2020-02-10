@@ -24,4 +24,4 @@ function xmail($to,$subj,$content) {
 $mailNotify=array("change"=>array("notify.change@my.site.tld"),
 						"register"=>array("notify.register@my.site.tld"));
 $baseUrl="https://my.site.tld/";
-
+$clientIp=($_SERVER["HTTP_X_FORWARDED_FOR"] ?? $_SERVER["REMOTE_ADDR"]);

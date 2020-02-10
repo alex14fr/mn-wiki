@@ -148,7 +148,7 @@ function auth_resendpwd2($login, $tok) {
 }
 
 function auth_register($u, $p, $p2, $n, $e) {
-	global $pwdFile, $secret3, $baseUrl;
+	global $pwdFile, $secret3, $baseUrl, $clientIp;
 	if($p!=$p2) { die("passwords don't match"); }
 	if(strlen($p)<7) { die("password is too short"); }
 	if($u!=san_filename($u)) {
@@ -171,7 +171,7 @@ function auth_register($u, $p, $p2, $n, $e) {
    Username:    $u
    Real name:   $n
    Email:       $e
-   IP:          ".$_SERVER['REMOTE_ADDR']." (".gethostbyname($_SERVER['REMOTE_ADDR']).")\r\n
+   IP:          $clientIp (".gethostbyname($clientIp).")\r\n
 Visit the following link to grant him edit rights:\r\n 
     $baseUrl/doku.php?do=addcontributor&login=$u&mail=$e&hash=$hash");
 }

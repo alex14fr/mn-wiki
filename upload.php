@@ -7,8 +7,7 @@ session_start();
 if(!auth_isContrib()) {
 	die("not authorized yet");
 }
-$ip=$_SERVER["REMOTE_ADDR"];
-$ip=$ip." (".gethostbyaddr($ip).")";
+$ip=$clientIp." (".gethostbyaddr($clientIp).")";
 
 function check_allowed($fn) {
 	global $ext_ok;
@@ -25,7 +24,7 @@ if(!empty($_FILES['fich'])) {
 		$desti=$_POST['nom'];
 	$desti=san_filename($desti);
 	check_allowed($desti);
-	chk_xtok();
+	chk_xtok("upload");
 	if(empty($desti)) { die("error : empty destination filename"); }
 	if($_FILES['fich']['error']) {
 		die("upload error ".$_FILES['fich']['error']);
@@ -46,7 +45,7 @@ if(!empty($_FILES['fich'])) {
 if(!empty($_POST['delete'])) {
 	$dd=san_filename($_POST['delete']);	
 	if(empty($dd)) { die("empty filename"); }
-	chk_xtok();
+	chk_xtok("upload");
 	if(substr($dd,0,1) != '.') {
 		$oldcnt=file_get_contents("$mediaDir/$dd");
 		if(!$oldcnt) { die("can't read file to be deleted"); }
@@ -59,14 +58,14 @@ if(!empty($_POST['delete'])) {
 }
 
 
-gen_xtok();
+gen_xtok("upload");
 ?>
 <!doctype html>
 <body>
 <?php if(!empty($msg)) { print "<b>$msg</b>"; } ?>
 <h2>File manager</h2>
 <form enctype=multipart/form-data method=post>
-<?php print pr_xtok(); ?>
+<?php print pr_xtok("upload"); ?>
 <label>
 File :
 <input type="file" name="fich">
@@ -82,7 +81,7 @@ Name (leave empty for default name) :
 <h2>File list</h2>
 <ul>
 <form method=post>
-<?php print pr_xtok(); ?>
+<?php print pr_xtok("upload"); ?>
 <?php
 $d=scandir('data/media/');
 foreach($d as $dd) {
