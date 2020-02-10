@@ -20,8 +20,10 @@ function auth_getline($login) {
 }
 
 function auth_hashpass($login, $pass) {
+		/* old php 
 		$salt=gensalt();
-		return crypt($pass,$salt);
+		return crypt($pass,$salt); */
+		return password_hash($pass, PASSWORD_DEFAULT);
 }
 
 function auth_login($login, $pass) {
@@ -29,10 +31,13 @@ function auth_login($login, $pass) {
 	$lspl=auth_getline($login);
 	if($lspl) {
 		$hashpass=$lspl[1];
+		/* old php
 		$salt=substr($hashpass,0,12);
 		$cryp=crypt($pass,$salt);
-		if($cryp==$hashpass) {
+		if($cryp==$hashpass) { */
+		if(password_verify($pass,$hashpass)) {
 			$_SESSION['auth_user']=$login;
+			auth_changePassword($login, $pass);
 			return(true);
 		} else {
 			$_SESSION['auth_user']='';
@@ -97,7 +102,7 @@ function auth_resendpwd1($email) {
 
 function generatePassword($length = 8) {
     $password = "";
-    $possible = "234678923456789%%%%!!!!!aeubcdfghjkmnpqrtvwxyzAEUBCDFGHJKLMNPQRTVWXYZ";
+    $possible = "234678923456789%%%%!!!!!*****aeubcdfghjkmnpqrtvwxyzAEUBCDFGHJKLMNPQRTVWXYZ";
     $maxlength = strlen($possible);
     if ($length > $maxlength) {
       $length = $maxlength;
