@@ -6,7 +6,7 @@ if(!auth_isAdmin()) { die("E"); }
 if(!is_readable($pwdFile) || !is_writable($pwdFile)) { die("EE"); }
 
 if(!empty($_POST['newpf'])) {
-	chk_xtok();
+	chk_xtok("admpasswd");
 	$oldpf=file_get_contents($pwdFile);
 	$hashold=hash("sha256",$oldpf);
 	if($hashold!=$_POST['hashold']) { die("error: race condition on passwd file"); }
@@ -19,9 +19,9 @@ if(!empty($_POST['newpf'])) {
 	print "OK <a href=index.php>Back</a><p>";
 }
 
-gen_xtok();
+gen_xtok("admpasswd");
 print "<form method=post><input type=hidden name=hashold value=".
-	hash("sha256",file_get_contents($pwdFile)).">".pr_xtok().
+	hash("sha256",file_get_contents($pwdFile)).">".pr_xtok("admpasswd").
 	"<textarea name=newpf rows=25 cols=100 wrap=soft style=white-space:pre;font-size:120%;overflow-wrap:normal;overflow-x:scroll>".
 	file_get_contents($pwdFile)."</textarea><p><input type=submit></form>";
 

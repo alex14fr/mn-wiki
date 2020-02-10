@@ -79,7 +79,7 @@ function pr_xtok($namespace="") {
 
 function chk_xtok($namespace="") {
 	$k="xtok-$namespace";
-	if(empty($_REQUEST[$k])||empty($_SESSION[$k])||!hash_equals($_SESSION[$k],$_REQUEST['xtok'])) {
+	if(empty($_REQUEST["xtok"])||empty($_SESSION[$k])||!hash_equals($_SESSION[$k],$_REQUEST["xtok"])) {
 		die('xtok verification failed');
 	}
 }
