@@ -1,7 +1,7 @@
 <?php
-canonical();
 include_once "utils.php";
 include_once "auth.php";
+canonical();
 session_start();
 if(!auth_isAdmin()) { die("E"); }
 if(!is_readable($pwdFile) || !is_writable($pwdFile)) { die("EE"); }
