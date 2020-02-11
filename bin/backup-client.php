@@ -9,8 +9,8 @@ $query["f"]=$f;
 $data=http_build_query($query);
 
 $context_options = array('http' => array('method' => 'POST',
-						       'header'=> "Content-type: application/x-www-form-urlencoded",
-						  	  'content' => $data));
+			'header'=> "Content-type: application/x-www-form-urlencoded",
+			'content' => $data));
 $context = stream_context_create($context_options);
 
 readfile($url, false, $context);
