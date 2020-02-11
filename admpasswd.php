@@ -1,4 +1,5 @@
 <?php
+canonical();
 include_once "utils.php";
 include_once "auth.php";
 session_start();

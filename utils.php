@@ -7,9 +7,9 @@ function canonical() {
 		if(empty($canonicalProto)) $canonicalProto=$_SERVER["REQUEST_SCHEME"];
 		if($_SERVER["HTTP_X_FORWARDED_HOST"]!=$canonicalHost) {
 				  $destination="$canonicalProto://$canonicalHost".$_SERVER["REQUEST_URI"];
-				  header("HTTP/1.1 301 Moved Permanently");
+				  header("HTTP/1.1 302 Found");
 				  header("Location: $destination");
-				  print "<h1>HTTP/1.1 301 Moved Permanently</h1><a href=\"$destination\">$destination</a>";
+				  print "<h1>HTTP/1.1 302 Found</h1><a href=\"$destination\">$destination</a>";
 				  exit;
 		}
 	}
@@ -41,7 +41,11 @@ function san_filename($fn) {
 }
 
 function san_csv($string) {
-	return preg_replace("/[^ a-zA-Z0-9\-_\.@éèçàäëüïöûùÉÈÇÀÄËÜÏÖÂÊÎÔÛÙ]/","",$string);
+	return preg_replace("/[^ a-zA-Z0-9\-_\.@éèçàäëüïöâêîôûùŸÿŷŶâêîôûÉÈÇÀÄËÜÏÖÂÊÎÔÛÙ]/","",$string);
+}
+
+function san_diff($string) {
+	return preg_replace("/[^ \r\na-zA-Z0-9\[\](){}\/?=\\|#~&'\"µ%§:;\^!,*+\-_\.@éèçàäëüïöûùŸÿŷŶâêîôŷûÉÈÇÀÄËÜÏÖÂÊÎÔÛÙ]/","",$string);
 }
 
 function sendNotify($reason, $subj, $body) {
