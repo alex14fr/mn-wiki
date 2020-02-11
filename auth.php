@@ -63,7 +63,7 @@ function auth_logout() {
 
 function genrepwhash($login, $curpwd) {
 	global $secret1, $secret2, $secret3;
-	return hash('sha256',$secret3.$login.$secret2.$curpwd.$secret1);
+	return hash_hmac('sha256',$login.$curpwd,$secret3.$secret1);
 }
 
 function auth_resendpwd1($email) {
@@ -166,7 +166,7 @@ function auth_register($u, $p, $p2, $n, $e) {
 	if(!is_writable($pwdFile)) { die("can't open passwd file for writing"); }
 	file_put_contents($pwdFile,$line,FILE_APPEND|LOCK_EX);
 
-   $hash=hash('sha256',$secret3.$u);
+   $hash=hash_hmac('sha256',$u,$secret3);
    sendNotify("register","Moderation request","New user registered on wiki : \r\n
    Username:    $u
    Real name:   $n
@@ -179,7 +179,8 @@ Visit the following link to grant him edit rights:\r\n
 
 function auth_addcontributor($login,$mail,$hash) {
 	global $secret3, $baseUrl, $mailFrom;
-	$hashok=hash('sha256',$secret3.$login);
+	$hashok=hash_hmac('sha256',$login,$secret3);
+	//print "hashok=$hashok   hash=$hash\n";
 	if(!hash_equals($hashok,$hash)) { die('invalid link'); }
 	$lspl=auth_getline($login);
 	if(strpos($lspl[4],"contributor")!==false) { die("already a contributor"); }
