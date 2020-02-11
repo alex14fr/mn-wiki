@@ -27,7 +27,8 @@ $outdir="sauve-persist";
 
 if(!$nomf) {
 	print 'fetch manifest... ';
-	fetchFile($url,$sec,"@manifest","$outdir/MANIFEST");
+	fetchFile($url,$sec,"@manifest","$outdir/MANIFEST.gz");
+	system("gunzip $outdir/MANIFEST.gz");
 	print 'ok\n';
 }
 

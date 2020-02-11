@@ -1,5 +1,6 @@
 <?php
 @include "backupsecret.php";
+error_reporting(E_ERROR);
 if(empty($secret) || strlen($secret)<20) { die("E"); }
 if(!empty($allowedIp) && $_SERVER['HTTP_X_FORWARDED_FOR']!=$allowedIp){ die("E"); }
 
@@ -13,9 +14,8 @@ if(!empty($_POST['f']) && !empty($_POST['tok']) && !empty($_POST['time'])) {
 	chdir($prefix);
 
 	if($_POST['f']=='@manifest') {
-		header("Content-type: text/plain; charset=utf8");
-		print "# mtime\tname\tsize\n";
-		passthru("find . -type f -exec stat -c '%Y\t%n\t%s' {} \; 2>&1");
+		passthru("find . -type f -exec stat -c '%Y\t%n\t%s' {} \; |gzip -9c");
+		exit;
 	} else if($_POST['f']=='@update') {
 		header("Content-type: text/plain; charset=utf8");
 		passthru("./update_htdocs 2>&1");
