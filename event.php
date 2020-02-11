@@ -2,7 +2,7 @@
 include_once "utils.php";
 canonical();
 include_once "auth.php";
-session_start();
+if(!isset($_SESSION)) session_start();
 
 $captch=false;
 
