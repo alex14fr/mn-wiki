@@ -5,7 +5,7 @@ function lastnews2() {
 	for($i=0;$i<5;$i++) {
 		$a=$obj->entry[$i];
 		if($a) {
-			$out .= "<div class=\"rssitem\" id=\"rssitem$i\"><div class=\"rsstitle\">".$a->title."</div><br/><div class=\"rssdate\">Published on: ".date(DATE_RSS,strtotime($a->published))." by ".$a->author->name."</div><div id=\"desc$id\" class=\"rssdesc\">".$a->content."</div></div>";
+			$out .= "<div class=\"rssitem\" id=\"rssitem$i\"><div class=\"rsstitle\">".$a->title."</div><br/><div class=\"rssdate\">Published on: ".date(DATE_RSS,strtotime($a->published))." by ".$a->author->name."</div><div id=\"desc$i\" class=\"rssdesc\">".$a->content."</div></div>";
 		}
 	}
 	$out.="</div>";

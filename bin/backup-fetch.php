@@ -27,12 +27,13 @@ $outdir="sauve-persist";
 
 if(!$nomf) {
 	print 'fetch manifest... ';
-	fetchFile($url,$sec,"@manifest","$outdir/MANIFEST.gz");
-	system("gunzip $outdir/MANIFEST.gz");
+	fetchFile($url,$sec,"@manifest","MANIFEST.gz");
+	system("gunzip MANIFEST.gz");
+	rename("MANIFEST","$outdir/MANIFEST");
 	print 'ok\n';
 }
 
-$lines=file("sauve-persist/MANIFEST");
+$lines=file("$outdir/MANIFEST");
 print $lines[0];
 foreach($lines as $l) {
 	$l=trim($l);
