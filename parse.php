@@ -301,7 +301,7 @@ function render_page($page, $rev="") {
 }
 
 function render_page_cache($page, $rev="") {
-	global $pageDir, $cacheDir;
+	global $pageDir, $cacheDir, $title;
 	$pageId=san_pageId($page);
 	if(!empty($rev)) {
 		$rev=preg_replace("/[^0-9]/","",$rev);
@@ -313,9 +313,11 @@ function render_page_cache($page, $rev="") {
 			$rp=render_page($pageId,$rev);
 			if((empty($rev)||$rev=="") && !empty($cacheDir)) {
 				file_put_contents("$cacheDir/$pageId",$rp);
+				file_put_contents("$cacheDir/$pageId.t",$title);
 			}
 			return($rp);
 	} else {
+			$title=file_get_contents("$cacheDir/$pageId.t");
 			return(file_get_contents("$cacheDir/$pageId"));
 	}
 }
