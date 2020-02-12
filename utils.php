@@ -2,6 +2,7 @@
 include_once "conf/conf.php";
 
 function canonical() {
+	global $canonicalProto, $canonicalHost;
 	if(!empty($canonicalHost)) {
 		if(empty($canonicalProto)) $canonicalProto=($_SERVER["HTTP_X_FORWARDED_PROTO"] ?? $_SERVER["REQUEST_SCHEME"]);
 		$curHost=($_SERVER["HTTP_X_FORWARDED_HOST"] ?? $_SERVER["HTTP_HOST"]);
