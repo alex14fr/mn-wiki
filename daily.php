@@ -1,6 +1,6 @@
 <?php
 function lastnews2() {
-	$obj=simplexml_load_file("static/feedext.rss");
+	$obj=simplexml_load_file("ephemeral/feedext.rss");
 	$out="<div class=\"rssfeed\">";
 	for($i=0;$i<5;$i++) {
 		$a=$obj->entry[$i];
@@ -13,7 +13,7 @@ function lastnews2() {
 }
 
 function lastshort() {
-	$obj=simplexml_load_file("static/feedext.rss");
+	$obj=simplexml_load_file("ephemeral/feedext.rss");
 	$out = "<ul>"; 
 	for($i=0;$i<5;$i++) {
 		$a=$obj->entry[$i];
@@ -59,10 +59,10 @@ function updhal() {
 
 
 
-file_put_contents("static/feedext.rss",file_get_contents("http://mascot-num.blogspot.com/feeds/posts/default"));
-file_put_contents("static/rss2.html",lastnews2());
-file_put_contents("static/rssshort.html",lastshort());
-file_put_contents("static/hal.html",updhal());
+file_put_contents("ephemeral/feedext.rss",file_get_contents("http://mascot-num.blogspot.com/feeds/posts/default"));
+file_put_contents("ephemeral/rss2.html",lastnews2());
+file_put_contents("ephemeral/rssshort.html",lastshort());
+file_put_contents("ephemeral/hal.html",updhal());
 unlink("ephemeral/cache/index");
 unlink("ephemeral/cache/newsletter");
 unlink("ephemeral/cache/documents");

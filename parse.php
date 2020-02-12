@@ -113,11 +113,11 @@ function parse_inline($l, $parseTags=true) {
 							$out.="<li><a href=event.php?id=$pageId&sectok=$sectok>Registration form</a>";
 						$out.="</ul>";
 					} else if($s=="HAL") {
-						$out.=file_get_contents("static/hal.html");
+						$out.=file_get_contents("ephemeral/hal.html");
 					} else if($s=="rss2") {
-						$out.=file_get_contents("static/rss2.html");
+						$out.=file_get_contents("ephemeral/rss2.html");
 					} else if($s=="rssshort") {
-						$out.=file_get_contents("static/rssshort.html");
+						$out.=file_get_contents("ephemeral/rssshort.html");
 					}
 				} else {
 					$out.=$l[$i];
