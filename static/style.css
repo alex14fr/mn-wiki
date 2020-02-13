@@ -45,11 +45,11 @@ article {
 
 footer {
 	margin: auto;
-	background-color: #555;
+	background-color: #3e6182;
 	color: #eee;
 	width: 100%;
-	font-size: 70%;
-	text-align: right;
+	font-size: 90%;
+	text-align: center;
 }
 
 footer a, footer a:hover {
@@ -115,21 +115,24 @@ li {
 
 
 #menugal {
+	color:#111;
 	background: none;
 	border: 0px;
-	line-height: 2em;
 	padding: 0px;
 	background-color: #efefef;
+	line-height:1.7em;
 }
 
 #menugal a {
 	display: block;
 	font-weight: bold;
+	color: #111;
 }
 
 #menugal ul {
 	list-style-type: none;
 	margin: 0px;
+	margin-bottom: 5px;
 	padding: 5px;
 }
 
@@ -148,12 +151,13 @@ li {
 
 #menugal li ul {
 	padding: 0px;
+	margin-top: 5px;
 	margin-left: 10px;
-	background-color: white;
 	text-align: left;
 }
 
 #menugal li ul li {
+	background-color:white;
 	font-size:70%;
 }
 
@@ -162,12 +166,15 @@ li {
 }
 
 .boite {
-	margin-top: 20px;
+	margin-top: 12px;
+	margin-bottom: 7px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 	background: #efefef;
 }
 
 .boite a {
-	color: black;
+	color: #111;
 	display: block;
 }
 
