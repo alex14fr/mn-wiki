@@ -294,7 +294,7 @@ function render_page($page, $rev="") {
 		fclose($fd);
 	}
 	$out.=exit_par();
-	$out=str_replace_first("~~TOC~~",$toc,$out);
+	$out=str_replace_first("~~TOC~~","<ul>$toc</ul>",$out);
 	$out=str_replace("~~TOC~~","",$out);
 	return($out);
 }
