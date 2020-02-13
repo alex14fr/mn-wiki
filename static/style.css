@@ -93,10 +93,7 @@ h1, h2, h3, h4, h5 {
 	border-bottom: 1px solid #CCCCCC;
 	font-weight: normal;
 	margin-top: 5px;
-}
-
-h3, h4, h5 {
-	border-bottom: 0;
+	margin-bottom: 5px;
 }
 
 h1 {
