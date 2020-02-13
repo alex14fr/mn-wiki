@@ -59,11 +59,11 @@ function updhal() {
 
 
 
-file_put_contents("ephemeral/feedext.rss",file_get_contents("http://mascot-num.blogspot.com/feeds/posts/default"));
+file_put_contents("ephemeral/feedext.rss",file_get_contents("https://mascot-num.blogspot.com/feeds/posts/default"));
 file_put_contents("ephemeral/rss2.html",lastnews2());
 file_put_contents("ephemeral/rssshort.html",lastshort());
 file_put_contents("ephemeral/hal.html",updhal());
-unlink("ephemeral/cache/index");
-unlink("ephemeral/cache/newsletter");
-unlink("ephemeral/cache/documents");
+foreach(array("index","newsletter","documents") as $p) 
+	if(file_exists("ephemeral/cache/$p") 
+		unlink("ephemeral/cache/$p");
 
