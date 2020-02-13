@@ -4,7 +4,7 @@ include_once "conf/conf.php";
 
 $tags=array("*"=>"b","/"=>"i","_"=>"u");
 function parse_inline($l, $parseTags=true) {
-	global $tags, $pageId, $sectok;
+	global $tags, $pageId;
 	global $mediaPrefix,$pagePrefix,$pageSuffix;
 	$out="";
 	$n=strlen($l);
@@ -94,35 +94,6 @@ function parse_inline($l, $parseTags=true) {
 					$out.=$l[$i];
 				}
 				break;
-			case "~":
-				if($i+1<$n && $l[$i]==$l[$i+1]) {
-					$i+=2;
-					$s="";
-					for(; $i<$n && $l[$i]=="~"; $i++);
-					for(; $i<$n && $l[$i]!="~"; $i++) $s.=$l[$i];
-					for(; $i<$n && $l[$i]=="~"; $i++);
-					if($s=="/div") {
-						$out.="</div>";
-					} else if(strpos($s,"div")!==false) {
-						$sxplod=explode(" ",$s);
-						$cl=str_replace("\"","",$sxplod[1]);
-						$out.="<div class=\"$cl\">";
-					} else if(strpos($s,"FORM")!==false) {
-						$out.="<ul><li><a href=event.php?action=view&id=$pageId&sectok=$sectok>List of participants</a>";
-						if($s!="FORM expire")
-							$out.="<li><a href=event.php?id=$pageId&sectok=$sectok>Registration form</a>";
-						$out.="</ul>";
-					} else if($s=="HAL") {
-						$out.=file_get_contents("ephemeral/hal.html");
-					} else if($s=="rss2") {
-						$out.=file_get_contents("ephemeral/rss2.html");
-					} else if($s=="rssshort") {
-						$out.=file_get_contents("ephemeral/rssshort.html");
-					}
-				} else {
-					$out.=$l[$i];
-				}
-				break;
 			case "\\":
 				if($i+1<$n && $l[$i+1]=="\\") $i=$i+2;
 				else $out.=$l[$i];
@@ -149,7 +120,7 @@ function exit_par() {
 }
 
 function parse_line($l) {
-	global $list_lvl, $title, $toc, $curAnchor, $in_tbl, $title_lvl, $head_lvl;
+	global $list_lvl, $title, $toc, $curAnchor, $in_tbl, $title_lvl, $head_lvl, $pageId, $sectok;
 
 	$l=rtrim(htmlspecialchars($l));
 	$n=strlen($l);
@@ -167,6 +138,7 @@ function parse_line($l) {
 	}
 
 	for($i=0; $i<$n; $i++) {
+		$out="";
 		switch($l[$i]) {
 			case "=":
 				$head_lvl=0;
@@ -193,7 +165,6 @@ function parse_line($l) {
 
 			case " ":
 				$spc_cnt=0;
-				$out="";
 				for(; $l[$i]==" " && $i++<$n; $spc_cnt++);
 				if($l[$i]=="-" || $l[$i]=="*" || $l[$i]==".") {
 					$list_gap=($spc_cnt-2*$list_lvl)/2;
@@ -207,7 +178,6 @@ function parse_line($l) {
 				}
 
 			case "^":
-				$out="";
 				if(!$in_tbl) {
 					$in_tbl=true;
 					$out.="<table border=1>";
@@ -231,7 +201,36 @@ function parse_line($l) {
 						$out.="<td>".parse_inline($s);
 				}
 				return $out;
-
+			case "~":
+				if($i+1<$n && $l[$i]==$l[$i+1]) {
+					$i+=2;
+					$s="";
+					for(; $i<$n && $l[$i]=="~"; $i++);
+					for(; $i<$n && $l[$i]!="~"; $i++) $s.=$l[$i];
+					for(; $i<$n && $l[$i]=="~"; $i++);
+					if($s=="/div") {
+						$out.="</div>";
+					} else if(strpos($s,"div")!==false) {
+						$sxplod=explode(" ",$s);
+						if(count($sxplod)>1) { $cl=str_replace("\"","",$sxplod[1]); }
+						else { $cl=""; }
+						$out.="<div class=\"$cl\">";
+					} else if(strpos($s,"FORM")!==false) {
+						$out.="<ul><li><a href=event.php?action=view&id=$pageId&sectok=$sectok>List of participants</a>";
+						if($s!="FORM expire")
+							$out.="<li><a href=event.php?id=$pageId&sectok=$sectok>Registration form</a>";
+						$out.="</ul>";
+					} else if($s=="HAL") {
+						$out.=file_get_contents("ephemeral/hal.html");
+					} else if($s=="rss2") {
+						$out.=file_get_contents("ephemeral/rss2.html");
+					} else if($s=="rssshort") {
+						$out.=file_get_contents("ephemeral/rssshort.html");
+					}
+				} else {
+					$out.=$l[$i];
+				}
+				return $out;
 			default:
 				$eli=exit_par();
 				$pil=parse_inline($l);
