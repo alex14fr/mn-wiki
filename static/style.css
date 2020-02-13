@@ -45,11 +45,13 @@ article {
 
 footer {
 	margin: auto;
-	background-color: #3e6182;
+	background-color: #14283c;
 	color: #eee;
 	width: 100%;
 	font-size: 90%;
 	text-align: center;
+	padding-top:.4em;
+	padding-bottom: .4em;
 }
 
 footer a, footer a:hover {
