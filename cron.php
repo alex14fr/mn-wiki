@@ -64,6 +64,6 @@ file_put_contents("ephemeral/rss2.html",lastnews2());
 file_put_contents("ephemeral/rssshort.html",lastshort());
 file_put_contents("ephemeral/hal.html",updhal());
 foreach(array("index","newsletter","documents") as $p) 
-	if(file_exists("ephemeral/cache/$p") 
+	if(file_exists("ephemeral/cache/$p"))
 		unlink("ephemeral/cache/$p");
 
