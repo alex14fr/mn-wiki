@@ -154,7 +154,7 @@ function parse_line($l) {
 				}
 				else if($head_lvl==2) {
 					$curAnchor++;
-					$toc.="<a href=#a".$curAnchor.">".$txt."</a><br>";
+					$toc.="<li><a href=#a".$curAnchor.">".$txt."</a>";
 					$txt="<a name=a".$curAnchor.">".$txt;
 				}
 				return "<h".$head_lvl.">".$txt."</h".$head_lvl.">".($head_lvl==1 ? "~~TOC~~<p>" : "");
@@ -252,7 +252,7 @@ function render_str($str) {
 	$out="";
 	foreach(explode("\n",$str) as $l) 
 		$out.=parse_line($l);
-	$out=str_replace_first("~~TOC~~",$toc,$out);
+	$out=str_replace_first("~~TOC~~","<ul class=toc>$toc</ul>",$out);
 	$out=str_replace("~~TOC~~","",$out);
 	return($out);
 }
