@@ -8,4 +8,5 @@ function update() {
 				document.getElementById('preview').innerHTML=xhtt.responseText;
 			}
 }
-update();
+window.addEventListener('DOMContentLoaded', function() { update(); document.getElementById('updateBtn').addEventListener('click',update); });
+

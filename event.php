@@ -3,7 +3,7 @@ include_once "utils.php";
 canonical();
 include_once "auth.php";
 if(!isset($_SESSION)) session_start();
-
+sendCsp();
 $captch=false;
 
 function checkRecaptcha() {
@@ -31,9 +31,7 @@ function ucname($string) {
 }
 
 function protect($str) {
-	$str=str_replace(';','',$str);
-	$str=str_replace('\'','',$str);
-	return $str;
+	return san_csv($str);
 }
 
 function voitMails() {
@@ -47,58 +45,32 @@ function listeInscrits() {
 	global $msg;	
 	global $id;
 	global $db;
-	$fich="data/rencontres.$id";
-	if(file_exists($fich)) 
-		$inscrits=file($fich,FILE_SKIP_EMPTY_LINES);
-	else
-		$inscrits=array();
-	$inscrits2=array();
-	foreach($inscrits as $usr) {
-		if(trim($usr)) {
-			list($nompre,$affil,$email)=explode(",",trim($usr));
-			array_push($inscrits2,ucname(strtolower($nompre)).",".$affil.",".$email."\n");
-		}
-	}
-	$res=$db->query("SELECT * FROM inscrits WHERE idrencontre='".$db->escapeString($id)."'");
+	$res=$db->query("SELECT * FROM inscrits WHERE idrencontre='".$db->escapeString($id)."' ORDER BY nomprenom");
+	$out="<ul>";
 	while($l=$res->fetchArray()) {
-		array_push($inscrits2,$l['nomprenom'].','.$l['affiliation'].','.$l['mail']);
-	}
-
-
-	$inscrits2=array_unique($inscrits2);
-	sort($inscrits2);
-	$inscrits=$inscrits2;
-	$inscrits=array_unique($inscrits);
-	?>
-	<ul>
-	<?php
-	$listeMails='';
-	sort($inscrits);
-	foreach($inscrits as $usr) {
-		list($nompre,$affil,$email)=explode(",",$usr);
-		print "<li><b>$nompre</b>, $affil";
+	//	array_push($inscrits2,$l['nomprenom'].','.$l['affiliation'].','.$l['mail']);
+		$out .= "<li><b>".$l['nomprenom']."</b>, ".$l['affiliation'];
 		if(voitMails())  {
-			print ", $email</li>";
-			$listeMails.=trim($email).",";
+			$out .=", ".$l['mail']."</li>";
+			$listeMails.=trim($l['mail']).",";
 		}
 	}
-	?>
-	</ul>
-	<?php
+	$out.="</ul>";
 	if(voitMails()) {
-		print "<textarea onclick=\"this.select()\" rows=10 cols=60>";
-		print $listeMails;
-		print "</textarea>";
+		$out.="<textarea rows=10 cols=60>$listeMails</textarea>";
 	}
+	return $out;
 }
 
 function formInscription() {
 	global $id, $secret1, $secret2,$captch;
+	gen_xtok("event");
 ?>
 <form method="post">
+<?php print pr_xtok("event"); ?>
 <input type="hidden" name="id" value="<?php echo $id; ?>">
 <input type=hidden name=sectok value=<?php print hash("sha256",$secret1.$id.$secret2); ?>>
-<table style="margin-left:20px;margin-right:20px;border-collapse:collapse;border:1px solid black" border="0">
+<table border="0">
 <tr><td><label for="nom">Family name</label><td><input id="nom" name="nom">
 <tr><td><label for="prenom">First name</label><td><input id="prenom" name="prenom">
 <tr><td><label for="email">Email adress<td><input id="email" name="email">
@@ -129,7 +101,7 @@ try {
 }
 
 if(!empty($_POST['nom'])) {
-	if(checkRecaptcha()) {
+	if(chk_xtok("event") || checkRecaptcha()) {
 		$prenom=protect(htmlspecialchars(preg_replace("/,/"," ",$_POST["prenom"])));
 		$affil=protect(htmlspecialchars(preg_replace("/,/"," ",$_POST["affil"])));
 		$nom=protect(htmlspecialchars(preg_replace("/,/"," ",$_POST["nom"])));
@@ -156,7 +128,7 @@ For more information, please consult ".pageLink($id,true));
 	}
 
 	else {
-		$msg='<span style="color:#ee1111;font-size:14pt;">RECAPTCHA error, please try again. </span>';
+		$msg='CAPTCHA or xtoken error, please try again';
 	}
 
 	print $msg;
@@ -167,7 +139,7 @@ For more information, please consult ".pageLink($id,true));
 }
 
 if(!empty($_REQUEST['action'])) 
-	listeInscrits();
+	print listeInscrits();
 else
 	formInscription();
 

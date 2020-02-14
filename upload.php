@@ -1,5 +1,6 @@
 <?php
 include_once "utils.php";
+sendCsp();
 canonical();
 include_once "auth.php";
 include_once "conf/conf.php";

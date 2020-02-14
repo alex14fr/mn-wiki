@@ -16,6 +16,11 @@ function canonical() {
 	}
 }
 
+function sendCsp() {
+	header("Content-security-policy: default-src 'none'; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'");
+
+}
+
 function str_replace_first($search,$replace,$subject) {
 	$pos = strpos($subject, $search);
 	if ($pos !== false) {
@@ -42,7 +47,7 @@ function san_filename($fn) {
 }
 
 function san_csv($string) {
-	return preg_replace("/[^ a-zA-Z0-9\-_\.@éèçàäëüïöâêîôûùŸÿŷŶâêîôûÉÈÇÀÄËÜÏÖÂÊÎÔÛÙ]/","",$string);
+	return preg_replace("/[^ a-zA-Z0-9\-_\.@éèçàäëüïöâêîôûùŸÿŷŶâêîôûÉÈÇÀÄËÜÏÖÂÊÎÔÛÙ]/"," ",$string);
 }
 
 function san_diff($string) {
@@ -87,6 +92,7 @@ function chk_xtok($namespace="") {
 	if(empty($_REQUEST["xtok"])||empty($_SESSION[$k])||!hash_equals($_SESSION[$k],$_REQUEST["xtok"])) {
 		die('xtok verification failed');
 	}
+	$_SESSION[$k]="*invalid*";
 }
 
 

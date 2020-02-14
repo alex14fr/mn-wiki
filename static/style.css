@@ -41,7 +41,7 @@ article {
 	padding-right: 20px;
 	padding-bottom: 30px;
 	text-align: justify;
-	overflow-x:scroll;
+	overflow-x:hidden;
 }
 
 footer {
@@ -308,6 +308,38 @@ dt.ChampRes {
 
 .yellowbox {
 	background-color: #ffffcc;
+}
+
+#txt {
+	width: 100%;
+	height: 70vh;
+}
+
+#preview {
+	flex-grow: 1;
+	width: 100%;
+	height: 70vh;
+	overflow-y: scroll;
+}
+
+#newpf {
+	white-space:pre;
+	font-size:100%;
+	width:100%;
+	height:80%;
+	min-height: 350px;
+	overflow-wrap:normal;
+	overflow-x:scroll;
+}
+
+#editContainer {
+	display:flex;
+}
+
+#textareaContainer {
+	flex-grow: 1;
+	width: 100%;
+	padding-right: 5px;
 }
 
 @media print {

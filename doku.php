@@ -9,6 +9,10 @@ include_once "parse.php";
 include_once "auth.php";
 
 if(!isset($_SESSION)) session_start();
+sendCsp();
+if(!empty($_GET['do']) && $_GET['do']=='edit') {
+	header("Content-security-policy: connect-src 'self'");
+}
 
 if(empty($_GET['id'])) 
 	$pageId='index';
@@ -20,7 +24,10 @@ if(!empty($_GET['do'])) {
 		case "register":
 		case "resendpwd":
 		case "login":
-			print render_html(str_replace("~~ID~~",$pageId,readtmpl($_GET['do'])));
+			gen_xtok("default");
+			print render_html(str_replace(array("~~XTOK~~","~~ID~~"),
+													array(pr_xtok("default"),$pageId),
+												readtmpl($_GET['do'])));
 			exit;
 		case "reinitpwd":
 			exit;
@@ -37,7 +44,7 @@ if(!empty($_GET['do'])) {
 			}
 			break;
 		case "edit":
-			if(!auth_isContrib()) { die("not yet authorized"); }
+			if(!auth_isContrib()) { die("not yet authorized, your edit rights are under review"); }
 			gen_xtok("edit_$pageId");
 			$lockfile="$lockDir/$pageId";
 			if(file_exists($lockfile)) 
@@ -106,6 +113,7 @@ if(!empty($_GET['do'])) {
 if(!empty($_POST['do'])) {
 	switch($_POST['do']) {
 		case "login":
+			chk_xtok("default");
 			if(empty($_POST['u']) || empty($_POST['p'])) {
 				die("empty username or password");
 			}
@@ -117,6 +125,7 @@ if(!empty($_POST['do'])) {
 			exit;
 
 		case "resendpwd":
+			chk_xtok("default");
 			if(empty($_POST['e'])) { die("empty email"); }
 			if(auth_resendpwd1($_POST['e'])) {
 				print "An email with your login and a link to reset your password has been sent. ";
@@ -126,6 +135,7 @@ if(!empty($_POST['do'])) {
 			exit;
 
 		case "register":
+			chk_xtok("default");
 			if(empty($_POST['e'])||empty($_POST['u'])||empty($_POST['n'])||empty($_POST['p'])||empty($_POST['p2'])) {
 				die("all form fields are required");
 			}
@@ -157,8 +167,8 @@ IP:           ".$clientIp."
 
 Summary:      ".$ps."
 
-Old revision: ".$baseUrl."/doku.php?id=$pageId&rev=$oldmt
-New revision: ".pageLink($pageId,true)."
+- Old revision: ".$baseUrl."?id=$pageId&rev=$oldmt
++ New revision: ".pageLink($pageId,true)."
 
 ".san_diff(textDiff($oldtext,$newtext)));
 			
