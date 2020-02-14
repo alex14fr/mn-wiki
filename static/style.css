@@ -41,6 +41,7 @@ article {
 	padding-right: 20px;
 	padding-bottom: 30px;
 	text-align: justify;
+	overflow-x:scroll;
 }
 
 footer {
@@ -64,7 +65,7 @@ input, textarea, select {
 	font-size: inherit;
 }
 
-img {
+article img {
 	border: 0;
 	max-width: 95%;
 }
