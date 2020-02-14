@@ -66,6 +66,7 @@ input, textarea, select {
 
 img {
 	border: 0;
+	max-width: 95%;
 }
 
 hr {
