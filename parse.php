@@ -1,6 +1,7 @@
 <?php
 include_once "utils.php";
 include_once "conf/conf.php";
+include_once "auth.php";
 
 $tags=array("*"=>"b","/"=>"i","_"=>"u");
 function parse_inline($l, $parseTags=true) {
@@ -61,7 +62,7 @@ function parse_inline($l, $parseTags=true) {
 						$ptags=false;
 					}
 					$asimg=false;
-					$mm[0]=str_replace("\"","",$mm[0]);
+					$mm[0]=str_replace(array(" ","\""),"",$mm[0]);
 					if($c=="{") {
 						$mmex=explode("?",$mm[0]);
 						$baseurl=$mmex[0];
@@ -275,8 +276,8 @@ function render_page($page, $rev="") {
 		if(!is_readable($fnam)) {
 			header("HTTP/1.1 404 Not found");
 			print "Page $pageId not found. ";
-			if(!empty($_SESSION['auth_user'])) {
-				print "<a href=\"doku.php?do=edit&id=$pageId\">Create this page</a>";
+			if(!empty($_SESSION['auth_user']) && auth_isContrib()) {
+				print "<a href=\"?do=edit&id=$pageId\">Create this page</a>";
 			}
 			exit;
 		}
@@ -294,7 +295,7 @@ function render_page($page, $rev="") {
 		fclose($fd);
 	}
 	$out.=exit_par();
-	$out=str_replace_first("~~TOC~~","<ul>$toc</ul>",$out);
+	$out=str_replace_first("~~TOC~~","<ul class=toc>$toc</ul>",$out);
 	$out=str_replace("~~TOC~~","",$out);
 	return($out);
 }
@@ -325,12 +326,12 @@ function render_html($str,$pageId="",$title="") {
 	$actions="";
 	if(!empty($pageId)) {
 		if(!empty($_SESSION['auth_user'])) {
-			$actions="<a href=\"doku.php?do=edit&id=$pageId\">Edit this page</a>".
-						"<a href=\"doku.php?do=revisions&id=$pageId\">Old revisions</a>".
-						(auth_isAdmin() ? "<a href=\"doku.php?do=edit&id=sidebar\">Edit sidebar</a><a href=admpasswd.php>Edit passwd</a>" : "").
-						"<a href=\"doku.php?do=logout&id=$pageId\">Logout ".$_SESSION['auth_user']."</a>";
+			$actions="<a href=\"?do=edit&id=$pageId\">Edit this page</a>".
+						"<a href=\"?do=revisions&id=$pageId\">Old revisions</a>".
+						(auth_isAdmin() ? "<a href=\"?do=edit&id=sidebar\">Edit sidebar</a><a href=admpasswd.php>Edit passwd</a>" : "").
+						"<a href=\"?do=logout&id=$pageId\">Logout ".$_SESSION['auth_user']."</a>";
 		} else {
-			$actions="<a href=\"doku.php?do=login&id=$pageId\">Login / Register</a>";
+			$actions="<a href=\"?do=login&id=$pageId\">Login / Register</a>";
 		}
 	}
 	$pgh=str_replace(array("~~ACTIONS~~","~~TITLE~~","~~SIDEBAR~~"),

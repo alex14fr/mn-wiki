@@ -18,7 +18,11 @@ function canonical() {
 
 function sendCsp() {
 	header("Content-security-policy: default-src 'none'; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'");
+}
 
+function die403($s) {
+	header("HTTP/1.1 403 Forbidden");
+	die($s);
 }
 
 function str_replace_first($search,$replace,$subject) {

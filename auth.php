@@ -84,7 +84,7 @@ function auth_resendpwd1($email) {
 		if(!empty($lspl[3]) && $lspl[3]==$email) {
 			$login=$lspl[0];
 			$sectok=genrepwhash($login, $lspl[1]);
-			$mailtext=" Someone (probably you) claimed for lost credentials for the Wiki at $baseUrl . ".$crlf.$crlf." Your username is $login. ".$crlf.$crlf." To reset your password, please visit $baseUrl/doku.php?do=resendpwd2&u=$login&tok=$sectok ".$crlf.$crlf." If not, you can safely ignore this message. ";
+			$mailtext=" Someone (probably you) claimed for lost credentials for the Wiki at $baseUrl . ".$crlf.$crlf." Your username is $login. ".$crlf.$crlf." To reset your password, please visit $baseUrl"."?do=resendpwd2&u=$login&tok=$sectok ".$crlf.$crlf." If not, you can safely ignore this message. ";
 			xmail($email, "Password reset", $mailtext);
 			return(true);
 		}
@@ -173,7 +173,7 @@ function auth_register($u, $p, $p2, $n, $e) {
    Email:       $e
    IP:          $clientIp (".gethostbyname($clientIp).")\r\n
 Visit the following link to grant him edit rights:\r\n 
-    $baseUrl/doku.php?do=addcontributor&login=$u&mail=$e&hash=$hash");
+    $baseUrl"."?do=addcontributor&login=$u&mail=$e&hash=$hash");
 }
 
 
@@ -196,7 +196,7 @@ information you think the community may be interested in.
 A good way to start is to add yourself (in alphabetical order please) to the
 User list. To do this, click on the following link:
 
-        $baseUrl/doku.php?id=users
+        $baseUrl"."?id=users
 
 and choose 'Edit this page' on the left. If this link does not appear, use the
 Login link first (your login is $login).

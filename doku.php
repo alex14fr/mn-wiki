@@ -44,7 +44,7 @@ if(!empty($_GET['do'])) {
 			}
 			break;
 		case "edit":
-			if(!auth_isContrib()) { die("not yet authorized, your edit rights are under review"); }
+			if(!auth_isContrib()) { die403("not yet authorized, your edit rights are under review"); }
 			gen_xtok("edit_$pageId");
 			$lockfile="$lockDir/$pageId";
 			if(file_exists($lockfile)) 
@@ -74,15 +74,15 @@ if(!empty($_GET['do'])) {
 			print render_html($tmpl);
 			exit;
 		case "revisions":
-			if(!auth_isContrib()) { die("not yet authorized"); }
+			if(!auth_isContrib()) { die403("not yet authorized"); }
 			$out="<h1>Revisions of ".$pageId."</h1><ul>";
 			$chgset=array_reverse(file("$metaDir/$pageId.changes"));
 			$first=true;
 			foreach($chgset as $chg) {
 				$chgs=explode("\t",$chg);
 				$out.="<li>".date('y/m/d H:i T',$chgs[0]).
-				" <a href=doku.php?id=$pageId&rev=".($first ? "" : $chgs[0]).">View</a>".
-				" <a href=doku.php?id=$pageId&rev=".($first ? "" : $chgs[0])."&do=edit>Revert</a>".
+				" <a href=?id=$pageId&rev=".($first ? "" : $chgs[0]).">View</a>".
+				" <a href=?id=$pageId&rev=".($first ? "" : $chgs[0])."&do=edit>Revert</a>".
 				" ".$chgs[5].
 				" <span style=color:#888>".$chgs[4]." (".$chgs[1].")</span>";
 				if($first)
@@ -115,10 +115,10 @@ if(!empty($_POST['do'])) {
 		case "login":
 			chk_xtok("default");
 			if(empty($_POST['u']) || empty($_POST['p'])) {
-				die("empty username or password");
+				die403("empty username or password");
 			}
 			if(!auth_login($_POST['u'], $_POST['p'])) {
-				die("wrong username or password");
+				die403("wrong username or password");
 			}
 			if(empty($_POST['id'])) $_POST['id']='index';
 			header("Location: ".pageLink(san_pageId($_POST['id'])));
@@ -144,7 +144,7 @@ if(!empty($_POST['do'])) {
 			exit;
 
 		case "edit":
-			if(!auth_isContrib()) { die("not yet authorized"); }
+			if(!auth_isContrib()) { die403("not yet authorized"); }
 			$pageId=san_pageId($_POST['id']);
 			chk_xtok("edit_$pageId");
 			if(is_readable("$pageDir/$pageId.txt")) {

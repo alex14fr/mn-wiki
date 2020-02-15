@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /?id=*
+Allow: /data/media/*
+Disallow: /*do=*
+Disallow: /*
+
