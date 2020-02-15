@@ -328,7 +328,7 @@ function render_html($str,$pageId="",$title="") {
 		if(!empty($_SESSION['auth_user'])) {
 			$actions="<a href=\"index.php?do=edit&id=$pageId\">Edit this page</a>".
 						"<a href=\"index.php?do=revisions&id=$pageId\">Old revisions</a>".
-						(auth_isAdmin() ? "<a href=\"?index.php&do=edit&id=sidebar\">Edit sidebar</a><a href=admpasswd.php>Edit passwd</a>" : "").
+						(auth_isAdmin() ? "<a href=\"index.php&do=edit&id=sidebar\">Edit sidebar</a><a href=admpasswd.php>Edit passwd</a>" : "").
 						"<a href=\"index.php?do=logout&id=$pageId\">Logout ".$_SESSION['auth_user']."</a>";
 		} else {
 			$actions="<a href=\"index.php?do=login&id=$pageId\">Login / Register</a>";
