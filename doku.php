@@ -167,8 +167,8 @@ IP:           ".$clientIp."
 
 Summary:      ".$ps."
 
-- Old revision: ".$baseUrl."?id=$pageId&rev=$oldmt
-+ New revision: ".pageLink($pageId,true)."
+--- Old revision: ".(empty($oldmt) ? "page created" : $baseUrl."?id=$pageId&rev=$oldmt")."
++++ New revision: ".pageLink($pageId,true)."
 
 ".san_diff(textDiff($oldtext,$newtext)));
 			
