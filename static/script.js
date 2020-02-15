@@ -8,7 +8,7 @@ function switchMenuMobile() {
 		document.getElementById("mobilemenulink").innerHTML="Show menu";
 	}
 }
-window.addEventListener('DOMContentLoaded',function() {
+window.addEventListener('load',function() {
 					document.getElementById('mobilemenulink').addEventListener('click', switchMenuMobile);
 });
 

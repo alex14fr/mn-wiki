@@ -8,7 +8,7 @@ function calcPass() {
 				document.getElementById('hash').value=xhtt.responseText;
 			} 
 }
-window.addEventListener('DOMContentLoaded', function() { 
+window.addEventListener('load', function() { 
 			document.getElementById('hash').addEventListener('click',function() { this.select(); });
 			document.getElementById('pass').addEventListener('keydown',function(e) { if(e.key=='Enter') calcPass();  }); 
 		});

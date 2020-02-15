@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /?id=*
+Allow: /static/*
 Allow: /data/media/*
 Disallow: /*do=*
 Disallow: /*
