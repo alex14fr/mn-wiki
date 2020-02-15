@@ -277,7 +277,7 @@ function render_page($page, $rev="") {
 			header("HTTP/1.1 404 Not found");
 			print "Page $pageId not found. ";
 			if(!empty($_SESSION['auth_user']) && auth_isContrib()) {
-				print "<a href=\"?do=edit&id=$pageId\">Create this page</a>";
+				print "<a href=\"index.php?do=edit&id=$pageId\">Create this page</a>";
 			}
 			exit;
 		}
@@ -326,12 +326,12 @@ function render_html($str,$pageId="",$title="") {
 	$actions="";
 	if(!empty($pageId)) {
 		if(!empty($_SESSION['auth_user'])) {
-			$actions="<a href=\"?do=edit&id=$pageId\">Edit this page</a>".
-						"<a href=\"?do=revisions&id=$pageId\">Old revisions</a>".
-						(auth_isAdmin() ? "<a href=\"?do=edit&id=sidebar\">Edit sidebar</a><a href=admpasswd.php>Edit passwd</a>" : "").
-						"<a href=\"?do=logout&id=$pageId\">Logout ".$_SESSION['auth_user']."</a>";
+			$actions="<a href=\"index.php?do=edit&id=$pageId\">Edit this page</a>".
+						"<a href=\"index.php?do=revisions&id=$pageId\">Old revisions</a>".
+						(auth_isAdmin() ? "<a href=\"?index.php&do=edit&id=sidebar\">Edit sidebar</a><a href=admpasswd.php>Edit passwd</a>" : "").
+						"<a href=\"index.php?do=logout&id=$pageId\">Logout ".$_SESSION['auth_user']."</a>";
 		} else {
-			$actions="<a href=\"?do=login&id=$pageId\">Login / Register</a>";
+			$actions="<a href=\"index.php?do=login&id=$pageId\">Login / Register</a>";
 		}
 	}
 	$pgh=str_replace(array("~~ACTIONS~~","~~TITLE~~","~~SIDEBAR~~"),
