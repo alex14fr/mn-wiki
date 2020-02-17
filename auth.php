@@ -170,7 +170,7 @@ function auth_rewriteLockedPasswd($newcontent) {
 	}
 	if(!rename($tempfile,$pwdFile)) {
 		auth_releaseLockPasswd();
-		die("can't rename to passwd");
+		die("can't rename to passwd $tempfile $pwdFile");
 	}
 }
 
