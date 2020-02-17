@@ -163,14 +163,14 @@ function auth_releaseLockPasswd() {
 function auth_rewriteLockedPasswd($newcontent) {
 	global $pwdFile;
 	$lockFile=$pwdFile.".lock";
-	$tempfile=dirname($pwdFile).get_random()."_xx.php";
+	$tempfile=dirname($pwdFile)."/".get_random()."_xx.php";
 	if(!file_put_contents($tempfile,$newcontent)) {
 		auth_releaseLockPasswd();
 		die("can't write new temp file");
 	}
 	if(!rename($tempfile,$pwdFile)) {
 		auth_releaseLockPasswd();
-		die("can't rename to passwd $tempfile $pwdFile");
+		die("can't rename to passwd ");
 	}
 }
 
