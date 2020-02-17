@@ -11,7 +11,7 @@ foreach($mf as $l) {
 }
 foreach($files as $f) {
 	$f=trim($f);
-	if(!in_array($f,$mffiles) && strpos($f,"MANIFEST")===0) {
+	if(!in_array($f,$mffiles) && $f!="./MANIFEST") {
 		print "$outdir/$f\n";
 	}
 }
