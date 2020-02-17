@@ -142,28 +142,57 @@ function generatePassword($length = 8) {
     return $password;
 }
 
+function auth_lockPasswd() {
+	global $pwdFile;
+	$lockFile=$pwdFile.".lock";
+	$i=0;
+	while($i<10 && file_exists($lockFile) && filemtime($lockFile)+10>time()) { 
+		sleep(1);
+		$i++;
+	} 
+	if($i==10) {
+		die("timeout while locking passwd file");
+	}
+}
+
+function auth_releaseLockPasswd() {
+	global $pwdFile;
+	@unlink($pwdFile.".lock");
+}
+
+function auth_rewriteLockedPasswd($newcontent) {
+	global $pwdFile;
+	$lockFile=$pwdFile.".lock";
+	$tempfile=dirname($pwdFile).get_random()."_xx.php";
+	if(!file_put_contents($tempfile,$newcontent)) {
+		auth_releaseLockPasswd();
+		die("can't write new temp file");
+	}
+	if(!rename($tempfile,$pwdFile)) {
+		auth_releaseLockPasswd();
+		die("can't rename to passwd");
+	}
+}
+
 function auth_changeUser($login, $newline) {
 	global $pwdFile;
 	$newfile="";
-	$fd=fopen($pwdFile,"r+");
+	auth_lockPasswd();
+	$fd=fopen($pwdFile,"r");
 	if(!$fd) {
-		die("can't open passwd file in r+ mode");
-	}
-	if(!flock($fd,LOCK_EX)) {
-		die("can't lock passwd file");
+		auth_releaseLockPasswd();
+		die("can't open passwd file in r mode");
 	}
 	while($line=fgets($fd)) {
 		$lspl=explode(':',$line);
-		if($lspl[0]!=$login) {
+		if(!$login || $lspl[0]!=$login) {
 			$newfile.=$line;
 		}
 	}
-	$newfile.=$newline;
-	ftruncate($fd,0);
-	rewind($fd);
-	fwrite($fd,$newfile);
-	flock($fd,LOCK_UN);
 	fclose($fd);
+	$newfile.=$newline;
+	auth_rewriteLockedPasswd($newfile);
+	auth_releaseLockPasswd();
 }
 
 function auth_changePassword($login, $newpass) {
@@ -200,8 +229,7 @@ function auth_register($u, $p, $p2, $n, $e) {
 	$n=san_csv($n);
 	$hash=auth_hashPass($u, $p);
 	$line="$u:$hash:$n:$e:user\n";
-	if(!is_writable($pwdFile)) { die("can't open passwd file for writing"); }
-	file_put_contents($pwdFile,$line,FILE_APPEND|LOCK_EX);
+	auth_changeUser(false, $line);
 
    $hash=hash_hmac('sha256',$u,$secret3);
    sendNotify("register","Moderation request","New user registered on wiki : \r\n

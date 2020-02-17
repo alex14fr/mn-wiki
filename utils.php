@@ -109,13 +109,17 @@ function pageLink($id,$incbase=false) {
 	return  ($incbase ? $baseUrl : "").$pagePrefix.$id.$pageSuffix;
 }
 
-function gen_xtok($namespace="") {
+function get_random() {
 	if(function_exists("openssl_random_pseudo_bytes")) {
-		$tok=sha1(openssl_random_pseudo_bytes(32));
+		$r=sha1(openssl_random_pseudo_bytes(32));
 	} else {
-		$tok = hash("sha256",$secret1.microtime().mt_rand());
+		$r = hash("sha256",$secret1.microtime().mt_rand());
 	}
-	$_SESSION["xtok-$namespace"] = $tok;
+	return($r);
+}
+
+function gen_xtok($namespace="") {
+	$_SESSION["xtok-$namespace"] = get_random();
 }
 
 function pr_xtok($namespace="") {

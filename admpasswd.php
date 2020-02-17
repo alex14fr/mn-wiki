@@ -51,9 +51,13 @@ if(!empty($_POST['newpf'])) {
 	$hashold=hash("sha256",$oldpf);
 	if($hashold!=$_POST['hashold']) { die("error: race condition on passwd file"); }
 	$newpf=trim($_POST['newpf'])."\n";
-	file_put_contents($pwdFile,$newpf);
+	auth_lockPasswd();
+	auth_rewriteLockedPasswd($newpf);
+	auth_releaseLockPasswd();
 	if(!auth_isAdmin()) {
-		file_put_contents($pwdFile,$oldpf);
+		auth_lockPasswd();
+		auth_rewriteLockedPasswd($oldpf);
+		auth_releaseLockPasswd();
 		die("error: lock out");
 	}
 	print "OK <a href=index.php>Back</a><p>";
