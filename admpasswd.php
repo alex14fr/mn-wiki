@@ -60,7 +60,8 @@ if(!empty($_POST['newpf'])) {
 		auth_releaseLockPasswd();
 		die("error: lock out");
 	}
-	print "OK <a href=index.php>Back</a><p>";
+	print "OK <a href=index.php>Back</a>";
+	exit;
 }
 
 gen_xtok("admpasswd");
