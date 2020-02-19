@@ -48,7 +48,8 @@ function canonical() {
 }
 
 function sendCsp() {
-	header("Content-security-policy: default-src 'none'; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'");
+	header("Content-security-policy: default-src 'none'; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; base-uri 'none'; frame-ancestors 'none'; ");
+	header("X-frame-options: deny");
 }
 
 function die403($s) {
