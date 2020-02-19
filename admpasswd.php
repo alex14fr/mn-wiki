@@ -33,8 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 include_once "utils.php";
 include_once "auth.php";
 canonical();
-sendCsp();
-header("Content-security-policy: connect-src 'self'");
+sendCsp("connect-src 'self'");
 if(!isset($_SESSION)) session_start();
 if(!auth_isAdmin()) { die("E"); }
 if(!is_readable($pwdFile) || !is_writable($pwdFile)) { die("EE"); }

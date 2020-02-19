@@ -29,7 +29,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-
+include_once "utils.php";
 include_once "parse.php";
+sendCsp();
 print render_str($_POST['txt']);
 
