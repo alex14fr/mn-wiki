@@ -343,9 +343,10 @@ dt.ChampRes {
 }
 
 @media print {
-	nav {
+	nav, footer {
 		display: none;
 	}
+	main { display: block; }
 }
 
 @media screen and (min-width: 1497px) {
