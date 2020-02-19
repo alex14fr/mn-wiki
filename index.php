@@ -40,10 +40,11 @@ include_once "parse.php";
 include_once "auth.php";
 
 if(!isset($_SESSION)) session_start();
-sendCsp();
+$addCsp="";
 if(!empty($_GET['do']) && $_GET['do']=='edit') {
-	header("Content-security-policy: connect-src 'self'");
+	$addCsp="connect-src 'self'";
 }
+sendCsp($addCsp);
 
 if(empty($_GET['id'])) 
 	$pageId='index';
