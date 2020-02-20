@@ -44,7 +44,7 @@ if (!isset($_SESSION)) {
 }
 $addCsp = "";
 if (!empty($_GET['do']) && $_GET['do'] == 'edit') {
-    $addCsp = "connect-src 'self'";
+    $addCsp = "script-src 'self'; connect-src 'self'";
 }
 sendCsp($addCsp);
 

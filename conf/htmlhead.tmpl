@@ -4,15 +4,24 @@
 <meta charset=utf-8>
 <title>~~TITLE~~ [GdR MASCOT-NUM]</title>
 <link rel=preload href=static/font.ttf as=font>
-<link rel=stylesheet href=static/style.css>
+<link rel=stylesheet href=static/style.css?v3>
 <meta name=viewport content="width=device-width">
 <link rel="shortcut icon" href=static/favicon.png>
 <body>
 <main>
 <nav>
 <a href=/><img src=static/logo.webp height=99 width=262 alt="Groupement de recherche MASCOT-NUM"></a>
-<a id=mobilemenulink href=# onclick=switchMenuMobile()>Show menu</a>
-<div id=leftsidebar>
+<details id=mobilesb>
+<summary id=mobilemenulink>Show menu</summary>
+<div class=boite id=menugal>
+~~SIDEBAR~~
+</div>
+<div class=boite>
+~~ACTIONS~~
+</div>
+</details>
+
+<div id=sb class=sidebar>
 <div class=boite id=menugal>
 ~~SIDEBAR~~
 </div>
@@ -20,6 +29,7 @@
 ~~ACTIONS~~
 </div>
 </div>
+
 </nav>
 <article>
 

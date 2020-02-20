@@ -33,7 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 include_once "utils.php";
 include_once "auth.php";
 canonical();
-sendCsp("connect-src 'self'");
+sendCsp("script-src 'self'; connect-src 'self'");
 if (!isset($_SESSION)) {
     session_start();
 }

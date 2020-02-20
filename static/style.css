@@ -113,10 +113,9 @@ li {
     padding-bottom: 3px;
 }
 
-#mobilemenulink {
-    display: none;
+#mobilesb {
+	display: none;
 }
-
 
 #menugal {
     color:#111;
@@ -356,9 +355,13 @@ dt.ChampRes {
 }
 
 @media screen and (max-width:860px) {
-    #leftsidebar {
+    #sb {
         display: none;
     }
+
+	 #mobilesb {
+		 display: block;
+	 }
 
     #mobilemenulink {
         display: block;
