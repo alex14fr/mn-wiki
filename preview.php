@@ -1,4 +1,5 @@
 <?php
+
 /**
 
 BSD 2-Clause License
@@ -33,4 +34,3 @@ include_once "utils.php";
 include_once "parse.php";
 sendCsp();
 print render_str($_POST['txt']);
-

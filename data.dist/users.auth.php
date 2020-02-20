@@ -1,5 +1,7 @@
 # users.auth.php
-# <?php exit()?>
+# <?php
+
+exit()?>
 # Don't modify the lines above
 #
 # Userfile

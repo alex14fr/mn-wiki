@@ -1,4 +1,5 @@
 <?php
+
 /**
 
 BSD 2-Clause License
@@ -29,34 +30,43 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-
 @include "backupsecret.php";
 error_reporting(E_ERROR);
-if(empty($secret) || strlen($secret)<20) { die("E"); }
-if(!empty($allowedIp) && $_SERVER['HTTP_X_FORWARDED_FOR']!=$allowedIp){ die("E"); }
+if (empty($secret) || strlen($secret) < 20) {
+    die("E");
+}
+if (!empty($allowedIp) && $_SERVER['HTTP_X_FORWARDED_FOR'] != $allowedIp) {
+    die("E");
+}
 
-if(!empty($_POST['f']) && !empty($_POST['tok']) && !empty($_POST['time'])) {
-	$clntTime=preg_replace('/[^0-9]/','',$_POST['time']);
-	if( abs($clntTime - time()) > 90 ) { die("desync"); }
-	$hashok=hash_hmac("sha256", $_POST['f'], $secret.$clntTime);
-	if(!hash_equals($hashok, $_POST['tok'])) { die("E"); }
+if (!empty($_POST['f']) && !empty($_POST['tok']) && !empty($_POST['time'])) {
+    $clntTime = preg_replace('/[^0-9]/', '', $_POST['time']);
+    if (abs($clntTime - time()) > 90) {
+        die("desync");
+    }
+    $hashok = hash_hmac("sha256", $_POST['f'], $secret . $clntTime);
+    if (!hash_equals($hashok, $_POST['tok'])) {
+        die("E");
+    }
 
-	$prefix="/persist/";
-	chdir($prefix);
+    $prefix = "/persist/";
+    chdir($prefix);
 
-	if($_POST['f']=='@manifest') {
-		passthru("find . -type f -exec stat -c '%Y\t%n\t%s' {} \; |gzip -9c");
-		exit;
-	} else if($_POST['f']=='@update') {
-		header("Content-type: text/plain; charset=utf8");
-		passthru("./update_htdocs 2>&1");
-		exit;
-	} else {
-		$rp=realpath($_POST['f']);
-		if(strpos($rp, $prefix)!==0) { die("E3"); }
-		readfile($rp);
-		exit;
-	}
+    if ($_POST['f'] == '@manifest') {
+        passthru("find . -type f -exec stat -c '%Y\t%n\t%s' {} \; |gzip -9c");
+        exit;
+    } elseif ($_POST['f'] == '@update') {
+        header("Content-type: text/plain; charset=utf8");
+        passthru("./update_htdocs 2>&1");
+        exit;
+    } else {
+        $rp = realpath($_POST['f']);
+        if (strpos($rp, $prefix) !== 0) {
+            die("E3");
+        }
+        readfile($rp);
+        exit;
+    }
 }
 
 
