@@ -203,6 +203,9 @@ function parse_line($l)
                     ; $l[$i] == "=" && $i++ < $n;
                     $head_lvl++
                 );
+					 for (
+						 ; $l[$i] == " " && $i++ <$n ;
+					 );
                 $header = "";
                 for (
                     ; $i < $n && $l[$i] != "=";
