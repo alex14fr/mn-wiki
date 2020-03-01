@@ -220,7 +220,8 @@ function parse_line($l)
                 } elseif ($head_lvl == 2) {
                     $curAnchor++;
                     $toc .= "<li><a href=#a" . $curAnchor . ">" . $txt . "</a>";
-                    $txt = "<a name=a" . $curAnchor . ">" . $txt;
+                    $txt = $txt;
+						  $head_lvl .= " id=a" . $curAnchor;
                 }
                 return "<h" . $head_lvl . ">" . $txt . "</h" . $head_lvl . ">" . ($head_lvl == 1 ? "~~TOC~~<p>" : "");
 
