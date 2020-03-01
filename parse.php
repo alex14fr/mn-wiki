@@ -221,9 +221,9 @@ function parse_line($l)
                     $curAnchor++;
                     $toc .= "<li><a href=#a" . $curAnchor . ">" . $txt . "</a>";
                     $txt = $txt;
-						  $head_lvl .= " id=a" . $curAnchor;
+						  $titleTag = " id=a" . $curAnchor;
                 }
-                return "<h" . $head_lvl . ">" . $txt . "</h" . $head_lvl . ">" . ($head_lvl == 1 ? "~~TOC~~<p>" : "");
+                return "<h" . $head_lvl . (empty($titleTag) ? "" : $titleTag) . ">" . $txt . "</h" . $head_lvl . ">" . ($head_lvl == 1 ? "~~TOC~~<p>" : "");
 
             case "-":
                 if ($i++ < $n && $l[$i] == "-") {
