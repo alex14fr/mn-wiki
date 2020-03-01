@@ -1,18 +1,10 @@
-@font-face {
-    font-family: 'Lato';
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: url(font.ttf) format('truetype');
-}
-
 body {
     background: #76B0C8;
     background-image: linear-gradient(#3e6182 0%, #76b0c8 50%);
     background-attachment: fixed, fixed, fixed, fixed;
     background-repeat: no-repeat;
     color: #222;
-    font-family: 'Lato', sans-serif;
+    font-family: sans-serif;
     font-size: 11pt;
     line-height: 1.5;
     margin: 1em;
