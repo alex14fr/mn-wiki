@@ -109,7 +109,7 @@ li {
 	display: none;
 }
 
-#menugal {
+.menu {
     color:#111;
     background: none;
     border: 0px;
@@ -118,20 +118,20 @@ li {
     line-height:1.7em;
 }
 
-#menugal a {
+.menu a {
     display: block;
     font-weight: bold;
     color: #111;
 }
 
-#menugal ul {
+.menu ul {
     list-style-type: none;
     margin: 0px;
     margin-bottom: 5px;
     padding: 5px;
 }
 
-#menugal li {
+.menu li {
     font-size: 13pt;
     font-weight: bold;
     margin: 0px;
@@ -139,28 +139,28 @@ li {
     margin-bottom:5px;
 }
 
-#menugal li a:hover {
+.menu li a:hover {
     color: white;
     background-color: #222;
 }
 
-#menugal li ul {
+.menu li ul {
     padding: 0px;
     margin-top: 5px;
     margin-left: 10px;
     text-align: left;
 }
 
-#menugal li ul li {
+.menu li ul li {
     background-color:white;
     font-size:70%;
 }
 
-#menugal li ul li a {
+.menu li ul li a {
     padding-left: 15px;
 }
 
-.boite {
+.box {
     margin-top: 12px;
     margin-bottom: 7px;
     padding-top: 5px;
@@ -168,17 +168,17 @@ li {
     background: #efefef;
 }
 
-.boite a {
+.box a {
     color: #111;
     display: block;
 }
 
-.boite a:hover {
+.box a:hover {
     color: red;
     text-decoration: none;
 }
 
-.boite ul {
+.box ul {
     margin-bottom: 0px;
 }
 .formtable {
