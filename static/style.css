@@ -278,6 +278,18 @@ dt.ChampRes {
     padding: .7em;
 }
 
+.aIp {
+	color: #888;
+}
+
+.add {
+	background-color: #8f8;
+}
+
+.del {
+	background-color: #f99;
+}
+
 .greenbox, .redbox, .bluebox, .yellowbox {
     margin-left: 5px;
     margin-right: 5px;

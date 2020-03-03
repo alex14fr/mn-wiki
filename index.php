@@ -46,9 +46,7 @@ $addCsp = "";
 if (!empty($_GET['do']) && $_GET['do'] == 'edit') {
     $addCsp = "script-src 'self'; connect-src 'self'";
 }
-if (!empty($_GET['do']) && $_GET['do']!='diff') {
-	sendCsp($addCsp);
-}
+sendCsp($addCsp);
 
 if (empty($_GET['id'])) {
     $pageId = 'index';
@@ -141,7 +139,7 @@ if (!empty($_GET['do'])) {
                 " <a href=?id=$pageId&rev=" . ($first ? "" : $chgs[0]) . ">View</a>" .
                 " <a href=?id=$pageId&rev=" . ($first ? "" : $chgs[0]) . "&do=edit>Revert</a>" .
                 " " . $chgs[5] .
-                " <span style=color:#888>" . $chgs[4] . " (" . $chgs[1] . ")</span><br>";
+                " <span class=aIp>" . $chgs[4] . " (" . $chgs[1] . ")</span><br>";
 					 if ($second) {
 						 $second = false;
 					 }
@@ -194,12 +192,12 @@ if (!empty($_GET['do'])) {
 				$t1=(empty($r1) ? "current revision" : date('y/m/d H:i T', $r1));
 				$t2=(empty($r2) ? "current revision" : date('y/m/d H:i T', $r2));
 				print "<!doctype html>";
-				print "<html><head><meta charset=utf8><style>.add{background-color:#8f8}.del{background-color:#f99}</style></head><body><tt>";
+				print "<html><head><meta charset=utf8><link rel=stylesheet href=static/mstyle.css?vx></head><body><article><tt>";
 				print "--- " . $pageId . " " . $t2 . "<br>";
 				print "+++ " . $pageId . " " . $t1 . "<p>";
 				print textDiff2($f2,$f1);
 				print "</tt><p>";
-				print "<a href=?do=revisions&id=$pageId>Back</a></body></html>";
+				print "<a href=?do=revisions&id=$pageId>Back</a></article></body></html>";
 				exit;
         default:
             print "unsupported do";
