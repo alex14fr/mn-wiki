@@ -379,7 +379,7 @@ function render_page($page, $rev = "")
         if (!is_readable($fnam)) {
             header("HTTP/1.1 404 Not found");
             print "Page $pageId not found. ";
-            if (!empty($_SESSION['auth_user']) && auth_isContrib()) {
+            if (!empty($_SESSION['auth_user']) && auth_isCommittee()) {
                 print "<a href=\"index.php?do=edit&id=$pageId\">Create this page</a>";
             }
             exit;
