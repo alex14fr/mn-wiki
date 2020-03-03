@@ -210,9 +210,20 @@ function textDiff($old, $new)
             $ret .= (!empty($k['d']) ? "- " . implode("\n+ ", $k['d']) . "\n" : '') .
                 (!empty($k['i']) ? "+ " . implode("\n+ ", $k['i']) . "\n" : '');
         }
-        /* else  $ret .= $k . ' ' ; */
     }
     return $ret;
 }
 
+function textDiff2($old, $new)
+{
+    $ret = '';
+    $diff = diff(preg_split("/\n+/", $old), preg_split("/\n+/", $new));
+    foreach ($diff as $k) {
+        if (is_array($k)) {
+            $ret .= (!empty($k['d']) ? "<div class=del>- " . implode("</div><div class=del>- ", $k['d']) . "</div>" : '') .
+                (!empty($k['i']) ? "<div class=add>+ " . implode("</div><div class=add>+ ", $k['i']) . "</div>" : '');
+        }
+    }
+    return $ret;
+}
 /**************************************/

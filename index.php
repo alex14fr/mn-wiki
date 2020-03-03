@@ -127,7 +127,7 @@ if (!empty($_GET['do'])) {
             if (!auth_isCommittee()) {
                 die403("not authorized");
             }
-            $out = "<h1>Revisions of " . $pageId . "</h1><form target=_blank><input type=hidden name=do value=diff><input type=hidden name=id value=$pageId><input type=submit value=\"Diff selected\"><p>";
+            $out = "<h1>Revisions of " . $pageId . "</h1><form><input type=hidden name=do value=diff><input type=hidden name=id value=$pageId><input type=submit value=\"Diff selected\"><p>";
             $chgset = array_reverse(file("$metaDir/$pageId.changes"));
             $first = true;
 				$second = false;
@@ -194,7 +194,7 @@ if (!empty($_GET['do'])) {
 				print "<tt>";
 				print "--- " . $pageId . " " . $t2 . "<br>";
 				print "+++ " . $pageId . " " . $t1 . "<p>";
-				print nl2br(san_diff(textDiff($f2,$f1)));
+				print nl2br(san_diff(textDiff2($f2,$f1)));
 				print "</tt><p>";
 				print "<a href=?do=revisions&id=$pageId>Back</a>";
 				exit;
