@@ -191,10 +191,11 @@ if (!empty($_GET['do'])) {
 				$f2=(empty($r2) ? file_get_contents("$pageDir/$pageId.txt") : implode(gzfile("$atticDir/$pageId.$r2.txt.gz")));
 				$t1=(empty($r1) ? "current revision" : date('y/m/d H:i T', $r1));
 				$t2=(empty($r2) ? "current revision" : date('y/m/d H:i T', $r2));
-				print "<tt>";
+				print "<!doctype html>";
+				print "<html><style>.add{background-color:#2f2}.del{background-color:#f22}</style><tt>";
 				print "--- " . $pageId . " " . $t2 . "<br>";
 				print "+++ " . $pageId . " " . $t1 . "<p>";
-				print nl2br(textDiff2($f2,$f1));
+				print textDiff2($f2,$f1);
 				print "</tt><p>";
 				print "<a href=?do=revisions&id=$pageId>Back</a>";
 				exit;
