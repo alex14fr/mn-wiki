@@ -192,12 +192,12 @@ if (!empty($_GET['do'])) {
 				$t1=(empty($r1) ? "current revision" : date('y/m/d H:i T', $r1));
 				$t2=(empty($r2) ? "current revision" : date('y/m/d H:i T', $r2));
 				print "<!doctype html>";
-				print "<html><style>.add{background-color:#2f2}.del{background-color:#f22}</style><tt>";
+				print "<html><head><style>.add{background-color:#2f2}.del{background-color:#f22}</style></head><body><tt>";
 				print "--- " . $pageId . " " . $t2 . "<br>";
 				print "+++ " . $pageId . " " . $t1 . "<p>";
 				print textDiff2($f2,$f1);
 				print "</tt><p>";
-				print "<a href=?do=revisions&id=$pageId>Back</a>";
+				print "<a href=?do=revisions&id=$pageId>Back</a></body></html>";
 				exit;
         default:
             print "unsupported do";
