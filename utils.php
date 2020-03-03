@@ -207,8 +207,8 @@ function textDiff($old, $new)
     $diff = diff(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
     foreach ($diff as $k) {
         if (is_array($k)) {
-            $ret .= (!empty($k['d']) ? "- " . implode("\n", $k['d']) . "\n" : '') .
-                (!empty($k['i']) ? "+ " . implode("\n", $k['i']) . "\n" : '');
+            $ret .= (!empty($k['d']) ? "- " . implode(" ", $k['d']) . "\n" : '') .
+                (!empty($k['i']) ? "+ " . implode(" ", $k['i']) . "\n" : '');
         }
         /* else  $ret .= $k . ' ' ; */
     }
