@@ -7,6 +7,7 @@ $pageDir="data/pages";
 $atticDir="data/attic";
 $mediaDir="data/media";
 $metaDir="data/meta";
+$editableDir="data/editable";
 $cacheDir="ephemeral/cache";
 $lockDir="ephemeral/locks";
 $locktime=300;
