@@ -194,7 +194,7 @@ if (!empty($_GET['do'])) {
 				$t1=(empty($r1) ? "current revision" : date('y/m/d H:i T', $r1));
 				$t2=(empty($r2) ? "current revision" : date('y/m/d H:i T', $r2));
 				print "<!doctype html>";
-				print "<html><head><style>.add{background-color:#2a2}.del{background-color:#a22}</style></head><body><tt>";
+				print "<html><head><style>.add{background-color:#8f8}.del{background-color:#f99}</style></head><body><tt>";
 				print "--- " . $pageId . " " . $t2 . "<br>";
 				print "+++ " . $pageId . " " . $t1 . "<p>";
 				print textDiff2($f2,$f1);
