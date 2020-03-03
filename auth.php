@@ -107,7 +107,7 @@ function auth_canEdit($id)
 		return true;
 
 	if(file_exists($editableDir . "/" . $id))
-			return auth_isContrib();
+			return (auth_isContrib() || auth_isCommittee());
 	else
 		return auth_isCommittee();
 
