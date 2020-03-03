@@ -46,7 +46,9 @@ $addCsp = "";
 if (!empty($_GET['do']) && $_GET['do'] == 'edit') {
     $addCsp = "script-src 'self'; connect-src 'self'";
 }
-sendCsp($addCsp);
+if (!empty($_GET['do']) && $_GET['do']!='diff') {
+	sendCsp($addCsp);
+}
 
 if (empty($_GET['id'])) {
     $pageId = 'index';
