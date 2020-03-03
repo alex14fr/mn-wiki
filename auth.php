@@ -91,7 +91,7 @@ function auth_getgroups()
 
 function auth_isContrib()
 {
-    return(in_array("contributor", auth_getgroups()) || auth_isAdmin());
+    return(in_array("contributor", auth_getgroups()) || auth_isAdmin() || auth_isCommittee() );
 }
 
 function auth_isCommittee()
