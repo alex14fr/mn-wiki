@@ -444,7 +444,7 @@ function render_html($str, $pageId = "", $title = "")
 			  }
             $actions = (auth_canEdit($pageId) ? "<a href=\"index.php?do=edit&id=$pageId\">Edit this page</a>" : "") .
                        (auth_isCommittee() ? "<a href=\"index.php?do=revisions&id=$pageId\">Old revisions</a>" : "") .
-                        (auth_isAdmin() ? "<a href=\"index.php?do=edit&id=sidebar\">Edit sidebar</a><a href=admpasswd.php>Edit passwd</a>" : "") .
+                        (auth_isAdmin() ? "<a href=\"index.php?do=edit&id=sidebar\">Edit sidebar</a><a href=admpasswd.php>Edit passwd / perms</a>" : "") .
 								(auth_isAdmin() && file_exists($editableDir . "/" . $pageId) ? "<a href=\"index.php?xtok=" . $_SESSION['x-xtok'] . "&do=revokeEdit&id=$pageId\">Unset contrib-writable</a>" : "") .
 								(auth_isAdmin() && !file_exists($editableDir . "/" . $pageId) ? "<a href=\"index.php?xtok=" . $_SESSION['x-xtok'] . "&do=allowEdit&id=$pageId\">Set contrib-writable</a>" : "") .
                         "<a href=\"index.php?do=logout&id=$pageId\">Logout " . $_SESSION['auth_user'] . "</a>";

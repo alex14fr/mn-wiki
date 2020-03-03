@@ -71,9 +71,20 @@ if (!empty($_POST['newpf'])) {
     exit;
 }
 
+if(!empty($_POST['newperm'])) {
+	chk_xtok("admpasswd");
+	file_put_contents($permFile, $_POST['newperm']);
+	print "OK <a href=index.php>Back</a>";
+	exit;
+}
+
 gen_xtok("admpasswd");
     print "<form method=post><input type=hidden name=hashold value=" .
     hash("sha256", file_get_contents($pwdFile)) . ">" . pr_xtok("admpasswd") .
     "<textarea id=newpf name=newpf wrap=soft>" . file_get_contents($pwdFile) .
     "</textarea><p><input type=submit></form><p>pass: <input id=pass> <button onclick=calcPass()>Calc hash</button>" .
-    "<input id=hash size=60></body></article><script src=static/crypt.js></script></html>";
+    "<input id=hash size=60><p>" .
+	 "<form method=post><textarea id=newperm name=newperm wrap=soft>" . file_get_contents($permFile) . "</textarea>" .
+	 pr_xtok("admpasswd") .
+	 "<input type=submit></form>" .
+	 "</article></body><script src=static/crypt.js></script></html>";

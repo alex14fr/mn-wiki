@@ -101,16 +101,18 @@ function auth_isCommittee()
 
 function auth_canEdit($id)
 {
-	global $pageDir, $editableDir;
+	global $pageDir, $editableDir, $permFile;
 
-	if(auth_isAdmin())
+	if(auth_isAdmin() || auth_isCommittee())
 		return true;
 
-	if(file_exists($editableDir . "/" . $id))
-			return (auth_isContrib() || auth_isCommittee());
-	else
-		return auth_isCommittee();
+	if(file_exists($editableDir . "/" . $id) && auth_isContrib())
+		return true;
 
+	if(!empty($_SESSION['auth_user']) && in_array($_SESSION['auth_user'] . ":" . $id, file($permFile,FILE_IGNORE_NEW_LINES))) 
+		return true;
+
+	return false;
 }
 
 function auth_isAdmin()

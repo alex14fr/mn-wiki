@@ -3,6 +3,7 @@ $secret1="change";
 $secret2="this";
 $secret3="too";
 $pwdFile="data/users.auth.php";
+$permFile="data/users.perm.php";
 $pageDir="data/pages";
 $atticDir="data/attic";
 $mediaDir="data/media";

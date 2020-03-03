@@ -127,21 +127,27 @@ if (!empty($_GET['do'])) {
             if (!auth_isCommittee()) {
                 die403("not authorized");
             }
-            $out = "<h1>Revisions of " . $pageId . "</h1><ul>";
+            $out = "<h1>Revisions of " . $pageId . "</h1><form target=_blank><input type=hidden name=do value=diff><input type=hidden name=id value=$pageId><input type=submit value=\"Diff selected\"><p>";
             $chgset = array_reverse(file("$metaDir/$pageId.changes"));
             $first = true;
+				$second = false;
             foreach ($chgset as $chg) {
                 $chgs = explode("\t", $chg);
-                $out .= "<li>" . date('y/m/d H:i T', $chgs[0]) .
+                $out .= "<input type=radio name=diffA value=" . ($first ? "\"\" checked=1 " : $chgs[0]) . ">" .
+					"<input type=radio name=diffB value=" . ($first ? "\"\"" : $chgs[0]) . ($second ? " checked=1" : "") . ">" .
+					 date('y/m/d H:i T', $chgs[0]) .
                 " <a href=?id=$pageId&rev=" . ($first ? "" : $chgs[0]) . ">View</a>" .
                 " <a href=?id=$pageId&rev=" . ($first ? "" : $chgs[0]) . "&do=edit>Revert</a>" .
                 " " . $chgs[5] .
-                " <span style=color:#888>" . $chgs[4] . " (" . $chgs[1] . ")</span>";
+                " <span style=color:#888>" . $chgs[4] . " (" . $chgs[1] . ")</span><br>";
+					 if ($second) {
+						 $second = false;
+					 }
                 if ($first) {
                     $first = false;
+						  $second = true;
                 }
             }
-            $out .= "</table>";
             print render_html($out);
             exit;
         case "resendpwd2":
@@ -174,6 +180,23 @@ if (!empty($_GET['do'])) {
 				unlink($editableDir . "/" . $pageId);
 				$_SESSION['x-xtok']='null';
 				print "Page $pageId not contrib-writable.  <a href=index.php?id=$pageId>Back</a>";
+				exit;
+		  case "diff":
+				if(!auth_isCommittee()) {
+					die403("unauthorized");
+				}
+				$r1=san_filename($_GET['diffA']);
+				$r2=san_filename($_GET['diffB']);
+				$f1=(empty($r1) ? file_get_contents("$pageDir/$pageId.txt") : implode(gzfile("$atticDir/$pageId.$r1.txt.gz")));
+				$f2=(empty($r2) ? file_get_contents("$pageDir/$pageId.txt") : implode(gzfile("$atticDir/$pageId.$r2.txt.gz")));
+				$t1=(empty($r1) ? "current revision" : date('y/m/d H:i T', $r1));
+				$t2=(empty($r2) ? "current revision" : date('y/m/d H:i T', $r2));
+				print "<pre>";
+				print "--- " . $pageId . " " . $t2 . "\n";
+				print "+++ " . $pageId . " " . $t1 . "\n\n";
+				print san_diff(textDiff($f2,$f1));
+				print "</pre>";
+				print "<a href=?do=revisions&id=$pageId>Back</a>";
 				exit;
         default:
             print "unsupported do";

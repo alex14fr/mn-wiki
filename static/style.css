@@ -313,7 +313,7 @@ dt.ChampRes {
     overflow-y: scroll;
 }
 
-#newpf {
+#newpf, #newperm {
     white-space:pre;
     font-size:100%;
     width:100%;
