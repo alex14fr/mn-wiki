@@ -94,6 +94,25 @@ function auth_isContrib()
     return(in_array("contributor", auth_getgroups()) || auth_isAdmin());
 }
 
+function auth_isCommittee()
+{
+    return(in_array("committee", auth_getgroups()) || auth_isAdmin());
+}
+
+function auth_canEdit($id)
+{
+	global $pageDir, $editableDir;
+
+	if(auth_isAdmin())
+		return true;
+
+	if(file_exists($editableDir . "/" . $id))
+			return auth_isContrib();
+	else
+		return auth_isCommittee();
+
+}
+
 function auth_isAdmin()
 {
     return(in_array("admin", auth_getgroups()));

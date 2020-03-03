@@ -84,6 +84,9 @@ if (!empty($_GET['do'])) {
             if (!auth_isContrib()) {
                 die403("not yet authorized, your edit rights are under review");
             }
+				if (!auth_canEdit($pageId)) {
+					die403("not authorized");
+				}
             gen_xtok("edit_$pageId");
             $lockfile = "$lockDir/$pageId";
             if (file_exists($lockfile)) {
@@ -121,8 +124,8 @@ if (!empty($_GET['do'])) {
             print render_html($tmpl);
             exit;
         case "revisions":
-            if (!auth_isContrib()) {
-                die403("not yet authorized");
+            if (!auth_isCommittee()) {
+                die403("not authorized");
             }
             $out = "<h1>Revisions of " . $pageId . "</h1><ul>";
             $chgset = array_reverse(file("$metaDir/$pageId.changes"));
@@ -156,6 +159,22 @@ if (!empty($_GET['do'])) {
             auth_addcontributor($u, $_GET['mail'], $h);
             print "added as contributor";
             exit;
+			case "allowEdit":
+				if(!auth_isAdmin() || $_GET['xtok']!=$_SESSION['x-xtok']) {
+					die403("unauthorized");
+				}
+				file_put_contents($editableDir . "/" . $pageId, "");
+				$_SESSION['x-xtok']='null';
+				print "Page $pageId contrib-writable.  <a href=index.php?id=$pageId>Back</a>";
+				exit;
+			case "revokeEdit":
+				if(!auth_isAdmin() || $_GET['xtok']!=$_SESSION['x-xtok']) {
+					die403("unauthorized");
+				}
+				unlink($editableDir . "/" . $pageId);
+				$_SESSION['x-xtok']='null';
+				print "Page $pageId not contrib-writable.  <a href=index.php?id=$pageId>Back</a>";
+				exit;
         default:
             print "unsupported do";
             exit;
@@ -204,6 +223,9 @@ if (!empty($_POST['do'])) {
                 die403("not yet authorized");
             }
             $pageId = san_pageId($_POST['id']);
+				if (!auth_canEdit($pageId)) {
+					die403("not authorized");
+				}
             chk_xtok("edit_$pageId");
             if (is_readable("$pageDir/$pageId.txt")) {
                 $oldmt = filemtime("$pageDir/$pageId.txt");
