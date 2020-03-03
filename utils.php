@@ -220,8 +220,8 @@ function textDiff2($old, $new)
     $diff = diff(preg_split("/\n+/", $old), preg_split("/\n+/", $new));
     foreach ($diff as $k) {
         if (is_array($k)) {
-            $ret .= (!empty($k['d']) ? "<div class=del>- " . implode("</div><div class=del>- ", $k['d']) . "</div>" : '') .
-                (!empty($k['i']) ? "<div class=add>+ " . implode("</div><div class=add>+ ", $k['i']) . "</div>" : '');
+            $ret .= (!empty($k['d']) ? "<div class=del>- " . implode("</div><div class=del>- ", san_diff($k['d'])) . "</div>" : '') .
+                (!empty($k['i']) ? "<div class=add>+ " . implode("</div><div class=add>+ ", san_diff($k['i'])) . "</div>" : '');
         }
     }
     return $ret;
