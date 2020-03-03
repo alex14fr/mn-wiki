@@ -12,6 +12,8 @@ function calcPass()
 window.addEventListener('load', function () {
             document.getElementById('hash').addEventListener('click',function () {
                 this.select(); });
+            document.getElementById('hashbtn').addEventListener('click',function () {
+                calcPass(); });
             document.getElementById('pass').addEventListener('keydown',function (e) {
                 if (e.key == 'Enter') {
                     calcPass();
