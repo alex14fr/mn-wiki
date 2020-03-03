@@ -194,8 +194,8 @@ if (!empty($_GET['do'])) {
 				print "<tt>";
 				print "--- " . $pageId . " " . $t2 . "<br>";
 				print "+++ " . $pageId . " " . $t1 . "<p>";
-				print nl2br((textDiff($f2,$f1)));
-				print "</tt>";
+				print nl2br(san_diff(textDiff($f2,$f1)));
+				print "</tt><p>";
 				print "<a href=?do=revisions&id=$pageId>Back</a>";
 				exit;
         default:
