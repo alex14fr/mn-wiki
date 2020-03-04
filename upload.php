@@ -38,7 +38,7 @@ include_once "conf/conf.php";
 if (!isset($_SESSION)) {
     session_start();
 }
-if (!auth_isCommittee()) {
+if (!auth_isContrib()) {
     die("not authorized");
 }
 $ip = $clientIp . " (" . gethostbyaddr($clientIp) . ")";
