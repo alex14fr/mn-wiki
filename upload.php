@@ -38,8 +38,8 @@ include_once "conf/conf.php";
 if (!isset($_SESSION)) {
     session_start();
 }
-if (!auth_isContrib()) {
-    die("not authorized yet");
+if (!auth_isCommittee()) {
+    die("not authorized");
 }
 $ip = $clientIp . " (" . gethostbyaddr($clientIp) . ")";
 
