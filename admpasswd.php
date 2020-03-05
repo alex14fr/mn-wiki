@@ -89,7 +89,7 @@ gen_xtok("admpasswd");
 	 "<input type=submit></form>" .
 	 "Contrib-writable pages: ";
 	 $wd=opendir($editableDir);
-	 while($d=readdir($wd)!==false) {
+	 while(($d=readdir($wd))!==false) {
 		 print "$d ";
 	 }
 	 closedir($wd);
