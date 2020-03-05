@@ -91,7 +91,7 @@ gen_xtok("admpasswd");
 	 $wd=opendir($editableDir);
 	 while(($d=readdir($wd))!==false) {
 		 if ($d != "." && $d != "..") {
-			 print "<a href=" . $pagePrefix . $d . $pageSuffix . " target=_blank>$d</a>";
+			 print "<a href=" . $pagePrefix . $d . $pageSuffix . " target=_blank>$d</a> ";
 		 }
 	 }
 	 closedir($wd);
