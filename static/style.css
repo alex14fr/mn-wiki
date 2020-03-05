@@ -283,11 +283,11 @@ dt.ChampRes {
 }
 
 .add {
-	background-color: #8f8;
+	color: green;
 }
 
 .del {
-	background-color: #f99;
+	color: red;
 }
 
 .greenbox, .redbox, .bluebox, .yellowbox {

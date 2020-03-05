@@ -79,12 +79,18 @@ if(!empty($_POST['newperm'])) {
 }
 
 gen_xtok("admpasswd");
-    print "<form method=post><input type=hidden name=hashold value=" .
+    print "<h2>Passwd file</h2><form method=post><input type=hidden name=hashold value=" .
     hash("sha256", file_get_contents($pwdFile)) . ">" . pr_xtok("admpasswd") .
     "<textarea id=newpf name=newpf wrap=soft>" . file_get_contents($pwdFile) .
     "</textarea><p><input type=submit></form><p>pass: <input id=pass> <button id=hashbtn>Calc hash</button>" .
     "hash: <input id=hash size=60><p>" .
-	 "<form method=post><textarea id=newperm name=newperm wrap=soft>" . file_get_contents($permFile) . "</textarea>" .
+	 "<h2>Edit permissions</h2><form method=post><textarea id=newperm name=newperm wrap=soft>" . file_get_contents($permFile) . "</textarea>" .
 	 pr_xtok("admpasswd") .
 	 "<input type=submit></form>" .
-	 "</article></body><script src=static/crypt.js?v></script></html>";
+	 "Contrib-writable pages: ";
+	 $wd=opendir($editableDir);
+	 while($d=readdir($wd)!==false) {
+		 print "$d ";
+	 }
+	 closedir($wd);
+	 print "</article></body><script src=static/crypt.js?v></script></html>";

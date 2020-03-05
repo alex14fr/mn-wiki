@@ -192,7 +192,7 @@ if (!empty($_GET['do'])) {
 				$t1=(empty($r1) ? "current revision" : date('y/m/d H:i T', $r1));
 				$t2=(empty($r2) ? "current revision" : date('y/m/d H:i T', $r2));
 				print "<!doctype html>";
-				print "<html><head><meta charset=utf8><link rel=stylesheet href=static/mstyle.css?vx></head><body><article><tt>";
+				print "<html><head><meta charset=utf8><link rel=stylesheet href=static/mstyle.css?vy></head><body><article><tt>";
 				print "--- " . $pageId . " " . $t2 . "<br>";
 				print "+++ " . $pageId . " " . $t1 . "<p>";
 				print textDiff2($f2,$f1);
