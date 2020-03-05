@@ -87,10 +87,12 @@ gen_xtok("admpasswd");
 	 "<h2>Edit permissions</h2><form method=post><textarea id=newperm name=newperm wrap=soft>" . file_get_contents($permFile) . "</textarea>" .
 	 pr_xtok("admpasswd") .
 	 "<input type=submit></form>" .
-	 "Contrib-writable pages: ";
+	 "<h3>Contrib-writable pages:</h3>";
 	 $wd=opendir($editableDir);
 	 while(($d=readdir($wd))!==false) {
-		 print "$d ";
+		 if ($d != "." && $d != "..") {
+			 print "<a href=" . $pagePrefix . $d . $pageSuffix . " target=_blank>$d</a>";
+		 }
 	 }
 	 closedir($wd);
 	 print "</article></body><script src=static/crypt.js?v></script></html>";
