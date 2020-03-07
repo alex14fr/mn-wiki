@@ -37,6 +37,8 @@ if (!isset($_SESSION)) {
     session_start();
 }
 sendCsp();
+header("X-Robots-Tag: noindex");
+
 $captch = false;
 
 function checkRecaptcha()

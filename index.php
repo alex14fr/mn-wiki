@@ -54,7 +54,18 @@ if (empty($_GET['id'])) {
     $pageId = san_pageId($_GET['id']);
 }
 
+if (empty($_GET['do'])) {
+	if (empty($_GET['rev'])) {
+		 print render_page_full($pageId);
+	} else {
+		 print render_page_full($pageId, san_pageRev($_GET['rev']));
+	}
+	exit;
+}
+
+
 if (!empty($_GET['do'])) {
+	header("X-Robots-Tag: noindex");
     switch ($_GET['do']) {
         case "register":
         case "resendpwd":
@@ -281,11 +292,3 @@ Summary:      " . $ps . "
     }
 }
 
-if (empty($_GET['id'])) {
-    $_GET['id'] = 'index';
-}
-if (empty($_GET['rev'])) {
-    print render_page_full($_GET['id']);
-} else {
-    print render_page_full($_GET['id'], $_GET['rev']);
-}
