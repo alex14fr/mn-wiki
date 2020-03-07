@@ -54,7 +54,7 @@ if (empty($_GET['id'])) {
     $pageId = san_pageId($_GET['id']);
 }
 
-if (empty($_GET['do'])) {
+if (empty($_GET['do']) && empty($_POST['do'])) {
 	if (empty($_GET['rev'])) {
 		 print render_page_full($pageId);
 	} else {
