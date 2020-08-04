@@ -35,7 +35,7 @@ error_reporting(E_ERROR);
 if (empty($secret) || strlen($secret) < 20) {
     die("E");
 }
-if (!empty($allowedIp) && $_SERVER['HTTP_X_FORWARDED_FOR'] != $allowedIp) {
+if (!empty($allowedIp) && $_SERVER['HTTP_X_FORWARDED_FOR'] !== $allowedIp) {
     die("E");
 }
 
@@ -52,10 +52,10 @@ if (!empty($_POST['f']) && !empty($_POST['tok']) && !empty($_POST['time'])) {
     $prefix = "/persist/";
     chdir($prefix);
 
-    if ($_POST['f'] == '@manifest') {
+    if ($_POST['f'] === '@manifest') {
         passthru("find . -type f -exec stat -c '%Y\t%n\t%s' {} \; |gzip -9c");
         exit;
-    } elseif ($_POST['f'] == '@update') {
+    } elseif ($_POST['f'] === '@update') {
         header("Content-type: text/plain; charset=utf8");
         passthru("./update_htdocs 2>&1");
         exit;

@@ -40,7 +40,7 @@ function canonical()
             $canonicalProto = ($_SERVER["HTTP_X_FORWARDED_PROTO"] ?? $_SERVER["REQUEST_SCHEME"]);
         }
         $curHost = ($_SERVER["HTTP_X_FORWARDED_HOST"] ?? $_SERVER["HTTP_HOST"]);
-        if ($curHost != $canonicalHost) {
+        if ($curHost !== $canonicalHost) {
                   $destination = "$canonicalProto://$canonicalHost" . $_SERVER["REQUEST_URI"];
                   header("HTTP/1.1 302 Found");
                   header("Location: $destination");
@@ -113,7 +113,7 @@ function readtmpl($id)
 {
     $id = san_pageId($id);
     $out = str_replace("\n", "", file_get_contents("conf/$id.tmpl"));
-    if ($id == "htmlhead") {
+    if ($id === "htmlhead") {
         $out = str_replace("<!doctype html>", "<!doctype html>\n", $out);
     }
     return $out;
@@ -191,7 +191,7 @@ function diff($old, $new)
             }
         }
     }
-    if ($maxlen == 0) {
+    if ($maxlen === 0) {
         return array(array('d' => $old, 'i' => $new));
     }
     return array_merge(

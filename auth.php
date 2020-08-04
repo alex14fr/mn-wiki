@@ -46,7 +46,7 @@ function auth_getline($login)
 
         $lspl = explode(':', $line);
 
-        if ($lspl[0] == $login) {
+        if ($lspl[0] === $login) {
             return $lspl;
         }
     }
@@ -91,12 +91,12 @@ function auth_getgroups()
 
 function auth_isContrib()
 {
-    return(in_array("contributor", auth_getgroups()) || auth_isAdmin() || auth_isCommittee() );
+    return(in_array("contributor", auth_getgroups(), TRUE) || auth_isAdmin() || auth_isCommittee() );
 }
 
 function auth_isCommittee()
 {
-    return(in_array("committee", auth_getgroups()) || auth_isAdmin());
+    return(in_array("committee", auth_getgroups(), TRUE) || auth_isAdmin());
 }
 
 function auth_canEdit($id)
@@ -109,7 +109,7 @@ function auth_canEdit($id)
 	if(file_exists($editableDir . "/" . $id) && auth_isContrib())
 		return true;
 
-	if(!empty($_SESSION['auth_user']) && in_array($_SESSION['auth_user'] . ":" . $id, file($permFile,FILE_IGNORE_NEW_LINES))) 
+	if(!empty($_SESSION['auth_user']) && in_array($_SESSION['auth_user'] . ":" . $id, file($permFile,FILE_IGNORE_NEW_LINES), TRUE)) 
 		return true;
 
 	return false;
@@ -117,7 +117,7 @@ function auth_canEdit($id)
 
 function auth_isAdmin()
 {
-    return(in_array("admin", auth_getgroups()));
+    return(in_array("admin", auth_getgroups(), TRUE));
 }
 
 function auth_logout()
@@ -148,7 +148,7 @@ function auth_resendpwd1($email)
 
         $lspl = explode(':', $line);
 
-        if (!empty($lspl[3]) && $lspl[3] == $email) {
+        if (!empty($lspl[3]) && $lspl[3] === $email) {
             $login = $lspl[0];
             $sectok = genrepwhash($login, $lspl[1]);
             $mailtext = " Someone (probably you) claimed for lost credentials for the Wiki at $baseUrl . " . $crlf . $crlf . " Your username is $login. " . $crlf . $crlf . " To reset your password, please visit $baseUrl" . "?do=resendpwd2&u=$login&tok=$sectok " . $crlf . $crlf . " If not, you can safely ignore this message. ";
@@ -226,7 +226,7 @@ function auth_changeUser($login, $newline)
     }
     while ($line = fgets($fd)) {
         $lspl = explode(':', $line);
-        if (!$login || $lspl[0] != $login) {
+        if (!$login || $lspl[0] !== $login) {
             $newfile .= $line;
         }
     }
@@ -247,7 +247,7 @@ function auth_resendpwd2($login, $tok)
 {
     global $mailFrom;
     $lspl = auth_getline($login);
-    if (genrepwhash($login, $lspl[1]) != $tok) {
+    if (genrepwhash($login, $lspl[1]) !== $tok) {
         die("resendpwd2 error 2");
     }
     $newpass = generatePassword();
@@ -259,16 +259,16 @@ function auth_resendpwd2($login, $tok)
 function auth_register($u, $p, $p2, $n, $e)
 {
     global $pwdFile, $secret3, $baseUrl, $clientIp;
-    if ($p != $p2) {
+    if ($p !== $p2) {
         die("passwords don't match");
     }
     if (strlen($p) < 7) {
         die("password is too short");
     }
-    if ($u != san_filename($u)) {
+    if ($u !== san_filename($u)) {
         die("invalid username: must be <64 chars long, lowercase, a-z 0-9 - _ .");
     }
-    if ($e != san_csv($e)) {
+    if ($e !== san_csv($e)) {
         die("mail address contains invalid characters");
     }
     if (auth_getline($u)) {

@@ -54,7 +54,7 @@ if (!empty($_POST['newpf'])) {
     chk_xtok("admpasswd");
     $oldpf = file_get_contents($pwdFile);
     $hashold = hash("sha256", $oldpf);
-    if ($hashold != $_POST['hashold']) {
+    if ($hashold !== $_POST['hashold']) {
         die("error: race condition on passwd file");
     }
     $newpf = trim($_POST['newpf']) . "\n";

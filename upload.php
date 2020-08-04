@@ -91,7 +91,7 @@ if (!empty($_POST['delete'])) {
         die("empty filename");
     }
     chk_xtok("upload");
-    if (substr($dd, 0, 1) != '.') {
+    if (substr($dd, 0, 1) !== '.') {
         $oldcnt = file_get_contents("$mediaDir/$dd");
         if (!$oldcnt) {
             die("can't read file to be deleted");
@@ -136,7 +136,7 @@ Name (leave empty for default name) :
 <?php
 $d = scandir('data/media/');
 foreach ($d as $dd) {
-    if (substr($dd, 0, 1) != '.') {
+    if (substr($dd, 0, 1) !== '.') {
         print "<li><tt>{{" . $dd . "}}</tt> <a href=\"$mediaDir/$dd\" target=_new>View</a> <button type=submit name=delete value=\"$dd\">Delete</button>";
     }
 }

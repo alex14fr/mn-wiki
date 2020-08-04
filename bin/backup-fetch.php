@@ -13,6 +13,9 @@ function fetchFile($url, $sec, $f, $out)
     $context = stream_context_create($context_options);
 
     $fhin = fopen($url, "rb", false, $context);
+	 if(!$fhin) {
+		print "error fetching $url\n";
+	 }
     $fhout = fopen($out, "wb");
     while (!feof($fhin)) {
         fwrite($fhout, fread($fhin, 32768));
