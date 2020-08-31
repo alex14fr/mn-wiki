@@ -89,13 +89,13 @@ function listeInscrits()
     global $msg;
     global $id;
     global $db;
-    $res = $db->query("SELECT * FROM inscrits WHERE idrencontre='" . $db->escapeString($id) . "' ORDER BY nomprenom");
+    $res = $db->query("SELECT DISTINCT * FROM inscrits WHERE idrencontre='" . $db->escapeString($id) . "' ORDER BY nomprenom");
     $out = "<ul>";
     while ($l = $res->fetchArray()) {
     //  array_push($inscrits2,$l['nomprenom'].','.$l['affiliation'].','.$l['mail']);
         $out .= "<li><b>" . $l['nomprenom'] . "</b>, " . $l['affiliation'];
         if (voitMails()) {
-            $out .= ", " . $l['mail'] . "</li>";
+            $out .= ", " . $l['mail'] . " <a href=\"".unsubLink($l['nomprenom'],$l['mail'])."\">cancel registration</a></li>";
             $listeMails .= trim($l['mail']) . ",";
         }
     }
@@ -104,6 +104,16 @@ function listeInscrits()
         $out .= "<textarea rows=10 cols=60>$listeMails</textarea>";
     }
     return $out;
+}
+
+function unsubToken($nompre,$mail) {
+	global $id, $secret2;
+	return hash_hmac("sha256",$nompre."/".$id."/".$mail,$secret2);
+}
+
+function unsubLink($nompre,$mail) {
+	global $id, $secret2;
+	return $baseUrl."event.php?action=remove&id=$id&nompre=".urlencode($nompre)."&mail=".urlencode($mail)."&sectok=".unsubToken($nompre,$mail);
 }
 
 function formInscription()
@@ -187,6 +197,19 @@ For more information, please consult " . pageLink($id, true));
 
     exit;
 }
+
+if ($_GET['action']=='remove') {
+	if(!hash_equals(unsubToken($_GET['nompre'],$_GET['mail']), $_GET['sectok'])) {
+		die("E");
+	}
+	if(!$db->exec("DELETE FROM inscrits WHERE nomprenom='".$db->escapeString(ucname(strtolower($_GET['nompre'])))."' AND mail='".$db->escapeString($_GET['mail'])."'")) {
+		die("db error delete ".$db->lastErrorMsg());
+	} else {
+		print "désinscription réussie. ";
+		exit;
+	}
+}
+
 
 if (!empty($_REQUEST['action'])) {
     print listeInscrits();
