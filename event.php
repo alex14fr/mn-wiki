@@ -200,12 +200,12 @@ For more information, please consult " . pageLink($id, true));
 
 if ($_GET['action']=='remove') {
 	if(!hash_equals(unsubToken($_GET['nompre'],$_GET['mail']), $_GET['sectok'])) {
-		die("E");
+		die("E ".unsubToken($_GET['nompre'],$_GET['mail']));
 	}
 	if(!$db->exec("DELETE FROM inscrits WHERE nomprenom='".$db->escapeString(ucname(strtolower($_GET['nompre'])))."' AND mail='".$db->escapeString($_GET['mail'])."'")) {
 		die("db error delete ".$db->lastErrorMsg());
 	} else {
-		print "désinscription réussie. ";
+		print "Your registration to $id has been canceled. ";
 		exit;
 	}
 }
