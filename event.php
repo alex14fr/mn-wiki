@@ -208,7 +208,7 @@ if ($_GET['action']=='remove') {
 	if(!hash_equals(unsubToken($_GET['nompre'],$_GET['mail']), $_GET['sectok'])) {
 		die("E");
 	}
-	if(!$db->exec("DELETE FROM inscrits WHERE nomprenom='".$db->escapeString(ucname(strtolower($_GET['nompre'])))."' AND mail='".$db->escapeString($_GET['mail'])."'")) {
+	if(!$db->exec("DELETE FROM inscrits WHERE id='".$db->escapeString($id)."' AND nomprenom='".$db->escapeString(ucname(strtolower($_GET['nompre'])))."' AND mail='".$db->escapeString($_GET['mail'])."'")) {
 		die("db error delete ".$db->lastErrorMsg());
 	} else {
 		print "Your registration to $id has been canceled. ";
