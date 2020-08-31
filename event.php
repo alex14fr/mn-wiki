@@ -180,13 +180,14 @@ if (!empty($_POST['nom'])) {
             xmail($notif, "Registration to $id", "
 Your registration has been taken into account.
 
-Name: " . $nom . ", " . $prenom . "
+Name:        " . $nom . ", " . $prenom . "
 Affiliation: " . $affil . "
-Email: " . $email . "
+Email:       " . $email . "
 
 For more information, please consult " . pageLink($id, true))."
 
 To cancel your registration, click on the following link : 
+
 ".unsubLink(ucname(strtolower($nom.' '.$prenom)), $email)."
 
 ";
