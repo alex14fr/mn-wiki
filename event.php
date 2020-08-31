@@ -112,7 +112,7 @@ function unsubToken($nompre,$mail) {
 }
 
 function unsubLink($nompre,$mail) {
-	global $id, $secret2;
+	global $baseUrl, $id, $secret2;
 	return $baseUrl."event.php?action=remove&id=$id&nompre=".urlencode($nompre)."&mail=".urlencode($mail)."&sectok=".unsubToken($nompre,$mail);
 }
 
