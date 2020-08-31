@@ -199,9 +199,11 @@ For more information, please consult " . pageLink($id, true));
 }
 
 if ($_GET['action']=='remove') {
+	print unsubToken($_GET['nompre'],$_GET['mail']);
+	/*
 	if(!hash_equals(unsubToken($_GET['nompre'],$_GET['mail']), $_GET['sectok'])) {
-		die("xE ".unsubToken($_GET['nompre'],$_GET['mail']));
-	}
+		die("E");
+	}*/
 	if(!$db->exec("DELETE FROM inscrits WHERE nomprenom='".$db->escapeString(ucname(strtolower($_GET['nompre'])))."' AND mail='".$db->escapeString($_GET['mail'])."'")) {
 		die("db error delete ".$db->lastErrorMsg());
 	} else {
