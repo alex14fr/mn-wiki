@@ -95,7 +95,7 @@ function listeInscrits()
     //  array_push($inscrits2,$l['nomprenom'].','.$l['affiliation'].','.$l['mail']);
         $out .= "<li><b>" . $l['nomprenom'] . "</b>, " . $l['affiliation'];
         if (voitMails()) {
-            $out .= ", " . $l['mail'] . " <a href=\"".unsubLink($l['nomprenom'],$l['mail'])."\">cancel registration</a></li>";
+            $out .= ", " . $l['mail'] . " <a href=\"".unsubLink($l['nomprenom'],$l['mail'])."\" target=_blank>cancel registration</a></li>";
             $listeMails .= trim($l['mail']) . ",";
         }
     }
