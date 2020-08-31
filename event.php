@@ -184,7 +184,11 @@ Name: " . $nom . ", " . $prenom . "
 Affiliation: " . $affil . "
 Email: " . $email . "
 
-For more information, please consult " . pageLink($id, true));
+For more information, please consult " . pageLink($id, true))."
+
+To cancel your registration, click on the following link : 
+".unsubLink(ucname(strtolower($nom.' '.$prenom)), $email)."
+;
         }
         $msg = 'Your registration has been taken into account. ';
     } else {
@@ -199,7 +203,6 @@ For more information, please consult " . pageLink($id, true));
 }
 
 if ($_GET['action']=='remove') {
-	print unsubToken($_GET['nompre'],$_GET['mail']);
 	if(!hash_equals(unsubToken($_GET['nompre'],$_GET['mail']), $_GET['sectok'])) {
 		die("E");
 	}
