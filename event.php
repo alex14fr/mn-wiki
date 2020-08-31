@@ -146,7 +146,7 @@ function backl()
 }
 
 $id = san_pageId($_REQUEST['id']);
-if (!hash_equals(hash("sha256", $secret1 . $id . $secret2), $_REQUEST['sectok'])) {
+if ($_GET['action']!='remove' && !hash_equals(hash("sha256", $secret1 . $id . $secret2), $_REQUEST['sectok'])) {
     print "E";
     exit;
 }
@@ -200,10 +200,9 @@ For more information, please consult " . pageLink($id, true));
 
 if ($_GET['action']=='remove') {
 	print unsubToken($_GET['nompre'],$_GET['mail']);
-	/*
 	if(!hash_equals(unsubToken($_GET['nompre'],$_GET['mail']), $_GET['sectok'])) {
 		die("E");
-	}*/
+	}
 	if(!$db->exec("DELETE FROM inscrits WHERE nomprenom='".$db->escapeString(ucname(strtolower($_GET['nompre'])))."' AND mail='".$db->escapeString($_GET['mail'])."'")) {
 		die("db error delete ".$db->lastErrorMsg());
 	} else {
