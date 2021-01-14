@@ -226,7 +226,7 @@ function parse_line($l)
 						  $titleTag = " id=a" . $curAnchor;
                 } elseif ($head_lvl == 3) {
 						 $curSubAnchor++;
-                   $toc .= "<li><a style=font-size:60% href=#aa" . $curSubAnchor . ">" . $txt . "</a>";
+                   $toc .= "<li style=margin-left:5px><a href=#aa" . $curSubAnchor . ">" . $txt . "</a>";
 						 $titleTag = " id=aa" . $curSubAnchor;
 					 }
                 return "<h" . $head_lvl . (empty($titleTag) ? "" : $titleTag) . ">" . $txt . "</h" . $head_lvl . ">" . ($head_lvl == 1 ? "~~TOC~~<p>" : "");
