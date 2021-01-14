@@ -313,6 +313,10 @@ dt.ChampRes {
     background-color: #ffffcc;
 }
 
+.subtoc {
+	margin-left: 30px;
+}
+
 #txt {
     width: 100%;
     height: 70vh;
@@ -399,3 +403,4 @@ dt.ChampRes {
         padding-left: 5px;
     }
 }
+
