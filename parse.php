@@ -227,8 +227,14 @@ function parse_line($l)
 						  $titleTag = " id=a" . md5($txt);
                 } elseif ($head_lvl == 3) {
 						 $curSubAnchor++;
-                   $toc .= "<li class=subtoc><a href=#a" . md5($txt) . ">" . $txt . "</a>";
-						 $titleTag = " id=a" . md5($txt);
+						 $linkId = md5($txt);
+						 if(strpos($txt,"#")) {
+							$txtspl=explode("#",$txt);
+							$txt=$txtspl[0];
+							$linkId=$txtspl[1];
+						 }
+                   $toc .= "<li class=subtoc><a href=#a" . $linkId . ">" . $txt . "</a>";
+						 $titleTag = " id=a" . $linkId;
 					 }
                 return "<h" . $head_lvl . (empty($titleTag) ? "" : $titleTag) . ">" . $txt . "</h" . $head_lvl . ">" . ($head_lvl == 1 ? "~~TOC~~<p>" : "");
 
