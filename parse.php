@@ -176,7 +176,7 @@ function exit_par()
 
 function parse_line($l)
 {
-    global $list_lvl, $title, $toc, $curAnchor, $curSubAnchor, $in_tbl, $title_lvl, $head_lvl, $pageId, $sectok;
+    global $list_lvl, $title, $toc, $anchTxt, $curAnchor, $curSubAnchor, $in_tbl, $title_lvl, $head_lvl, $pageId, $sectok;
 
     $l = rtrim(htmlspecialchars($l));
     $n = strlen($l);
@@ -222,12 +222,13 @@ function parse_line($l)
                     $title_lvl = $head_lvl;
                 } elseif ($head_lvl == 2) {
                     $curAnchor++;
-                    $toc .= "<li><a href=#a" . $curAnchor . ">" . $txt . "</a>";
-						  $titleTag = " id=a" . $curAnchor;
+						  $anchTxt = $txt;
+                    $toc .= "<li><a href=#a" . md5($txt) . ">" . $txt . "</a>";
+						  $titleTag = " id=a" . md5($txt);
                 } elseif ($head_lvl == 3) {
 						 $curSubAnchor++;
-                   $toc .= "<li class=subtoc><a href=#aa" . $curSubAnchor . ">" . $txt . "</a>";
-						 $titleTag = " id=aa" . $curSubAnchor;
+                   $toc .= "<li class=subtoc><a href=#a" . md5($txt) . ">" . $txt . "</a>";
+						 $titleTag = " id=a" . md5($txt);
 					 }
                 return "<h" . $head_lvl . (empty($titleTag) ? "" : $titleTag) . ">" . $txt . "</h" . $head_lvl . ">" . ($head_lvl == 1 ? "~~TOC~~<p>" : "");
 
