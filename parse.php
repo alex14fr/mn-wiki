@@ -176,7 +176,7 @@ function exit_par()
 
 function parse_line($l)
 {
-    global $list_lvl, $title, $toc, $curAnchor, $in_tbl, $title_lvl, $head_lvl, $pageId, $sectok;
+    global $list_lvl, $title, $toc, $curAnchor, $curSubAnchor, $in_tbl, $title_lvl, $head_lvl, $pageId, $sectok;
 
     $l = rtrim(htmlspecialchars($l));
     $n = strlen($l);
@@ -223,9 +223,12 @@ function parse_line($l)
                 } elseif ($head_lvl == 2) {
                     $curAnchor++;
                     $toc .= "<li><a href=#a" . $curAnchor . ">" . $txt . "</a>";
-                    $txt = $txt;
 						  $titleTag = " id=a" . $curAnchor;
-                }
+                } elseif ($head_lvl == 3) {
+						 $curSubAnchor++;
+                   $toc .= "<li><a style=font-size:60% href=#aa" . $curSubAnchor . ">" . $txt . "</a>";
+						 $titleTag = " id=aa" . $curSubAnchor;
+					 }
                 return "<h" . $head_lvl . (empty($titleTag) ? "" : $titleTag) . ">" . $txt . "</h" . $head_lvl . ">" . ($head_lvl == 1 ? "~~TOC~~<p>" : "");
 
             case "-":
@@ -351,6 +354,7 @@ function render_str($str)
     $list_lvl = 0;
     $toc = "";
     $curAnchor = 0;
+    $curSubAnchor = 0;
     $out = "";
     foreach (explode("\n", $str) as $l) {
         $out .= parse_line($l);

@@ -104,9 +104,12 @@ function san_diff($string)
 function sendNotify($reason, $subj, $body)
 {
     global $mailNotify;
+
     foreach ($mailNotify[$reason] as $to) {
         xmail($to, $subj, $body);
     }
+
+	 file_put_contents($dataDir."/maillog","To: $to\r\nSubject: $subj\r\n$body\r\n\r\n",FILE_APPEND);
 }
 
 function readtmpl($id)
