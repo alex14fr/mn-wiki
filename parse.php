@@ -316,6 +316,7 @@ function parse_line($l)
                         ; $i < $n && $l[$i] == "~";
                         $i++
                     );
+						  if ($s == "br") { $out .= "<br>"; }
                     if ($s == "/div") {
                         $out .= "</div>";
                     } elseif (strpos($s, "div") !== false) {
