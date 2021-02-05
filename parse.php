@@ -176,7 +176,7 @@ function exit_par()
 
 function parse_line($l)
 {
-    global $list_lvl, $title, $toc, $anchTxt, $curAnchor, $curSubAnchor, $in_tbl, $title_lvl, $head_lvl, $pageId, $sectok;
+    global $list_lvl, $title, $toc, $toc_level, $in_tbl, $title_lvl, $head_lvl, $pageId, $sectok;
 
     $l = rtrim(htmlspecialchars($l));
     $n = strlen($l);
@@ -220,20 +220,14 @@ function parse_line($l)
                 if ($head_lvl < $title_lvl) {
                     $title = $txt;
                     $title_lvl = $head_lvl;
-                } elseif ($head_lvl == 2) {
-                    $curAnchor++;
-						  $anchTxt = $txt;
-                    $toc .= "<li><a href=#a" . md5($txt) . ">" . $txt . "</a>";
-						  $titleTag = " id=a" . md5($txt);
-                } elseif ($head_lvl == 3) {
-						 $curSubAnchor++;
+                } elseif ($head_lvl <= $toc_level && $head_lvl >= 2) {
 						 $linkId = md5($txt);
-						 if(strpos($txt,"#")) {
+						 if(strpos($txt,"#") !==false) {
 							$txtspl=explode("#",$txt);
 							$txt=$txtspl[0];
 							$linkId=$txtspl[1];
 						 }
-                   $toc .= "<li class=subtoc><a href=#a" . $linkId . ">" . $txt . "</a>";
+                   $toc .= "<li ".($head_lvl >= 3 ? "class=subtoc" : "")."><a href=#a" . $linkId . ">" . $txt . "</a>";
 						 $titleTag = " id=a" . $linkId;
 					 }
                 return "<h" . $head_lvl . (empty($titleTag) ? "" : $titleTag) . ">" . $txt . "</h" . $head_lvl . ">" . ($head_lvl == 1 ? "~~TOC~~<p>" : "");
@@ -340,7 +334,11 @@ function parse_line($l)
                         $out .= file_get_contents("ephemeral/rss2.html");
                     } elseif ($s == "rssshort") {
                         $out .= file_get_contents("ephemeral/rssshort.html");
-                    }
+                    } elseif (strpos($s, "toclevel") !== false) {
+                        $sxplod = explode(" ", $s);
+                        if (count($sxplod) > 1) 
+                            $toc_level = $sxplod[1];
+						  }
                 } else {
                     $out .= $l[$i];
                 }
@@ -359,11 +357,10 @@ function parse_line($l)
 
 function render_str($str)
 {
-    global $list_lvl, $title, $title_lvl, $toc, $curAnchor;
+    global $list_lvl, $title, $title_lvl, $toc_level, $toc;
     $list_lvl = 0;
     $toc = "";
-    $curAnchor = 0;
-    $curSubAnchor = 0;
+	 $toc_level = 2;
     $out = "";
     foreach (explode("\n", $str) as $l) {
         $out .= parse_line($l);
@@ -375,7 +372,7 @@ function render_str($str)
 
 function render_page($page, $rev = "")
 {
-    global $list_lvl, $title, $title_lvl, $toc, $curAnchor, $pageId, $sectok;
+    global $list_lvl, $title, $title_lvl, $toc, $pageId, $sectok;
     include_once "conf/conf.php";
     global $secret1, $secret2, $pageDir, $atticDir;
     $list_lvl = 0;
@@ -383,7 +380,6 @@ function render_page($page, $rev = "")
     $title = $pageId;
     $title_lvl = 4;
     $toc = "";
-    $curAnchor = 0;
     $rev = san_pageRev($rev);
     $out = "";
     $sectok = hash("sha256", $secret1 . $pageId . $secret2);
