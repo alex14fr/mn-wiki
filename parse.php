@@ -217,7 +217,7 @@ function parse_line($l)
                     $head_lvl = 6 - $head_lvl;
                 }
                 $txt = parse_inline($header);
-					 print "\n<!-- xxxxx $head_lvl $toc_level -->\n";
+					 print "\n<!-- xxxxx $head_lvl x $toc_level -->\n";
                 if ($head_lvl < $title_lvl) {
                     $title = $txt;
                     $title_lvl = $head_lvl;
