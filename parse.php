@@ -373,7 +373,7 @@ function render_str($str)
 
 function render_page($page, $rev = "")
 {
-    global $list_lvl, $title, $title_lvl, $toc, $pageId, $sectok;
+    global $list_lvl, $title, $title_lvl, $toc, $toc_level, $pageId, $sectok;
     include_once "conf/conf.php";
     global $secret1, $secret2, $pageDir, $atticDir;
     $list_lvl = 0;
