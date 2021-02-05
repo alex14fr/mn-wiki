@@ -380,6 +380,7 @@ function render_page($page, $rev = "")
     $title = $pageId;
     $title_lvl = 4;
     $toc = "";
+	 $toc_level = 2;
     $rev = san_pageRev($rev);
     $out = "";
     $sectok = hash("sha256", $secret1 . $pageId . $secret2);
