@@ -227,8 +227,8 @@ function parse_line($l)
 							$txt=$txtspl[0];
 							$linkId=$txtspl[1];
 						 }
-                   $toc .= "<li ".($head_lvl >= 3 ? "class=subtoc" : "")."><a href=#a" . $linkId . ">" . $txt . "</a>";
-						 $titleTag = " id=a" . $linkId;
+                   $toc .= "<li ".($head_lvl >= 3 ? "class=subtoc" : "")."><a href=#" . $linkId . ">" . $txt . "</a>";
+						 $titleTag = " id=" . $linkId;
 					 }
                 return "<h" . $head_lvl . (empty($titleTag) ? "" : $titleTag) . ">" . $txt . "</h" . $head_lvl . ">" . ($head_lvl == 1 ? "~~TOC~~<p>" : "");
 
