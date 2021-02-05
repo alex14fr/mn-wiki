@@ -88,8 +88,10 @@ function updhal()
             for ($i++; ($i < count($lines)) && (strpos($lines[$i], "</dl") === false); $i++) {
                 $sub .= $lines[$i];
             }
+
+            /* Gobble </dl> */
             if ($i < count($lines)) {
-                $sub .= $lines[$i++];
+                $sub .= $lines[$i];
             }
 
             for (
