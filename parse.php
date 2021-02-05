@@ -221,6 +221,7 @@ function parse_line($l)
                     $title = $txt;
                     $title_lvl = $head_lvl;
                 } elseif ($head_lvl <= $toc_level && $head_lvl >= 2) {
+						 print "\n<!-- xxxxx -->\n";
 						 $linkId = md5($txt);
 						 if(strpos($txt,"#") !==false) {
 							$txtspl=explode("#",$txt);
