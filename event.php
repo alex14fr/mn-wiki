@@ -93,8 +93,7 @@ function listeInscrits()
     $out = "<ul>";
 	 $listeMailsA=array();
     while ($l = $res->fetchArray()) {
-		 print "<!-- ".$l['mail']." -->\n";
-		 if(in_array(trim($l['mail']), $listeMailsA, true)) { print "doublon <!-- ".$l['mail']." -->\n"; }
+		 //if(in_array(trim($l['mail']), $listeMailsA, true)) { print "doublon <!-- ".$l['mail']." -->\n"; }
 		 $listeMailsA[]=trim($l['mail']);
         $out .= "<li><b>" . $l['nomprenom'] . "</b>, " . $l['affiliation'];
         if (voitMails()) {
