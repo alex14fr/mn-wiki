@@ -212,9 +212,8 @@ if ($_GET['action']=='remove') {
 	}
 	$queryCond="WHERE idrencontre='".$db->escapeString($id)."' AND nomprenom='".$db->escapeString(ucname(strtolower($_GET['nompre'])))."' AND mail='".$db->escapeString($_GET['mail'])."'";
 	$query="DELETE FROM inscrits $queryCond AND rowid IN (SELECT rowid FROM inscrits $queryCond LIMIT 1)";
-	print $query;
 	if(!$db->exec($query)) {
-			die("query [".$query."] db error delete ".$db->lastErrorMsg());
+			die("db error delete ".$db->lastErrorMsg());
 	} else {
 		print "Your registration to $id has been canceled. ";
 		exit;
