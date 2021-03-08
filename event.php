@@ -210,7 +210,9 @@ if ($_GET['action']=='remove') {
 	if(!hash_equals(unsubToken($_GET['nompre'],$_GET['mail']), $_GET['sectok'])) {
 		die("E");
 	}
-	$query="DELETE FROM inscrits WHERE idrencontre='".$db->escapeString($id)."' AND nomprenom='".$db->escapeString(ucname(strtolower($_GET['nompre'])))."' AND mail='".$db->escapeString($_GET['mail'])."' ORDER BY nomprenom LIMIT 1";
+	$queryCond="WHERE idrencontre='".$db->escapeString($id)."' AND nomprenom='".$db->escapeString(ucname(strtolower($_GET['nompre'])))."' AND mail='".$db->escapeString($_GET['mail'])."'";
+	$query="DELETE FROM inscrits $queryCond AND rowid IN (SELECT rowid FROM inscrits $queryCond LIMIT 1)";
+	print $query;
 	if(!$db->exec($query)) {
 			die("query [".$query."] db error delete ".$db->lastErrorMsg());
 	} else {
