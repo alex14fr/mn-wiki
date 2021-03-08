@@ -90,18 +90,17 @@ function listeInscrits()
     global $id;
     global $db;
     $res = $db->query("SELECT DISTINCT * FROM inscrits WHERE idrencontre='" . $db->escapeString($id) . "' ORDER BY nomprenom");
-    $out = "<ul>";
 	 $listeMailsA=array();
+    $out = "<ul>";
     while ($l = $res->fetchArray()) {
-		 print "<!-- ".$l['mail']." -->\n";
-		 if(in_array(trim($l['mail']), $listeMailsA, true)) { print "doublon <!-- ".$l['mail']." -->\n"; }
-		 $listeMailsA[]=trim($l['mail']);
+		 if(in_array($l['mail'],$listeMailsA,true)) continue;
+		 array_push($listeMailsA, $l['mail']);
         $out .= "<li><b>" . $l['nomprenom'] . "</b>, " . $l['affiliation'];
         if (voitMails()) {
             $out .= ", " . $l['mail'] . " <a href=\"".unsubLink($l['nomprenom'],$l['mail'])."\" target=_blank>cancel registration</a></li>";
         }
     }
-	 $listeMails = explode(",", $listeMailsA);
+	 $listeMails = implode(",",$listeMailsA);
     $out .= "</ul>";
     if (voitMails()) {
         $out .= "<textarea rows=10 cols=60>$listeMails</textarea>";
@@ -211,8 +210,10 @@ if ($_GET['action']=='remove') {
 	if(!hash_equals(unsubToken($_GET['nompre'],$_GET['mail']), $_GET['sectok'])) {
 		die("E");
 	}
-	if(!$db->exec("DELETE FROM inscrits WHERE idrencontre='".$db->escapeString($id)."' AND nomprenom='".$db->escapeString(ucname(strtolower($_GET['nompre'])))."' AND mail='".$db->escapeString($_GET['mail'])."'")) {
-		die("db error delete ".$db->lastErrorMsg());
+	$queryCond="WHERE idrencontre='".$db->escapeString($id)."' AND nomprenom='".$db->escapeString(ucname(strtolower($_GET['nompre'])))."' AND mail='".$db->escapeString($_GET['mail'])."'";
+	$query="DELETE FROM inscrits $queryCond AND rowid IN (SELECT rowid FROM inscrits $queryCond LIMIT 1)";
+	if(!$db->exec($query)) {
+			die("db error delete ".$db->lastErrorMsg());
 	} else {
 		print "Your registration to $id has been canceled. ";
 		exit;
