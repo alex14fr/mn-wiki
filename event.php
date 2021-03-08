@@ -93,8 +93,6 @@ function listeInscrits()
     $out = "<ul>";
 	 $listeMailsA=array();
     while ($l = $res->fetchArray()) {
-		 //if(in_array(trim($l['mail']), $listeMailsA, true)) { print "doublon <!-- ".$l['mail']." -->\n"; }
-		 $listeMailsA[]=trim($l['mail']);
         $out .= "<li><b>" . $l['nomprenom'] . "</b>, " . $l['affiliation'];
         if (voitMails()) {
             $out .= ", " . $l['mail'] . " <a href=\"".unsubLink($l['nomprenom'],$l['mail'])."\" target=_blank>cancel registration</a></li>";
