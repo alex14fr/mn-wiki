@@ -93,7 +93,7 @@ function listeInscrits()
 	 $listeMailsA=array();
     $out = "<ul>";
     while ($l = $res->fetchArray()) {
-		 if(in_array($l['mail'],$listeMailsA,true)) next;
+		 if(in_array($l['mail'],$listeMailsA,true)) continue;
 		 array_push($listeMailsA, $l['mail']);
         $out .= "<li><b>" . $l['nomprenom'] . "</b>, " . $l['affiliation'];
         if (voitMails()) {
