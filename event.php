@@ -89,9 +89,8 @@ function listeInscrits()
     global $msg;
     global $id;
     global $db;
-    $res = $db->query("SELECT DISTINCT * FROM inscrits WHERE idrencontre='" . $db->escapeString($id) . "' ORDER BY nomprenom");
+    $res = $db->query("SELECT * FROM inscrits WHERE idrencontre='" . $db->escapeString($id) . "' ORDER BY nomprenom");
     $out = "<ul>";
-	 $listeMailsA=array();
     while ($l = $res->fetchArray()) {
         $out .= "<li><b>" . $l['nomprenom'] . "</b>, " . $l['affiliation'];
         if (voitMails()) {
