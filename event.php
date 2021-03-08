@@ -89,22 +89,23 @@ function listeInscrits()
     global $msg;
     global $id;
     global $db;
-    $res = $db->query("SELECT * FROM inscrits WHERE idrencontre='" . $db->escapeString($id) . "' ORDER BY nomprenom");
+    $res = $db->query("SELECT DISTINCT * FROM inscrits WHERE idrencontre='" . $db->escapeString($id) . "' ORDER BY nomprenom");
 	 $listeMailsA=array();
     $out = "<ul>";
     while ($l = $res->fetchArray()) {
-		 if(in_array($l['mail'],$listeMailsA,true)) {print "dd"; next;}
+		 if(in_array($l['mail'],$listeMailsA,true)) next;
 		 array_push($listeMailsA, $l['mail']);
         $out .= "<li><b>" . $l['nomprenom'] . "</b>, " . $l['affiliation'];
         if (voitMails()) {
             $out .= ", " . $l['mail'] . " <a href=\"".unsubLink($l['nomprenom'],$l['mail'])."\" target=_blank>cancel registration</a></li>";
         }
     }
-	 $listeMails = explode(",", $listeMailsA);
+	 $listeMails = explode($listeMailsA, ",");
     $out .= "</ul>";
     if (voitMails()) {
         $out .= "<textarea rows=10 cols=60>$listeMails</textarea>";
     }
+	 print "eee";
     return $out;
 }
 
