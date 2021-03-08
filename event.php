@@ -105,7 +105,6 @@ function listeInscrits()
     if (voitMails()) {
         $out .= "<textarea rows=10 cols=60>$listeMails</textarea>";
     }
-	 print "eee";
     return $out;
 }
 
