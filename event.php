@@ -91,14 +91,16 @@ function listeInscrits()
     global $db;
     $res = $db->query("SELECT DISTINCT * FROM inscrits WHERE idrencontre='" . $db->escapeString($id) . "' ORDER BY nomprenom");
     $out = "<ul>";
+	 $listeMailsA=array();
     while ($l = $res->fetchArray()) {
-    //  array_push($inscrits2,$l['nomprenom'].','.$l['affiliation'].','.$l['mail']);
+		 if(in_array(trim($l['mail']), $listeMailsA)) next;
+		 $listeMailsA[]=trim($l['mail']);
         $out .= "<li><b>" . $l['nomprenom'] . "</b>, " . $l['affiliation'];
         if (voitMails()) {
             $out .= ", " . $l['mail'] . " <a href=\"".unsubLink($l['nomprenom'],$l['mail'])."\" target=_blank>cancel registration</a></li>";
-            $listeMails .= trim($l['mail']) . ",";
         }
     }
+	 $listeMails = explode(",", $listeMailsA);
     $out .= "</ul>";
     if (voitMails()) {
         $out .= "<textarea rows=10 cols=60>$listeMails</textarea>";
