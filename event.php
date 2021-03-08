@@ -100,7 +100,7 @@ function listeInscrits()
             $out .= ", " . $l['mail'] . " <a href=\"".unsubLink($l['nomprenom'],$l['mail'])."\" target=_blank>cancel registration</a></li>";
         }
     }
-	 $listeMails = explode($listeMailsA, ",");
+	 $listeMails = implode(",",$listeMailsA);
     $out .= "</ul>";
     if (voitMails()) {
         $out .= "<textarea rows=10 cols=60>$listeMails</textarea>";
