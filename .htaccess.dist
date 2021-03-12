@@ -1,13 +1,11 @@
 <IfModule rewrite_module>
 RewriteEngine on
-RewriteRule pecnum(.*) pecnum$1 [L]
-RewriteRule google(.*) google$1 [L]
-RewriteRule ^data2/(.*)$ data2/$1 [L]
 RewriteRule ^rencontres/(.*)$ data2/rencontres/$1 [L]
 RewriteRule ^dam.incertitudes forumincertitudes.html [L]
 RewriteRule ^20([0-9]*)$ mascot$1.html [L]
 RewriteRule ^20([0-9]*)/$ mascot$1.html [L]
 RewriteRule ^media/(.*)$ data/media/$1 [L]
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ([a-zA-Z0-9_\-]*)\.html index.php?id=$1 [L]
 </IfModule>
 
