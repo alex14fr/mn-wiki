@@ -19,8 +19,8 @@ if($_FILES['f']) {
 			$fnam=bin2hex(random_bytes(32));
 			file_put_contents("data3/mascot21_upload/".$_GET['mail']."/".$fnam."_name", $_FILES['f']['name'][$key]);
 			$muf=move_uploaded_file($_FILES['f']['tmp_name'][$key],"data3/mascot21_upload/".$_GET['mail']."/".$fnam);
-			if(!$mue) 
-				$str.="Move error during upload of ".$_FILES['f']['tmp_name'][$key]." : ".$mue."\n";
+			if(!$muf) 
+				$str.="Move error during upload of ".$_FILES['f']['tmp_name'][$key]." : ".$muf."\n";
 			else {
 				$str.="Upload of ".$_FILES['f']['name'][$key]." succeeded. \n";
 				$str2.="https://gdr-mascotnum.fr/data3/mascot21_upload/".$_GET['mail']."/".$fnam."\n";
