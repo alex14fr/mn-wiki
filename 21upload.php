@@ -33,7 +33,10 @@ if($_FILES['f']) {
 			$str.="Error during upload of ".$_FILES['f']['name'][$key]." : ".$err."\n";
 	}
 	print "<b>".nl2br($str)."</b><hr>";
-	mail("alexandre.janon@u-psud.fr","mascot21 upload ".$_GET['mail'],$str."\n".$str2);
+	//mail("alex14fr@gmail.com","mascot21 upload ".$_GET['mail'],$str."\n".$str2);
+	$ff=popen("sendmail alex14fr@gmail.com");
+	fwrite($ff,"subject: mascot21 upload ".$_GET['mail']."\n\n".$str."\n".$str2."\n");
+	pclose($ff);
 
 }
 
