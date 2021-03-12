@@ -2,7 +2,9 @@
 $_GET['mail']=basename(urldecode($_GET['mail']));
 
 if(!hash_equals(sha1(file_get_contents("data/secret1").$_GET['mail']), $_GET['tok'])) {
-	print 'token error'; exit;
+	print 'token error '; 
+	print sha1(file_get_contents("data/secret1").$_GET['mail']);
+	exit;
 } 
 
 if(!in_array($_GET['mail'],file("data/mascot21_upload_allowed",FILE_IGNORE_NEW_LINES))) {
