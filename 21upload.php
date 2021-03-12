@@ -21,7 +21,7 @@ if($_FILES['f']) {
 			move_uploaded_file($_FILES['f']['tmp_name'][$key],"data3/mascot21_upload/".$_GET['mail']."/".$fnam);
 			$str.="Upload of ".$_FILES['f']['name'][$key]." succeeded. \n";
 			$str2.="https://gdr-mascotnum.fr/data3/mascot21_upload/".$_GET['mail']."/".$fnam."\n";
-		} else 
+		} else if($err != 4)
 			$str.="Error during upload of ".$_FILES['f']['name'][$key]." : ".$err."\n";
 	}
 	print "<b>".nl2br($str)."</b><hr>";
