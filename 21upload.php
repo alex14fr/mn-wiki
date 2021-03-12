@@ -1,29 +1,33 @@
 <?php 
-$_GET['mail']=basename(urldecode($_GET['mail']));
+$sec=file_get_contents("/persist/data/secret1");
+$mail=basename(urldecode($_GET['mail']));
+$tok=$_GET['tok'];
+$allowed_file="/persist/mascot21_upload/allowed";
+$upload_dir="/persist/mascot21_upload/$mail/";
 
-if(!hash_equals(sha1(file_get_contents("data/secret1").$_GET['mail']), $_GET['tok'])) {
+if(!hash_equals(sha1($sec.$mail), $tok)) {
 	print 'token error '; 
-	print sha1(file_get_contents("data/secret1").$_GET['mail']);
+	print sha1($sec.$mail);
 	exit;
 } 
 
-if(!in_array($_GET['mail'],file("data/mascot21_upload_allowed",FILE_IGNORE_NEW_LINES))) {
+if(!in_array($mail,file($allowed_file,FILE_IGNORE_NEW_LINES))) {
 	print 'not allowed'; exit;
 }
 
 if($_FILES['f']) {
-	mkdir("data3/mascot21_upload/".$_GET['mail']);
+	mkdir($upload_dir);
 	$str="";$str2="";
 	foreach($_FILES['f']['error'] as $key=>$err) {
 		if($err==UPLOAD_ERR_OK) {
 			$fnam=bin2hex(random_bytes(32));
-			file_put_contents("data3/mascot21_upload/".$_GET['mail']."/".$fnam."_name", $_FILES['f']['name'][$key]);
-			$muf=move_uploaded_file($_FILES['f']['tmp_name'][$key],"data3/mascot21_upload/".$_GET['mail']."/".$fnam);
+			file_put_contents($upload_dir.$fnam."_name", $_FILES['f']['name'][$key]);
+			$muf=move_uploaded_file($_FILES['f']['tmp_name'][$key],$upload_dir.$fnam);
 			if(!$muf) 
-				$str.="Move error during upload of ".$_FILES['f']['tmp_name'][$key]." : ".$muf."\n";
+				$str.="Move error during upload of ".$_FILES['f']['name'][$key]."\n";
 			else {
 				$str.="Upload of ".$_FILES['f']['name'][$key]." succeeded. \n";
-				$str2.="https://gdr-mascotnum.fr/data3/mascot21_upload/".$_GET['mail']."/".$fnam."\n";
+				$str2.="https://gdr-mascotnum.fr/21download.php?".$_GET['mail']."/".$fnam."\n";
 			}
 		} else if($err != 4)
 			$str.="Error during upload of ".$_FILES['f']['name'][$key]." : ".$err."\n";
