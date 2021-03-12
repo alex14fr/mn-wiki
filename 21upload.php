@@ -16,7 +16,7 @@ if(!in_array($mail,file($allowed_file,FILE_IGNORE_NEW_LINES))) {
 }
 
 if($_FILES['f']) {
-	mkdir($upload_dir);
+	@mkdir($upload_dir);
 	$str="";$str2="";
 	foreach($_FILES['f']['error'] as $key=>$err) {
 		if($err==UPLOAD_ERR_OK) {
