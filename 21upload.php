@@ -55,7 +55,7 @@ $dr=opendir("/persist/mascot21_upload/$mail");
 while($f=readdir($dr)) {
 	if(! ($f=='.' || $f=='..' || strpos($f,"_name")!==false)) {
 		$tok=sha1($sec."fil".urldecode("$mail%2F$f"));
-		print "<li> <a href=21view.php?f=$mail%2F$f&tok=$tok>file</a>";
+		print "<li> <a href=21view.php?f=$mail%2F$f&tok=$tok>".file_get_contents($f."_name")."</a>";
 	}
 }
 ?>
