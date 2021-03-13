@@ -1,5 +1,6 @@
 <?php 
 $sec=file_get_contents("/persist/data/secret1");
+$mailAdmin=trim(file_get_contents("/persist/mascot21_upload/mail"));
 $mail=basename(urldecode($_GET['mail']));
 $tok=$_GET['tok'];
 $allowed_file="/persist/mascot21_upload/allowed";
@@ -33,8 +34,7 @@ if($_FILES['f']) {
 			$str.="Error during upload of ".$_FILES['f']['name'][$key]." : ".$err."\n";
 	}
 	print "<b>".nl2br($str)."</b><hr>";
-	//mail("alex14fr@gmail.com","mascot21 upload ".$_GET['mail'],$str."\n".$str2);
-	$ff=popen("/usr/sbin/sendmail alex14fr@gmail.com","w");
+	$ff=popen("/usr/sbin/sendmail $mailAdmin","w");
 	fwrite($ff,"subject: mascot21 upload ".$_GET['mail']."\n\n".$str."\n".$str2."\n");
 	pclose($ff);
 
