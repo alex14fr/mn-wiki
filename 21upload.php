@@ -34,7 +34,7 @@ if($_FILES['f']) {
 	}
 	print "<b>".nl2br($str)."</b><hr>";
 	//mail("alex14fr@gmail.com","mascot21 upload ".$_GET['mail'],$str."\n".$str2);
-	$ff=popen("/usr/sbin/sendmail alexandre.janon@u-psud.fr","w");
+	$ff=popen("/usr/sbin/sendmail alex14fr@gmail.com","w");
 	fwrite($ff,"subject: mascot21 upload ".$_GET['mail']."\n\n".$str."\n".$str2."\n");
 	pclose($ff);
 
