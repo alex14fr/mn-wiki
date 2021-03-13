@@ -62,11 +62,12 @@ Please use the following form to send your file(s):
 <i>You may send multiple files at once provided the overall size of the files is not too large; if not, you can use this form multiple times for each file.</i>
 <div id=progress></div>
 <script>
+/*
 document.getElementById('form').onsubmit=function(ev) {
 	setInterval( function() {  
 		fetch('/21progress.php').then(resp=>resp.text())
 										.then(data=>document.getElementById('progress').innerHTML=data);
 		}, 2000); 
-}
+} */
 </script>
 
