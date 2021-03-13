@@ -23,8 +23,9 @@ if($_GET['fn']) {
 	$fnam=bin2hex(random_bytes(32));
 	stream_copy_to_stream(fopen("php://input","r"),fopen($upload_dir.$fnam,"w"));
 	file_put_contents($upload_dir.$fnam."_name", $_GET['fn']);
-	$str.="Upload of ".$_FILES['f']['name'][$key]." succeeded. \n";
-	$str2.="https://gdr-mascotnum.fr/21admin.php?f=".urlencode($_GET['mail']."/".$fnam)."\n";
+	$tok2=sha1($sec.'fil'.$_GET['mail'].'/'.$fnam);
+	$str.="Upload of ".$_GET['fn'].". \n";
+	$str2.="https://gdr-mascotnum.fr/21view.php?tok=".$tok2."&f=".urlencode($_GET['mail']."/".$fnam)."\n";
 	print 'ok';
 	$ff=popen("/usr/sbin/sendmail $mailAdmin","w");
 	fwrite($ff,"subject: mascot21 upload ".$_GET['mail']."\n\n".$str."\n".$str2."\n");
