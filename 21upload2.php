@@ -46,12 +46,14 @@ Please use the following form to send your file:
 <div id=progress></div>
 <script>
 var sendurl="/21upload2.php?mail=<?php print urlencode($mail); ?>&tok=<?php print urlencode($tok); ?>";
+var xhr;
+
 function updProgress(ev) {
-	document.getElementById('progress').innerHTML=ev.loaded+' / '+ev.total+' bytes';
+	document.getElementById('progress').innerHTML='uploaded '+ev.loaded+' / '+ev.total+' bytes';
 }
 
 function updError(ev) {
-	document.getElementById('progress').innerHTML='error';
+	document.getElementById('progress').innerHTML='error : '+xhr.status;
 }
 
 function updOK(ev) {
@@ -59,13 +61,14 @@ function updOK(ev) {
 }
 
 document.getElementById('submit').onclick=function(ev) {
+	document.getElementById('progress').innerHTML='uploading...';
 	var ff=document.getElementById('f');
 	var x=ff.files[0];
 	var sendurl2=sendurl+'&fn='+encodeURIComponent(x.name);
 	var xhr=new XMLHttpRequest();
-	xhr.onprogress=updProgress;
-	xhr.onerror=updError;
-	xhr.onload=updOK;
+	xhr.upload.onprogress=updProgress;
+	xhr.upload.onerror=updError;
+	xhr.upload.onload=updOK;
 	xhr.open('POST',sendurl2);
 	xhr.send(x);
 };
