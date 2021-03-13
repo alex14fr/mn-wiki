@@ -62,7 +62,7 @@ document.getElementById('submit').onclick=function(ev) {
 	var ff=document.getElementById('f');
 	var x=ff.files[0];
 	var sendurl2=sendurl+'&fn='+encodeURIComponent(x.name);
-	var xhr=new XMLHTTPRequest();
+	var xhr=new XMLHttpRequest();
 	xhr.onprogress=updProgress;
 	xhr.onerror=updError;
 	xhr.onload=updOK;
