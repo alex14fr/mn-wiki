@@ -16,7 +16,7 @@ if($_GET['l']) {
 }
 
 if($_GET['m']) {
-	foreach(file('/persist/mascot21_upload/allowed') as $mail) {
+	foreach(file('/persist/mascot21_upload/allowed',FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES) as $mail) {
 		print "https://gdr-mascotnum.fr/21upload.php?mail=".urlencode($mail)."&tok=".sha1(file_get_contents("/persist/data/secret1").$mail)."\n";
 
 	}

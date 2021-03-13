@@ -11,7 +11,7 @@ if(!hash_equals(sha1($sec.$mail), $tok)) {
 	exit;
 } 
 
-if(!in_array($mail,file($allowed_file,FILE_IGNORE_NEW_LINES))) {
+if(!in_array($mail,file($allowed_file,FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES))) {
 	print 'not allowed'; exit;
 }
 
