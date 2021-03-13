@@ -55,6 +55,7 @@ Please use the following form to send your file(s):
 <input type=file name=f[]><br>
 <input type=file name=f[]><br>
 <input type=submit value=Upload>
+<input type="hidden" name="<?php echo ini_get("session.upload_progress.name"); ?>" value="1">
 </form>
 <i>You may send multiple files at once provided the overall size of the files is not too large; if not, you can use this form multiple times for each file.</i>
 <div id=progress></div>
