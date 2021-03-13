@@ -46,9 +46,28 @@ Please use the following form to send your file:
 <div id=progress></div>
 <script>
 var sendurl="/21upload2.php?mail=<?php print urlencode($mail); ?>&tok=<?php print urlencode($tok); ?>";
+function updProgress(ev) {
+	document.getElementById('progress').innerHTML=ev.loaded+' / '+ev.total+' bytes';
+}
+
+function updError(ev) {
+	document.getElementById('progress').innerHTML='error';
+}
+
+function updOK(ev) {
+	document.getElementById('progress').innerHTML='file upload successful';
+}
+
 document.getElementById('submit').onclick=function(ev) {
 	var ff=document.getElementById('f');
-
+	ff.files.map(function(x) {
+		var sendurl2=sendurl+'&fn='+encodeURIComponent(x.name);
+		var xhr=new XMLHTTPRequest();
+		xhr.onprogress=updProgress;
+		xhr.onerror=updError;
+		xhr.onload=updOK;
+		xhr.open('POST',sendurl2);
+		xhr.send());
 }
 </script>
 
