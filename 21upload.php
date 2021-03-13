@@ -7,7 +7,7 @@ $upload_dir="/persist/mascot21_upload/$mail/";
 
 if(!hash_equals(sha1($sec.$mail), $tok)) {
 	print 'token error '; 
-	print sha1($sec.$mail);
+//	print sha1($sec.$mail);
 	exit;
 } 
 
@@ -27,14 +27,14 @@ if($_FILES['f']) {
 				$str.="Move error during upload of ".$_FILES['f']['name'][$key]."\n";
 			else {
 				$str.="Upload of ".$_FILES['f']['name'][$key]." succeeded. \n";
-				$str2.="https://gdr-mascotnum.fr/21download.php?".$_GET['mail']."/".$fnam."\n";
+				$str2.="https://gdr-mascotnum.fr/21admin.php?f=".urlencode($_GET['mail']."/".$fnam)."\n";
 			}
 		} else if($err != 4)
 			$str.="Error during upload of ".$_FILES['f']['name'][$key]." : ".$err."\n";
 	}
 	print "<b>".nl2br($str)."</b><hr>";
 	//mail("alex14fr@gmail.com","mascot21 upload ".$_GET['mail'],$str."\n".$str2);
-	$ff=popen("/usr/sbin/sendmail alex14fr@gmail.com","w");
+	$ff=popen("/usr/sbin/sendmail alexandre.janon@u-psud.fr","w");
 	fwrite($ff,"subject: mascot21 upload ".$_GET['mail']."\n\n".$str."\n".$str2."\n");
 	pclose($ff);
 
