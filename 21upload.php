@@ -49,13 +49,19 @@ Please use the following form to send your file:
 <div id=progress></div>
 <p>
 <h3>Your files</h3>
+<ul>
 <?php
-foreach(readdir("/persist/mascot21_upload/$mail") as $f) {
-	print $f;
+$dr=opendir("/persist/mascot21_upload/$mail");
+while($f=readdir($dr)) {
+	if($f=='.' || $f=='..' || strpos($f,"_name")!==false) {
+		$tok=sha1($sec."fil".urldecode("$mail%2F$f"));
+		print "<li> <a href=21view.php?f=$mail%2F$f&tok=$tok>file</a>";
+	}
 }
 ?>
+</ul>
 <script>
-var sendurl="/21upload2.php?mail=<?php print urlencode($mail); ?>&tok=<?php print urlencode($tok); ?>";
+var sendurl="/21upload.php?mail=<?php print urlencode($mail); ?>&tok=<?php print urlencode($tok); ?>";
 var xhr;
 
 function updProgress(ev) {
@@ -68,6 +74,7 @@ function updError(ev) {
 
 function updOK(ev) {
 	document.getElementById('progress').innerHTML='file upload successful';
+	reload();
 }
 
 document.getElementById('submit').onclick=function(ev) {
