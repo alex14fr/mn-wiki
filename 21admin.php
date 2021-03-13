@@ -7,7 +7,7 @@ if($_POST['key']!=md5(file_get_contents("/persist/data/secret1"))) {
 if($_GET['f']) {
 	$f=urldecode($_GET['f']);
 	header('content-type: application/octet-stream');
-	header('content-disposition: attachment;filename="'.file_get_contents('/persist/mascot21_upload/'.$f.'_name'));
+	header('content-disposition: attachment;filename="'.file_get_contents('/persist/mascot21_upload/'.$f.'_name').'"');
 	readfile('/persist/mascot21_upload/'.$f);
 }
 
