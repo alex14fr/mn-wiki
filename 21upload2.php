@@ -67,7 +67,8 @@ document.getElementById('submit').onclick=function(ev) {
 		xhr.onerror=updError;
 		xhr.onload=updOK;
 		xhr.open('POST',sendurl2);
-		xhr.send());
-}
+		xhr.send();
+	});
+};
 </script>
 
