@@ -62,18 +62,22 @@ function auth_login($login, $pass)
 {
     $login = san_filename($login);
     $lspl = auth_getline($login);
+	 session_start();
     if ($lspl) {
         $hashpass = $lspl[1];
         if (password_verify($pass, $hashpass)) {
             $_SESSION['auth_user'] = $login;
+				session_write_close();
             auth_changePassword($login, $pass);
             return(true);
         } else {
             $_SESSION['auth_user'] = '';
+				session_write_close();
             return(false);
         }
     }
     $_SESSION['auth_user'] = '';
+	 session_write_close();
     return(false);
 }
 
@@ -122,7 +126,9 @@ function auth_isAdmin()
 
 function auth_logout()
 {
+	session_start();
     $_SESSION['auth_user'] = '';
+	 session_write_close();
 }
 
 function genrepwhash($login, $curpwd)

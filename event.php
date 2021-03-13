@@ -34,7 +34,7 @@ include_once "utils.php";
 canonical();
 include_once "auth.php";
 if (!isset($_SESSION)) {
-    session_start();
+    session_start(["read_and_close"=>true]);
 }
 sendCsp();
 header("X-Robots-Tag: noindex");

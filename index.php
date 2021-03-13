@@ -40,7 +40,7 @@ include_once "parse.php";
 include_once "auth.php";
 
 if (!isset($_SESSION)) {
-    session_start();
+    session_start(["read_and_close"=>true]);
 }
 $addCsp = "";
 if (!empty($_GET['do']) && $_GET['do'] == 'edit') {
@@ -181,7 +181,9 @@ if (!empty($_GET['do'])) {
 					die403("unauthorized");
 				}
 				file_put_contents($editableDir . "/" . $pageId, "");
+				session_start();
 				$_SESSION['x-xtok']='null';
+				session_write_close();
 				print "Page $pageId contrib-writable.  <a href=index.php?id=$pageId>Back</a>";
 				exit;
 			case "revokeEdit":
@@ -189,7 +191,9 @@ if (!empty($_GET['do'])) {
 					die403("unauthorized");
 				}
 				unlink($editableDir . "/" . $pageId);
+				session_start();
 				$_SESSION['x-xtok']='null';
+				session_write_close();
 				print "Page $pageId not contrib-writable.  <a href=index.php?id=$pageId>Back</a>";
 				exit;
 		  case "diff":

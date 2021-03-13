@@ -36,7 +36,7 @@ canonical();
 include_once "auth.php";
 include_once "conf/conf.php";
 if (!isset($_SESSION)) {
-    session_start();
+    session_start(["read_and_close"=>true]);
 }
 if (!auth_isContrib()) {
     die("not authorized");

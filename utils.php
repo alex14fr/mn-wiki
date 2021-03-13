@@ -140,7 +140,9 @@ function get_random()
 
 function gen_xtok($namespace = "")
 {
+	session_start();
     $_SESSION["xtok-$namespace"] = get_random();
+	 session_write_close();
 }
 
 function pr_xtok($namespace = "")
@@ -154,7 +156,9 @@ function chk_xtok($namespace = "")
     if (empty($_REQUEST["xtok"]) || empty($_SESSION[$k]) || !hash_equals($_SESSION[$k], $_REQUEST["xtok"])) {
         die('xtok verification failed');
     }
+	 session_start();
     $_SESSION[$k] = "*invalid*";
+	 session_write_close();
 }
 
 
