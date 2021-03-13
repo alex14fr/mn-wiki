@@ -45,7 +45,15 @@ Please use the following form to send your file:
 <input id=f type=file>
 <input id=submit type=button value=Submit>
 </form>
+<p>
 <div id=progress></div>
+<p>
+<h3>Your files</h3>
+<?php
+foreach(readdir("/persist/mascot21_upload/$mail") as $f) {
+	print $f;
+}
+?>
 <script>
 var sendurl="/21upload2.php?mail=<?php print urlencode($mail); ?>&tok=<?php print urlencode($tok); ?>";
 var xhr;
