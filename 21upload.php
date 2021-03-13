@@ -15,8 +15,6 @@ if(!in_array($mail,file($allowed_file,FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINE
 	print 'not allowed'; exit;
 }
 
-session_start();
-
 if($_GET['fn']) {
 	@mkdir($upload_dir);
 	$str="";$str2="";
