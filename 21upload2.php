@@ -25,10 +25,11 @@ if($_GET['fn']) {
 	file_put_contents($upload_dir.$fnam."_name", $_GET['fn']);
 	$str.="Upload of ".$_FILES['f']['name'][$key]." succeeded. \n";
 	$str2.="https://gdr-mascotnum.fr/21admin.php?f=".urlencode($_GET['mail']."/".$fnam)."\n";
-	print "<b>".nl2br($str)."</b><hr>";
+	print 'ok';
 	$ff=popen("/usr/sbin/sendmail $mailAdmin","w");
 	fwrite($ff,"subject: mascot21 upload ".$_GET['mail']."\n\n".$str."\n".$str2."\n");
 	pclose($ff);
+	exit;
 }
 ?>
 <!doctype html>
@@ -49,7 +50,7 @@ var sendurl="/21upload2.php?mail=<?php print urlencode($mail); ?>&tok=<?php prin
 var xhr;
 
 function updProgress(ev) {
-	document.getElementById('progress').innerHTML='uploaded '+ev.loaded+' / '+ev.total+' bytes';
+	document.getElementById('progress').innerHTML='uploaded '+ev.loaded+' / '+ev.total+' bytes ('+(100*ev.loaded/ev.total)+' %)';
 }
 
 function updError(ev) {
