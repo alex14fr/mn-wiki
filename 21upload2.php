@@ -41,7 +41,7 @@ You can prepare the video files using your favorite movie recording application,
 Please use the following form to send your file:
 <form>
 <input id=f type=file>
-<button role=button id=submit>Submit</button>
+<input id=submit value=Submit>
 </form>
 <div id=progress></div>
 <script>
