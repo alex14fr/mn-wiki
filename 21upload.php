@@ -67,7 +67,7 @@ var sendurl="21upload.php?mail=<?php print urlencode($mail); ?>&tok=<?php print 
 var xhr;
 
 function updProgress(ev) {
-	document.getElementById('progress').innerHTML='uploaded '+ev.loaded+' / '+ev.total+' bytes ('+Math.round(100*ev.loaded/ev.total)+' %)';
+	document.getElementById('progress').innerHTML='uploaded '+ev.loaded+' / '+ev.total+' bytes ('+Math.round(100*ev.loaded/ev.total, 2)+' %)';
 }
 
 function updError(ev) {
