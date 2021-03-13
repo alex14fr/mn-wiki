@@ -62,7 +62,8 @@ Please use the following form to send your file(s):
 <script>
 document.getElementById('form').onsubmit=function(ev) {
 	setInterval( function() {  
-		fetch('/21progress.php').then(resp=>document.getElementById('progress').innerHTML=resp.text());
+		fetch('/21progress.php').then(resp=>resp.text())
+										.then(data=>document.getElementById('progress').innerHTML=data);
 		}, 2000); 
 }
 </script>
