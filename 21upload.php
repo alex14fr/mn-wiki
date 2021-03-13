@@ -54,8 +54,8 @@ Please use the following form to send your file:
 $dr=opendir("/persist/mascot21_upload/$mail");
 while($f=readdir($dr)) {
 	if(! ($f=='.' || $f=='..' || strpos($f,"_name")!==false)) {
-		$tok=sha1($sec."fil".urldecode("$mail%2F$f"));
-		print "<li> <a href=21view.php?f=$mail%2F$f&tok=$tok>".file_get_contents("/persist/mascot21_upload/$mail/$f"."_name")."</a> [<a href=21view.php?f=$mail%2F$f&tok=$tok&del=1>Delete</a>]";
+		$tok2=sha1($sec."fil".urldecode("$mail%2F$f"));
+		print "<li> <a href=21view.php?f=$mail%2F$f&tok=$tok2>".file_get_contents("/persist/mascot21_upload/$mail/$f"."_name")."</a> [<a href=21view.php?f=$mail%2F$f&tok=$tok2&del=1>Delete</a>]";
 	}
 }
 ?>
