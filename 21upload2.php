@@ -60,15 +60,14 @@ function updOK(ev) {
 
 document.getElementById('submit').onclick=function(ev) {
 	var ff=document.getElementById('f');
-	ff.files.map(function(x) {
-		var sendurl2=sendurl+'&fn='+encodeURIComponent(x.name);
-		var xhr=new XMLHTTPRequest();
-		xhr.onprogress=updProgress;
-		xhr.onerror=updError;
-		xhr.onload=updOK;
-		xhr.open('POST',sendurl2);
-		xhr.send();
-	});
+	var x=ff.files[0];
+	var sendurl2=sendurl+'&fn='+encodeURIComponent(x.name);
+	var xhr=new XMLHTTPRequest();
+	xhr.onprogress=updProgress;
+	xhr.onerror=updError;
+	xhr.onload=updOK;
+	xhr.open('POST',sendurl2);
+	xhr.send(x);
 };
 </script>
 
