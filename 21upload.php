@@ -50,10 +50,19 @@ To prepare for the poster session of the MASCOT21 conference, we ask you to send
 You can send to us one video file (of you presenting your poster, or a screen presentation with aural comments, or both), or two synchronized video files (one with you, the other one for your screen presentation). You can <b>(must ?)</b> also send a PDF file of your poster that will serve as a support during audience's questions session.<p>
 You can prepare the video files using your favorite movie recording application, or you can use <a href="21record.php?mail=<?php print $_GET['mail'] ?>&tok=<?php print $_GET['tok'] ?>">this video recording web application</a>.<p>
 Please use the following form to send your file(s):
-<form enctype=multipart/form-data method=post>
+<form id=form enctype=multipart/form-data method=post>
 <input type=file name=f[]><br>
 <input type=file name=f[]><br>
 <input type=file name=f[]><br>
 <input type=submit value=Upload>
 </form>
 <i>You may send multiple files at once provided the overall size of the files is not too large; if not, you can use this form multiple times for each file.</i>
+<div id=progress></div>
+<script>
+document.getElementById('form').onsubmit=function(ev) {
+	setInterval( function() {  
+		fetch('/21progress.php').then(resp=>document.getElementById('progress').innerHTML=resp.text());
+		}, 2000); 
+}
+</script>
+

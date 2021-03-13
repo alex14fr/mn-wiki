@@ -37,7 +37,7 @@ var recorder_screen=false, recorder_cam=false;
 var blobScreen=false, blobCam=false;
 var desktopM=false, micM=false, camM=false;
 
-async function startrecording() {
+async function startrecording(ev) {
 	document.getElementById('savescreen').disabled=true;
 	document.getElementById('savecam').disabled=true;
 	recorder_screen=recorder_cam=blobScreen=blobCam=false;
