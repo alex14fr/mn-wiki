@@ -12,6 +12,7 @@ foreach(file("/persist/mascot21_upload/allowed",FILE_IGNORE_NEW_LINES|FILE_SKIP_
 	print "<a href=21upload.php?mail=".urlencode($l)."&tok=".sha1($sec1.$l).">".$l."</a><br>";
 }
 ?>
+<p>
 <textarea cols=60 rows=12>
 <?php
 foreach(file("/persist/mascot21_upload/allowed",FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES) as $l) {
