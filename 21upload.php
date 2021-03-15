@@ -5,6 +5,7 @@ $mail=basename(urldecode($_GET['mail']));
 $tok=$_GET['tok'];
 $allowed_file="/persist/mascot21_upload/allowed";
 $upload_dir="/persist/mascot21_upload/$mail/";
+mkdir($upload_dir);
 
 if(!hash_equals(sha1($sec.$mail), $tok)) {
 	print 'token error '; 
