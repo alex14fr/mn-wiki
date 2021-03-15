@@ -49,7 +49,7 @@ If you have any question regarding the process, you can send mail to alexandre.j
 Best regards,
 
 EOF
-)|msmtp -t -a psud <?php print $l; ?> 
+)|msmtp -t -a psud 
 <?php
 }
 ?>
