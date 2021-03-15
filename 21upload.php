@@ -35,9 +35,18 @@ if($_GET['fn']) {
 <meta name=viewport value="width=device-width">
 <style>body { line-height: 1.7; font-size: 18px;  font-family:sans-serif;}</style>
 <h2>MASCOT21 Days - Poster session - Upload files</h2>
-To prepare for the poster session of the MASCOT21 conference, we ask you to send to us a video recording containing your presentation (of <i>5 minutes maximum</i>) before <b>XXXX</b>.<p>
-You can send to us one video file (of you presenting your poster, or a screen presentation with aural comments, or both), or two synchronized video files (one with you, the other one for your screen presentation). You can <b>(must ?)</b> also send a PDF file of your poster that will serve as a support during audience's questions session.<p>
+The session poster of the MASCOT21 conference is shared in two parallel sessions on April, the 28th, organized as follows:
+<ul>
+<li>4:00-4:45 pm a poster blitz during which a video with all recorded presentations of the session will be presented,
+<li>4:45-5:45 pm a 1 hour question and answer session during which, based on the a pdf support, you will defend your poster work.
+</ul>
+
+To prepare the session for the poster session of the MASCOT21 conference, we ask you to send to us a video recording containing your presentation (of 5 minutes maximum) before <b>April 20th</b>. You can send to us <b>one video file</b> (of you commenting your presentation, or a screen presentation with aural comments, or both), or <b>two synchronized video files</b> (one with you, the other one for your screen presentation). <p>
+
 You can prepare the video files using your favorite movie recording application, or you can use <a href="21videorec.php?mail=<?php print $_GET['mail'] ?>&tok=<?php print $_GET['tok'] ?>">this video recording web application</a>.<p>
+
+<b>We also need a PDF file</b> of your presentation that you will probably share as a support during audience's question session. <p>
+
 Please use the following form to send each of your files (please keep each file under 80 MB) :
 <form>
 <input id=f type=file>
