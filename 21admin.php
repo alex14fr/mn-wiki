@@ -43,6 +43,7 @@ If you have any question regarding the process, you can send mail to alexandre.j
 Best regards,
 
 EOF)|msmtp -a psud <?php print $l; ?> alexandre.janon@u-psud.fr bertrand.iooss@edf.fr clementine.prieur@univ-grenoble-alpes.fr celine.helbert@ec-lyon.fr anthony.nouy@ec-nantes.fr christophette.blanchet@ec-lyon.fr
+<?php
 }
 ?>
 </textarea>
