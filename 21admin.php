@@ -18,12 +18,12 @@ foreach(file("/persist/mascot21_upload/allowed",FILE_IGNORE_NEW_LINES|FILE_SKIP_
 	?>
 (cat << EOF
 From: Alexandre Janon (GDR MASCOT-NUM) <alexandre.janon@u-psud.fr>
-To: <?php print $l; ?>
+To: <<?php print $l; ?>>
 Subject: MASCOT21 Poster session instructions
 Content-type: text/plain
 Message-id: <?php print sha1(time().sha1($l)); ?>@u-psud.fr
 Mime-version: 1.0
-Date: <?php print date(DATE_RFC822, time()); ?>
+Date: <?php print date(DATE_RFC822, time())."\n"; ?>
 
 Dear all,
 
@@ -38,9 +38,9 @@ You can send to us one video file (of you commenting your presentation, or a scr
 
 We also need a PDF file of your presentation that you will probably share as a support during audience's question session. 
 
-Web form for uploading your files (mandatory) : https://gdr-mascotnum.fr/21upload.php?mail=<?php print $l; ?>&tok=<?php print sha1($sec1.$l); ?>
+Web form for uploading your files (mandatory) : https://gdr-mascotnum.fr/21upload.php?mail=<?php print $l; ?>&tok=<?php print sha1($sec1.$l)."\n"; ?>
 
-Web application for video recording (optional) : https://gdr-mascotnum.fr/21videorec.php?mail=<?php print $l; ?>&tok=<?php print sha1($sec1.$l); ?>
+Web application for video recording (optional) : https://gdr-mascotnum.fr/21videorec.php?mail=<?php print $l; ?>&tok=<?php print sha1($sec1.$l)."\n"; ?>
 
 If you have any question regarding the process, you can send mail to alexandre.janon@u-psud.fr .
 
