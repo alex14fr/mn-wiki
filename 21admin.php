@@ -19,7 +19,7 @@ foreach(file("/persist/mascot21_upload/allowed",FILE_IGNORE_NEW_LINES|FILE_SKIP_
 (cat << EOF
 From: Alexandre Janon (GDR MASCOT-NUM) <alexandre.janon@u-psud.fr>
 To: <?php print $l."\n"; ?>
-Cc: alexandre.janon@u-psud.fr
+Cc: alexandre.janon@u-psud.fr,bertrand.iooss@edf.fr,clementine.prieur@univ-grenoble-alpes.fr,celine.helbert@ec-lyon.fr,anthony.nouy@ec-nantes.fr,christophette.blanchet@ec-lyon.fr
 Subject: MASCOT21 Poster session instructions
 Content-type: text/plain
 Message-id: <<?php print sha1(time().sha1($l)); ?>@u-psud.fr>
@@ -48,7 +48,7 @@ If you have any question regarding the process, you can send mail to alexandre.j
 Best regards,
 
 EOF
-)|msmtp -t -a psud <?php print $l; ?> #alexandre.janon@u-psud.fr bertrand.iooss@edf.fr clementine.prieur@univ-grenoble-alpes.fr celine.helbert@ec-lyon.fr anthony.nouy@ec-nantes.fr christophette.blanchet@ec-lyon.fr
+)|msmtp -t -a psud <?php print $l; ?> 
 <?php
 }
 ?>
