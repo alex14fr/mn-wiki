@@ -1,5 +1,9 @@
 <!doctype html>
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+
 $sec=file_get_contents("/persist/data/secret2");
 $sec1=file_get_contents("/persist/data/secret1");
 $key=sha1($sec);
