@@ -17,13 +17,13 @@ foreach(file("/persist/mascot21_upload/allowed",FILE_IGNORE_NEW_LINES|FILE_SKIP_
 foreach(file("/persist/mascot21_upload/allowed",FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES) as $l) {
 	?>
 (cat << EOF
-from: Alexandre Janon (GDR MASCOT-NUM) <alexandre.janon@u-psud.fr>
-to: <?php print $l; ?>
-subject: MASCOT21 Poster session instructions
-content-type: text/plain
-message-id: <?php print sha1(time().sha1($l)); ?>@u-psud.fr
-mime-version: 1.0
-date: <?php print date(DATE_RFC822, time()); ?>
+From: Alexandre Janon (GDR MASCOT-NUM) <alexandre.janon@u-psud.fr>
+To: <?php print $l; ?>
+Subject: MASCOT21 Poster session instructions
+Content-type: text/plain
+Message-id: <?php print sha1(time().sha1($l)); ?>@u-psud.fr
+Mime-version: 1.0
+Date: <?php print date(DATE_RFC822, time()); ?>
 
 Dear all,
 
