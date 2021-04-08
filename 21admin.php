@@ -7,7 +7,7 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 $sec=file_get_contents("/persist/data/secret2");
 $sec1=file_get_contents("/persist/data/secret1");
 $key=sha1($sec);
-if(!hash_equals($_GET['tok'],$key)) { print "token error"; exit; }
+if(!isset($_GET['tok']) || !hash_equals($_GET['tok'],$key)) { print "token error"; exit; }
 foreach(file("/persist/mascot21_upload/allowed",FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES) as $l) {
 	print "<a href=21upload.php?mail=".urlencode($l)."&tok=".sha1($sec1.$l).">".$l."</a><br>";
 }
