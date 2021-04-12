@@ -21,13 +21,18 @@ foreach(file("/persist/mascot21_upload/allowed",FILE_IGNORE_NEW_LINES|FILE_SKIP_
 From: Alexandre Janon (GDR MASCOT-NUM) <alexandre.janon@u-psud.fr>
 To: <?php print $l."\n"; ?>
 Cc: alexandre.janon@u-psud.fr,bertrand.iooss@edf.fr,clementine.prieur@univ-grenoble-alpes.fr,celine.helbert@ec-lyon.fr,anthony.nouy@ec-nantes.fr,christophette.blanchet@ec-lyon.fr
-Subject: MASCOT21 Poster session instructions
+Subject: Reminder - MASCOT21 Poster session
 Content-type: text/plain
 Message-id: <<?php print sha1(time().sha1($l)); ?>@u-psud.fr>
 Mime-version: 1.0
 Date: <?php print date(DATE_RFC822, time())."\n"; ?>
 
-Dear all,
+Dear Sir/Madam,
+
+We sent this gentle reminder to you, as we have not received your presentation yet (please signal it to us if you sent it).
+
+Best regards,
+
 
 The session poster of the MASCOT21 conference is shared in two parallel sessions on April, the 28th, organized as follows:
 
