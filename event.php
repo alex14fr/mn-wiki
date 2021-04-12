@@ -76,7 +76,7 @@ function protect($str)
 
 function voitMails()
 {
-    if (auth_isAdmin()) {
+    if (auth_isAdmin() || auth_canEdit($_GET['id'])) {
         return true;
     }
 
