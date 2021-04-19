@@ -103,7 +103,7 @@ function listeInscrits()
 	 $listeMails = implode(",",$listeMailsA);
     $out .= "</ul>";
     if (voitMails()) {
-        $out .= "<textarea rows=10 cols=60>$listeMails</textarea><p><b>".count($listeMails)." inscrits</b>;
+        $out .= "<textarea rows=10 cols=60>$listeMails</textarea><p><b>".count($listeMailsA)." inscrits</b>;
     }
     return $out;
 }
