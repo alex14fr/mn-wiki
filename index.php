@@ -253,7 +253,7 @@ if (!empty($_POST['do'])) {
             if (empty($_POST['e']) || empty($_POST['u']) || empty($_POST['n']) || empty($_POST['p']) || empty($_POST['p2'])) {
                 die("all form fields are required");
             }
-            auth_register($_POST['u'], $_POST['p'], $_POST['p2'], $_POST['n'], $_POST['e']);
+            auth_register($_POST['u'], $_POST['p'], $_POST['p2'], $_POST['n'], $_POST['e'], $_POST['sup']);
             print "Registration successful. <a href=\"?do=login\">Go to login page</a>";
             exit;
 

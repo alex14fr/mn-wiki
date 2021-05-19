@@ -262,7 +262,7 @@ function auth_resendpwd2($login, $tok)
     xmail($mailto, "Your password", "Your password is : $newpass");
 }
 
-function auth_register($u, $p, $p2, $n, $e)
+function auth_register($u, $p, $p2, $n, $e, $sup)
 {
     global $pwdFile, $secret3, $baseUrl, $clientIp;
     if ($p !== $p2) {
@@ -286,11 +286,15 @@ function auth_register($u, $p, $p2, $n, $e)
     auth_changeUser(false, $line);
 
     $hash = hash_hmac('sha256', $u, $secret3);
+	 $suplInfo="";
+	 foreach($sup as $fld=>$val) 
+		 $suplInfo .= "   $fld:   $val\r\n";
     sendNotify("register", "Moderation request", "New user registered on wiki : \r\n
    Username:    $u
    Real name:   $n
    Email:       $e
    IP:          $clientIp (" . gethostbyname($clientIp) . ")\r\n
+	$suplInfo\r\n
 Visit the following link to grant him edit rights:\r\n 
     $baseUrl" . "?do=addcontributor&login=$u&mail=$e&hash=$hash");
 }
