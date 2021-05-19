@@ -294,7 +294,7 @@ function auth_register($u, $p, $p2, $n, $e, $sup)
    Real name:   $n
    Email:       $e
    IP:          $clientIp (" . gethostbyname($clientIp) . ")\r\n
-	$suplInfo\r\n
+$suplInfo\r\n
 Visit the following link to grant him edit rights:\r\n 
     $baseUrl" . "?do=addcontributor&login=$u&mail=$e&hash=$hash");
 }
