@@ -288,7 +288,7 @@ function auth_register($u, $p, $p2, $n, $e, $sup)
     $hash = hash_hmac('sha256', $u, $secret3);
 	 $suplInfo="";
 	 foreach($sup as $fld=>$val) 
-		 $suplInfo .= "   $fld:   $val\r\n";
+		 $suplInfo .= "   $fld:   ".str_replace("&amp;","&",$val)."\r\n";
     sendNotify("register", "Moderation request", "New user registered on wiki : \r\n
    Username:    $u
    Real name:   $n
