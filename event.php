@@ -166,7 +166,7 @@ try {
 if (!empty($_POST['nom'])) {
     if (chk_xtok("event") || checkRecaptcha()) {
         $prenom = protect(htmlspecialchars(preg_replace("/,/", " ", $_POST["prenom"])));
-        $affil = protect(htmlspecialchars(preg_replace("/,/", " ", $_POST["affil"])));
+        $affil = str_replace("&amp;","&",san_csv_ext(htmlspecialchars(preg_replace("/,/", " ", $_POST["affil"]))));
         $nom = protect(htmlspecialchars(preg_replace("/,/", " ", $_POST["nom"])));
         $email = protect(htmlspecialchars(preg_replace("/,/", " ", $_POST["email"])));
         $email = san_csv($email);

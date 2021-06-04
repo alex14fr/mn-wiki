@@ -96,6 +96,11 @@ function san_csv($string)
     return preg_replace("/[^ a-zA-Z0-9\-_\.@éèçàäëüïöâêîôûùŸÿŷŶâêîôûÉÈÇÀÄËÜÏÖÂÊÎÔÛÙ]/", " ", $string);
 }
 
+function san_csv_ext($string)
+{
+    return preg_replace("/[^ a-zA-Z0-9\-_\.@éèçàäëüïöâêîôûùŸÿŷŶâêîôûÉÈÇÀÄËÜÏÖÂÊÎÔÛÙ&;]/", " ", $string);
+}
+
 function san_diff($string)
 {
     return preg_replace("/[^ \r\na-zA-Z0-9\[\](){}\/?=\\|#~&'\"µ%§:;\^!,*+\-_\.@éèçàäëüïöûùŸÿŷŶâêîôŷûÉÈÇÀÄËÜÏÖÂÊÎÔÛÙ]/", "", $string);
