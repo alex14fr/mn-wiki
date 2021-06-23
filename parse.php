@@ -452,6 +452,7 @@ function render_html($str, $pageId = "", $title = "")
 			  if (auth_isAdmin()) {
 				  session_start();
 				  $_SESSION['x-xtok'] = get_random();
+				  session_write_close();
 			  }
             $actions = (auth_canEdit($pageId) ? "<a href=\"index.php?do=edit&id=$pageId\">Edit this page</a>" : "") .
                        (auth_isCommittee() ? "<a href=\"index.php?do=revisions&id=$pageId\">Old revisions</a>" : "") .
