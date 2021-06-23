@@ -450,6 +450,7 @@ function render_html($str, $pageId = "", $title = "")
     if (!empty($pageId)) {
         if (!empty($_SESSION['auth_user'])) {
 			  if (auth_isAdmin()) {
+				  session_start();
 				  $_SESSION['x-xtok'] = get_random();
 			  }
             $actions = (auth_canEdit($pageId) ? "<a href=\"index.php?do=edit&id=$pageId\">Edit this page</a>" : "") .
