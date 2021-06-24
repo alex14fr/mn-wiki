@@ -34,7 +34,7 @@ if (!$nomf) {
     fetchFile($url, $sec, "@manifest", "MANIFEST.gz");
     system("gunzip MANIFEST.gz");
     rename("MANIFEST", "$outdir/MANIFEST");
-    print 'ok\n';
+    print "ok\n";
 }
 
 $lines = file("$outdir/MANIFEST");

@@ -35,9 +35,10 @@ error_reporting(E_ERROR);
 if (empty($secret) || strlen($secret) < 20) {
     die("E");
 }
+/*
 if (!empty($allowedIp) && $_SERVER['HTTP_X_FORWARDED_FOR'] !== $allowedIp) {
     die("E");
-}
+} */
 
 if (!empty($_POST['f']) && !empty($_POST['tok']) && !empty($_POST['time'])) {
     $clntTime = preg_replace('/[^0-9]/', '', $_POST['time']);
