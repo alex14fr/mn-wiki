@@ -312,7 +312,7 @@ New: " . pageLink($pageId, true) . "
 
 ";
 				$txtbasehtml=nl2br($txtbase);
-				$dc=Diff::compare($oldtext, $newtext);
+				$dc=contextDiff(Diff::compare($oldtext, $newtext));
 
             sendNotify("change", "Page $pageId changed", "This is a multipart message in MIME format.
 
