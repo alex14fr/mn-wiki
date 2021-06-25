@@ -142,6 +142,14 @@ if (!empty($_GET['do'])) {
             $chgset = array_reverse(file("$metaDir/$pageId.changes"));
             $first = true;
 				$second = false;
+				if(strpos($chgset,"\x00")!==false) {
+					$out .= "! bad $metaDir/$pageId.changes<p>";
+					$chgset = array();
+					foreach(glob("$atticDir/$pageId.*.txt.gz") as $f) {
+						$fs = explode(".",$f);
+						$chgset[]=$fs[1]."\tx\tx\tx\tx";
+					}
+				}
             foreach ($chgset as $chg) {
                 $chgs = explode("\t", $chg);
                 $out .= "<input type=radio name=diffA value=" . ($first ? "\"\" checked=1 " : $chgs[0]) . ">" .
