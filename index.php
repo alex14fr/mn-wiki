@@ -139,7 +139,7 @@ if (!empty($_GET['do'])) {
                 die403("not authorized");
             }
             $out = "<h1>Revisions of " . $pageId . "</h1><form><input type=hidden name=do value=diff><input type=hidden name=id value=$pageId><input type=submit value=\"Diff selected\"><p>";
-            $chgsetInfo = array_reverse(file("$metaDir/$pageId.changes"));
+            $chgsetInfo = file("$metaDir/$pageId.changes");
             $first = true;
 				$second = false;
 				$chgset = array();
