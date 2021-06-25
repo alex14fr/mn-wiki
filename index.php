@@ -293,23 +293,30 @@ if (!empty($_POST['do'])) {
             unlink("$lockDir/$pageId");
 				include_once "class.Diff.php";
 				$boundary=bin2hex(openssl_random_pseudo_bytes(4));
+				$txtbase="Username:     " . $_SESSION['auth_user'] . "
+IP:           " . $clientIp . "
+
+Summary:      " . $ps . "
+
+Old: " . (empty($oldmt) ? "page created" : $baseUrl . "?id=$pageId&rev=$oldmt") . "
+New: " . pageLink($pageId, true) . 
+
+";
+				$txtbasehtml=nl2br($txtbase);
+				$dc=Diff::compare($oldtext, $newtext);
+
             sendNotify("change", "Page $pageId changed", "This is a multipart message in MIME format.
 
 --$boundary
 Content-type: text/plain; charset=utf8
 Content-transfer-encoding: 8bit
 
-Username:     " . $_SESSION['auth_user'] . "
-IP:           " . $clientIp . "
+$txtbase
 
-Summary:      " . $ps . "
-
-Old: " . (empty($oldmt) ? "page created" : $baseUrl . "?id=$pageId&rev=$oldmt") . "
-New: " . pageLink($pageId, true) . "
+".Diff::toString($dc)."
 
 --$boundary
 Content-type: text/html; charset=utf8
-Content-disposition: attachment; filename=diff.html
 Content-transfer-encoding: 8bit
 
 <!doctype html>
@@ -325,10 +332,12 @@ Content-transfer-encoding: 8bit
 }
 </style>
 <tt>
-" . (Diff::toTable(Diff::compare($oldtext, $newtext))) . "</tt>
+$txtbasehtml
+
+" . (Diff::toTable($dc)). "</tt>
 
 --$boundary--
-","Content-type: multipart/mixed; boundary=$boundary\r\n");
+","Content-type: multipart/alternative; boundary=$boundary\r\n");
             
             header("Location: " . pageLink($pageId));
             exit;
