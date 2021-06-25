@@ -307,7 +307,7 @@ Summary:      " . $ps . "
 Old: " . (empty($oldmt) ? "page created" : $baseUrl . "?id=$pageId&rev=$oldmt") . "
 New: " . pageLink($pageId, true) . "
 
---$boudary
+--$boundary
 Content-type: text/html; charset=utf8
 Content-disposition: attachment; filename=diff.html
 Content-transfer-encoding: 8bit
