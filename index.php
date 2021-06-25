@@ -315,7 +315,6 @@ $txtbase
 
 --$boundary
 Content-type: text/html; charset=utf8
-Content-disposition: attachment; filename=diff.html
 Content-transfer-encoding: 8bit
 
 <!doctype html>
@@ -334,7 +333,7 @@ Content-transfer-encoding: 8bit
 " . (Diff::toTable($dc)). "</tt>
 
 --$boundary--
-","Content-type: multipart/mixed; boundary=$boundary\r\n");
+","Content-type: multipart/alternative; boundary=$boundary\r\n");
             
             header("Location: " . pageLink($pageId));
             exit;
