@@ -230,7 +230,7 @@ if (!empty($_GET['do'])) {
 				print "+++ " . $pageId . " " . $t1 . "<p>";
 				//print textDiff2($f2,$f1);
 				include_once "class.Diff.php";
-				print Diff::toTable(Diff::compare($f2, $f1));
+				print Diff::toTable(contextDiff(Diff::compare($f2, $f1)));
 				print "</tt><p>";
 				print "<a href=?do=revisions&id=$pageId>Back</a></article></body></html>";
 				exit;
