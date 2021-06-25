@@ -142,7 +142,7 @@ if (!empty($_GET['do'])) {
             $chgset = array_reverse(file("$metaDir/$pageId.changes"));
             $first = true;
 				$second = false;
-				if(strpos($chgset,"\x00")!==false) {
+				if(strpos($chgset[0],"\x00")!==false) {
 					$out .= "! bad $metaDir/$pageId.changes<p>";
 					$chgset = array();
 					foreach(glob("$atticDir/$pageId.*.txt.gz") as $f) {
