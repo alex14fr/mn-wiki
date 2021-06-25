@@ -219,7 +219,9 @@ if (!empty($_GET['do'])) {
 				print "<html><head><meta charset=utf8><link rel=stylesheet href=static/mstyle.css?vy></head><body><article><tt>";
 				print "--- " . $pageId . " " . $t2 . "<br>";
 				print "+++ " . $pageId . " " . $t1 . "<p>";
-				print textDiff2($f2,$f1);
+				//print textDiff2($f2,$f1);
+				include_once "class.Diff.php";
+				print Diff:toHTML(Diff::compare($f1, $f2));
 				print "</tt><p>";
 				print "<a href=?do=revisions&id=$pageId>Back</a></article></body></html>";
 				exit;
