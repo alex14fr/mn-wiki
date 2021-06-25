@@ -143,16 +143,20 @@ if (!empty($_GET['do'])) {
             $first = true;
 				$second = false;
 				$chgset = array();
+				$tss = array();
 				foreach(glob("$atticDir/$pageId.*.txt.gz") as $f) {
 					$fs = explode(".",$f);
 					$chgset[]=array('ts'=>$fs[1],'msg'=>'x', 'author'=>'x'); 
+					$tss[]=$fs[1];
 				}
-				$chgset[]=array('ts'=>filemtime("$pageDir/$pageId.txt"),'msg'=>'x','author'=>'x');
+				$lastts=filemtime("$pageDir/$pageId.txt");
+				$chgset[]=array('ts'=>$lastts,'msg'=>'x','author'=>'x');
+				$tss[]=$lastts;
             foreach ($chgsetInfo as $chg) {
 					if(strpos($chg,"\x00")===false) {
 						 $chgs = explode("\t", $chg);
-						 if(array_key_exists($chgs[0], $chgset)) 
-							 $chgset[($firstInfo ? 0 : $chgs[0])]=array('msg'=>$chgs[5], 'author'=>$chgs[4]." (".$chgs[1].")");
+						 if($ii=array_search($chgs[0],$tss)) 
+							 $chgset[$ii]=array('ts'=>$chgs[0], 'msg'=>$chgs[5], 'author'=>$chgs[4]." (".$chgs[1].")");
 					}
 				}
 
