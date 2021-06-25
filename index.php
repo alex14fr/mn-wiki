@@ -230,7 +230,7 @@ if (!empty($_GET['do'])) {
 				print "+++ " . $pageId . " " . $t1 . "<p>";
 				//print textDiff2($f2,$f1);
 				include_once "class.Diff.php";
-				print Diff::toTable(contextDiff(Diff::compare($f2, $f1)));
+				print Diff::toTable(contextDiff(Diff::compare(san_diff($f2), san_diff($f1))));
 				print "</tt><p>";
 				print "<a href=?do=revisions&id=$pageId>Back</a></article></body></html>";
 				exit;
@@ -312,7 +312,7 @@ New: " . pageLink($pageId, true) . "
 
 ";
 				$txtbasehtml=nl2br($txtbase);
-				$dc=contextDiff(Diff::compare($oldtext, $newtext));
+				$dc=contextDiff(Diff::compare(san_diff($oldtext), san_diff($newtext)));
 
             sendNotify("change", "Page $pageId changed", "This is a multipart message in MIME format.
 
