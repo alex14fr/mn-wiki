@@ -299,7 +299,7 @@ IP:           " . $clientIp . "
 Summary:      " . $ps . "
 
 Old: " . (empty($oldmt) ? "page created" : $baseUrl . "?id=$pageId&rev=$oldmt") . "
-New: " . pageLink($pageId, true) . 
+New: " . pageLink($pageId, true) . "
 
 ";
 				$txtbasehtml=nl2br($txtbase);
