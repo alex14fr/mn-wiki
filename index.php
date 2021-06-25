@@ -143,9 +143,6 @@ if (!empty($_GET['do'])) {
             $first = true;
 				$second = false;
 				$z=file_get_contents("$metaDir/$pageId.changes");
-				print_r(strpos($z,"\x00\x00"));
-				print_r(strlen($z));
-				print_r($z);
 				if(strpos($z,"\x00\x00")!==false || strlen($z)<5) {
 					$out .= "! bad $metaDir/$pageId.changes<p>";
 					$chgset = array();
