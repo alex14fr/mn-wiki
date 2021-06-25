@@ -149,7 +149,7 @@ if (!empty($_GET['do'])) {
 				}
             foreach ($chgsetInfo as $chg) {
                 $chgs = explode("\t", $chg);
-					 $chgset[$chgs[0]]=array('msg'=>$chgs[5], 'author'=>$chgs[4]." (".$chgs[1].")";
+					 $chgset[$chgs[0]]=array('msg'=>$chgs[5], 'author'=>$chgs[4]." (".$chgs[1].")");
 				}
 
 				foreach ($chgset as $ts=>$info) {
