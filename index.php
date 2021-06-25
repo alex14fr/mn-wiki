@@ -158,7 +158,7 @@ if (!empty($_GET['do'])) {
 					}
 				}
 
-				foreach (array_reverse($chgset) as $ts=>$info) {
+				foreach ($chgset as $ts=>$info) {
                 $out .= "<input type=radio name=diffA value=" . ($first ? "\"\" checked=1 " : $ts) . ">" .
 					"<input type=radio name=diffB value=" . ($first ? "\"\"" : $ts) . ($second ? " checked=1" : "") . ">" .
 					 date('y/m/d H:i T', $ts) .
