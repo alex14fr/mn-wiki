@@ -179,5 +179,5 @@ function contextDiff($dc) {
 		} else 
 			$dcout[]=$dc[$i];
 	}
-	return($dcout)
+	return($dcout);
 }
