@@ -147,11 +147,11 @@ if (!empty($_GET['do'])) {
 					$fs = explode(".",$f);
 					$chgset[$fs[1]]=array('msg'=>'x', 'author'=>'x'); 
 				}
-				$firstInfo=true;
+				$chgset[filemtime("$pageDir/$pageId.txt")]=array('msg'=>'x','author'=>'x');
             foreach ($chgsetInfo as $chg) {
 					if(strpos($chg,"\x00")===false) {
 						 $chgs = explode("\t", $chg);
-						 if($firstInfo || array_key_exists($chgs[0], $chgset)) {
+						 if(array_key_exists($chgs[0], $chgset)) {
 							 $chgset[($firstInfo ? 0 : $chgs[0])]=array('msg'=>$chgs[5], 'author'=>$chgs[4]." (".$chgs[1].")");
 							 $firstInfo=false;
 						 }
