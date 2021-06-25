@@ -139,18 +139,22 @@ if (!empty($_GET['do'])) {
                 die403("not authorized");
             }
             $out = "<h1>Revisions of " . $pageId . "</h1><form><input type=hidden name=do value=diff><input type=hidden name=id value=$pageId><input type=submit value=\"Diff selected\"><p>";
-            $chgsetInfo = file("$metaDir/$pageId.changes");
+            $chgsetInfo = array_reverse(file("$metaDir/$pageId.changes"));
             $first = true;
 				$second = false;
 				$chgset = array();
-				foreach(array_reverse(glob("$atticDir/$pageId.*.txt.gz")) as $f) {
+				foreach(glob("$atticDir/$pageId.*.txt.gz") as $f) {
 					$fs = explode(".",$f);
 					$chgset[$fs[1]]=array('msg'=>'x', 'author'=>'x'); 
 				}
+				$firstInfo=true;
             foreach ($chgsetInfo as $chg) {
 					if(strpos($chg,"\x00")===false) {
 						 $chgs = explode("\t", $chg);
-						 $chgset[$chgs[0]]=array('msg'=>$chgs[5], 'author'=>$chgs[4]." (".$chgs[1].")");
+						 if($firstInfo || array_key_exists($chgs[0], $chgset)) {
+							 $chgset[($firstInfo ? 0 : $chgs[0])]=array('msg'=>$chgs[5], 'author'=>$chgs[4]." (".$chgs[1].")");
+							 $firstInfo=false;
+						 }
 					}
 				}
 
