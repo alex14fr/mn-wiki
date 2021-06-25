@@ -301,7 +301,7 @@ Summary:      " . $ps . "
 --- Old: " . (empty($oldmt) ? "page created" : $baseUrl . "?id=$pageId&rev=$oldmt") . "
 +++ New: " . pageLink($pageId, true) . "
 
-" . san_diff(Diff::toString(Diff::compare($oldtext, $newtext)));
+" . san_diff(Diff::toString(Diff::compare($oldtext, $newtext))));
             
             header("Location: " . pageLink($pageId));
             exit;
