@@ -330,6 +330,8 @@ Content-transfer-encoding: 8bit
 }
 </style>
 <tt>
+$txtbasehtml
+
 " . (Diff::toTable($dc)). "</tt>
 
 --$boundary--
