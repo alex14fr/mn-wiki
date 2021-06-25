@@ -221,7 +221,7 @@ if (!empty($_GET['do'])) {
 				print "+++ " . $pageId . " " . $t1 . "<p>";
 				//print textDiff2($f2,$f1);
 				include_once "class.Diff.php";
-				print Diff:toHTML(Diff::compare($f1, $f2));
+				print Diff::toHTML(Diff::compare($f1, $f2));
 				print "</tt><p>";
 				print "<a href=?do=revisions&id=$pageId>Back</a></article></body></html>";
 				exit;
@@ -291,6 +291,7 @@ if (!empty($_POST['do'])) {
             $cline = "$mt\t$clientIp\tE\t$pageId\t" . $_SESSION['auth_user'] . "\t" . $ps . "\n";
             file_put_contents("$metaDir/$pageId.changes", $cline, FILE_APPEND | LOCK_EX);
             unlink("$lockDir/$pageId");
+				include_once "class.Diff.php";
             sendNotify("change", "Page $pageId changed", "
 Username:     " . $_SESSION['auth_user'] . "
 IP:           " . $clientIp . "
@@ -300,7 +301,7 @@ Summary:      " . $ps . "
 --- Old: " . (empty($oldmt) ? "page created" : $baseUrl . "?id=$pageId&rev=$oldmt") . "
 +++ New: " . pageLink($pageId, true) . "
 
-" . san_diff(textDiff($oldtext, $newtext)));
+" . san_diff(Diff::toString(Diff::compare($oldtext, $newtext)));
             
             header("Location: " . pageLink($pageId));
             exit;
