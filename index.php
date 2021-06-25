@@ -145,20 +145,18 @@ if (!empty($_GET['do'])) {
 				$chgset = array();
 				foreach(glob("$atticDir/$pageId.*.txt.gz") as $f) {
 					$fs = explode(".",$f);
-					$chgset[$fs[1]]=array('msg'=>'x', 'author'=>'x'); 
+					$chgset[]=array('ts'=>$fs[1],'msg'=>'x', 'author'=>'x'); 
 				}
-				$chgset[filemtime("$pageDir/$pageId.txt")]=array('msg'=>'x','author'=>'x');
+				$chgset[]=array('ts'=>filemtime("$pageDir/$pageId.txt"),'msg'=>'x','author'=>'x');
             foreach ($chgsetInfo as $chg) {
 					if(strpos($chg,"\x00")===false) {
 						 $chgs = explode("\t", $chg);
-						 if(array_key_exists($chgs[0], $chgset)) {
+						 if(array_key_exists($chgs[0], $chgset)) 
 							 $chgset[($firstInfo ? 0 : $chgs[0])]=array('msg'=>$chgs[5], 'author'=>$chgs[4]." (".$chgs[1].")");
-							 $firstInfo=false;
-						 }
 					}
 				}
 
-				foreach ($chgset as $ts=>$info) {
+				foreach (array_reverse($chgset) as $ts=>$info) {
                 $out .= "<input type=radio name=diffA value=" . ($first ? "\"\" checked=1 " : $ts) . ">" .
 					"<input type=radio name=diffB value=" . ($first ? "\"\"" : $ts) . ($second ? " checked=1" : "") . ">" .
 					 date('y/m/d H:i T', $ts) .
