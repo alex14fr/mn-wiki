@@ -106,12 +106,12 @@ function san_diff($string)
     return preg_replace("/[^ \r\na-zA-Z0-9\[\](){}\/?=\\|#~&'\"µ%§:;\^!,*+\-_\.@éèçàäëüïöûùŸÿŷŶâêîôŷûÉÈÇÀÄËÜÏÖÂÊÎÔÛÙ]/", "", $string);
 }
 
-function sendNotify($reason, $subj, $body)
+function sendNotify($reason, $subj, $body, $hdrs="")
 {
     global $mailNotify;
 
     foreach ($mailNotify[$reason] as $to) {
-        xmail($to, $subj, $body);
+        xmail($to, $subj, $body, $hdrs);
     }
 
 	 file_put_contents($dataDir."/maillog","To: $to\r\nSubject: $subj\r\n$body\r\n\r\n",FILE_APPEND);
