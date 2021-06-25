@@ -313,6 +313,8 @@ Content-transfer-encoding: 8bit
 
 $txtbase
 
+" . Diff::toString($dc) . "
+
 --$boundary
 Content-type: text/html; charset=utf8
 Content-transfer-encoding: 8bit
