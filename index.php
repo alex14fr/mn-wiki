@@ -292,16 +292,43 @@ if (!empty($_POST['do'])) {
             file_put_contents("$metaDir/$pageId.changes", $cline, FILE_APPEND | LOCK_EX);
             unlink("$lockDir/$pageId");
 				include_once "class.Diff.php";
-            sendNotify("change", "Page $pageId changed", "
+				$boundary=bin2hex(openssl_random_pseudo_bytes(4));
+            sendNotify("change", "Page $pageId changed", "This is a multipart message in MIME format.
+
+--$boundary
+Content-type: text/plain; charset=utf8
+Content-transfer-encoding: 8bit
+
 Username:     " . $_SESSION['auth_user'] . "
 IP:           " . $clientIp . "
 
 Summary:      " . $ps . "
 
---- Old: " . (empty($oldmt) ? "page created" : $baseUrl . "?id=$pageId&rev=$oldmt") . "
-+++ New: " . pageLink($pageId, true) . "
+Old: " . (empty($oldmt) ? "page created" : $baseUrl . "?id=$pageId&rev=$oldmt") . "
+New: " . pageLink($pageId, true) . "
 
-" . san_diff(Diff::toString(Diff::compare($oldtext, $newtext))));
+--$boudary
+Content-type: text/html; charset=utf8
+Content-disposition: attachment; filename=diff.html
+Content-transfer-encoding: 8bit
+
+<!doctype html>
+<style>
+.diffInserted span {
+	border: 1px solid rgb(192,255,192);
+	background-color: rgb(224,255,224);
+}
+
+.diffDeleted span {
+	border: 1px solid rgb(255,192,192);
+	background-color: rgb(255,224,224);
+}
+</style>
+<tt>
+" . (Diff::toTable(Diff::compare($oldtext, $newtext))) . "</tt>
+
+--$boundary--
+","Content-type: multipart/mixed; boundary=$boundary\r\n");
             
             header("Location: " . pageLink($pageId));
             exit;
