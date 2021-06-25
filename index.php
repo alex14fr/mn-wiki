@@ -139,27 +139,27 @@ if (!empty($_GET['do'])) {
                 die403("not authorized");
             }
             $out = "<h1>Revisions of " . $pageId . "</h1><form><input type=hidden name=do value=diff><input type=hidden name=id value=$pageId><input type=submit value=\"Diff selected\"><p>";
-            $chgset = array_reverse(file("$metaDir/$pageId.changes"));
+            $chgsetInfo = array_reverse(file("$metaDir/$pageId.changes"));
             $first = true;
 				$second = false;
-				$z=file_get_contents("$metaDir/$pageId.changes");
-				if(strpos($z,"\x00\x00")!==false || strlen($z)<5) {
-					$out .= "! bad $metaDir/$pageId.changes<p>";
-					$chgset = array();
-					foreach(glob("$atticDir/$pageId.*.txt.gz") as $f) {
-						$fs = explode(".",$f);
-						$chgset[]=$fs[1]."\tx\tx\tx\tx";
-					}
+				$chgset = array();
+				foreach(glob("$atticDir/$pageId.*.txt.gz") as $f) {
+					$fs = explode(".",$f);
+					$chgset[$fs[1]]=array('msg'=>'x', 'author'=>'x'); 
 				}
-            foreach ($chgset as $chg) {
+            foreach ($chgsetInfo as $chg) {
                 $chgs = explode("\t", $chg);
-                $out .= "<input type=radio name=diffA value=" . ($first ? "\"\" checked=1 " : $chgs[0]) . ">" .
-					"<input type=radio name=diffB value=" . ($first ? "\"\"" : $chgs[0]) . ($second ? " checked=1" : "") . ">" .
-					 date('y/m/d H:i T', $chgs[0]) .
-                " <a href=?id=$pageId&rev=" . ($first ? "" : $chgs[0]) . ">View</a>" .
-                " <a href=?id=$pageId&rev=" . ($first ? "" : $chgs[0]) . "&do=edit>Revert</a>" .
-                " " . $chgs[5] .
-                " <span class=aIp>" . $chgs[4] . " (" . $chgs[1] . ")</span><br>";
+					 $chgset[$chgs[0]]=array('msg'=>$chgs[5], 'author'=>$chgs[4]." (".$chgs[1].")";
+				}
+
+				foreach ($chgset as $ts=>$info) {
+                $out .= "<input type=radio name=diffA value=" . ($first ? "\"\" checked=1 " : $ts) . ">" .
+					"<input type=radio name=diffB value=" . ($first ? "\"\"" : $ts) . ($second ? " checked=1" : "") . ">" .
+					 date('y/m/d H:i T', $ts) .
+                " <a href=?id=$pageId&rev=" . ($first ? "" : $ts) . ">View</a>" .
+                " <a href=?id=$pageId&rev=" . ($first ? "" : $ts) . "&do=edit>Revert</a>" .
+                " " . $info['msg'] .
+                " <span class=aIp>" . $info['author'] . "</span><br>";
 					 if ($second) {
 						 $second = false;
 					 }
