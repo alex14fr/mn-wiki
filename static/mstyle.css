@@ -128,7 +128,7 @@ li {
     list-style-type: none;
     margin: 0px;
     margin-bottom: 5px;
-    padding: 5px;
+    padding: 0px;
 }
 
 .menu li {
@@ -147,6 +147,7 @@ li {
 .menu ul > li {
     padding: 0px;
     margin-top: 5px;
+	 margin-bottom: 5px;
 /*    margin-left: 10px;*/
 /*    text-align: left;*/
 }
@@ -154,10 +155,6 @@ li {
 .menu li ul li {
     background-color:white;
     font-size:70%;
-}
-
-.menu li ul li a {
-    padding-left: 15px;
 }
 
 .box {
