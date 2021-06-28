@@ -145,7 +145,7 @@ li {
 }
 
 .menu ul > li:first-child {
-	margin-top: 5px;
+	margin-top: 2px;
 }
 
 .menu ul > li {
@@ -154,6 +154,10 @@ li {
 	 margin-bottom: 10px;
 /*    margin-left: 10px;*/
 /*    text-align: left;*/
+}
+
+.menu ul > li > b {
+	margin-bottom: 5px;
 }
 
 .menu ul > li > ul > li {
