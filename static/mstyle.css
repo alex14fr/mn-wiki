@@ -146,15 +146,17 @@ li {
 
 .menu ul > li {
     padding: 0px;
-    margin-top: 5px;
-	 margin-bottom: 5px;
+    margin-top: 8px;
+	 margin-bottom: 8px;
 /*    margin-left: 10px;*/
 /*    text-align: left;*/
 }
 
-.menu li ul li {
+.menu ul > li > ul > li {
     background-color:white;
     font-size:70%;
+	 margin-top:4px;
+	 margin-bottom:4px; 
 }
 
 .box {
