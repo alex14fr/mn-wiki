@@ -144,7 +144,7 @@ li {
     background-color: #222;
 }
 
-.menu li ul {
+.menu li > ul {
     padding: 0px;
     margin-top: 10px;
     margin-left: 10px;
