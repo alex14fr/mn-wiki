@@ -158,6 +158,7 @@ li {
 
 .menu ul > li > b {
 	margin-bottom: 5px;
+	display: block;
 }
 
 .menu ul > li > ul > li {
