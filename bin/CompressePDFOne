@@ -1,0 +1,13 @@
+#!/bin/sh
+f="$1"
+	if ! grep -q "$f" pdf.optimized; then
+		szAvant=$(stat -c %s "$f")
+		sh CompressePDF "$f"
+		szApres=$(stat -c %s "compress/$f")
+		if [ $szApres -lt $szAvant ]; then
+			mv "compress/$f" .
+		else
+			rm "compress/$f"
+		fi
+		echo "$f" >> pdf.optimized
+	fi

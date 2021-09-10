@@ -1,0 +1,6 @@
+#!/bin/sh
+set -x
+for f in *.pdf; do
+	sh CompressePDFOne "$f"
+done
+
