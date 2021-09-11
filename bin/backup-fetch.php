@@ -39,6 +39,7 @@ if (!$nomf) {
 
 $lines = file("$outdir/MANIFEST");
 print $lines[0];
+$toFetch="";
 foreach ($lines as $l) {
     $l = trim($l);
     if (strpos($l, "#") !== 0 && strpos($l, "find") !== 0 && $l != "E") {
@@ -55,9 +56,16 @@ foreach ($lines as $l) {
             print "skip\n";
         } else {
             @mkdir(dirname("$outdir/$mffname"), 0777, true);
-            print "fetch... ";
-            fetchFile($url, $sec, $mffname, "$outdir/$mffname");
-            print "ok\n";
+            print "to fetch\n";
+	    $toFetch.=$mffname."\n";
+	      //print "fetch... ";
+              //fetchFile($url, $sec, $mffname, "$outdir/$mffname");
+              //print "ok\n";
         }
     }
 }
+
+print "fetching tar file...\n";
+fetchFile($url, $sec, "@tar@$toFetch", "/tmp/backup-mnwiki.tar");
+system("tar xf /tmp/backup-mnwiki.tar -C $outdir");
+
