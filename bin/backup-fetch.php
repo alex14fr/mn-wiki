@@ -26,19 +26,17 @@ function fetchFile($url, $sec, $f, $out)
 
 $url = $argv[1];
 $sec = $argv[2];
-$nomf = $argv[3] ?? false;
+$tarmode = $argv[3] ?? false;
 $outdir = "sauve-persist";
+@mkdir($outdir);
 
-if (!$nomf) {
-    print 'fetch manifest... ';
-    fetchFile($url, $sec, "@manifest", "MANIFEST.gz");
-    system("gunzip MANIFEST.gz");
-    rename("MANIFEST", "$outdir/MANIFEST");
-    print "ok\n";
-}
+print 'fetch manifest... ';
+fetchFile($url, $sec, "@manifest", "$outdir/MANIFEST.gz");
+system("gunzip -c $outdir/MANIFEST.gz > $outdir/MANIFEST");
+unlink("$outdir/MANIFEST.gz");
+print "ok\n";
 
 $lines = file("$outdir/MANIFEST");
-print $lines[0];
 $toFetch="";
 foreach ($lines as $l) {
     $l = trim($l);
@@ -56,16 +54,25 @@ foreach ($lines as $l) {
             print "skip\n";
         } else {
             @mkdir(dirname("$outdir/$mffname"), 0777, true);
-            print "to fetch\n";
-	    $toFetch.=$mffname."\n";
-	      //print "fetch... ";
-              //fetchFile($url, $sec, $mffname, "$outdir/$mffname");
-              //print "ok\n";
+				if($tarmode) {
+					print "to fetch\n";
+					$toFetch.=$mffname."\n";
+				} else {
+	      		print "fetch... ";
+               fetchFile($url, $sec, $mffname, "$outdir/$mffname");
+               print "ok\n";
+				}
         }
     }
 }
 
-print "fetching tar file...\n";
-fetchFile($url, $sec, "@tar@$toFetch", "/tmp/backup-mnwiki.tar");
-system("tar xf /tmp/backup-mnwiki.tar -C $outdir");
+if($tarmode) {
+	print "fetching tar file...";
+	fetchFile($url, $sec, "@tar@$toFetch", "/tmp/backup-mnwiki.tar");
+	print "ok\nextracting tar file...";
+	system("tar xf /tmp/backup-mnwiki.tar -C $outdir");
+	print "ok\n";
+	system("rm -i /tmp/backup-mnwiki.tar");
+}
+
 
