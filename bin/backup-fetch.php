@@ -9,8 +9,7 @@ function fetchFile($url, $sec, $f, $out, $pipe=false)
 
     $context_options = array('http' => array('method' => 'POST',
                 'header' => "Content-type: application/x-www-form-urlencoded",
-                'content' => $data),
-			     'ssl' => array('verify_peer'=>false));
+                'content' => $data));
     $context = stream_context_create($context_options);
 
     $fhin = fopen($url, "rb", false, $context);
