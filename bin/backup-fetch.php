@@ -1,6 +1,6 @@
 <?php
 
-function fetchFile($url, $sec, $f, $out)
+function fetchFile($url, $sec, $f, $out, $pipe=false)
 {
     $query = array("time" => time());
     $query["tok"] = hash_hmac("sha256", $f, $sec . $query["time"]);
@@ -9,14 +9,18 @@ function fetchFile($url, $sec, $f, $out)
 
     $context_options = array('http' => array('method' => 'POST',
                 'header' => "Content-type: application/x-www-form-urlencoded",
-                'content' => $data));
+                'content' => $data),
+			     'ssl' => array('verify_peer'=>false));
     $context = stream_context_create($context_options);
 
     $fhin = fopen($url, "rb", false, $context);
 	 if(!$fhin) {
 		print "error fetching $url\n";
 	 }
-    $fhout = fopen($out, "wb");
+	 if($pipe)
+		 $fhout = $out;
+	 else 
+		 $fhout = fopen($out, "wb");
     while (!feof($fhin)) {
         fwrite($fhout, fread($fhin, 32768));
     }
@@ -67,12 +71,9 @@ foreach ($lines as $l) {
 }
 
 if($tarmode) {
-	print "fetching tar file...";
-	fetchFile($url, $sec, "@tar@$toFetch", "/tmp/backup-mnwiki.tar");
-	print "ok\nextracting tar file...";
-	system("tar xf /tmp/backup-mnwiki.tar -C $outdir");
-	print "ok\n";
-	system("rm -i /tmp/backup-mnwiki.tar");
+	print "fetching tar file...\n";
+	$hdl=popen("tar xv -C $outdir","w");
+	fetchFile($url, $sec, "@tar@$toFetch", $hdl, true);
 }
 
 
