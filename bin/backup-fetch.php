@@ -18,8 +18,10 @@ function fetchFile($url, $sec, $f, $out, $pipe=false)
 	 }
 	 if($pipe)
 		 $fhout = $out;
-	 else 
+	 else  {
+		unlink($out);
 		 $fhout = fopen($out, "wb");
+	 }
     while (!feof($fhin)) {
         fwrite($fhout, fread($fhin, 32768));
     }
