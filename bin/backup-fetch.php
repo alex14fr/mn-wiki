@@ -37,6 +37,7 @@ $outdir = "sauve-persist";
 
 print 'fetch manifest... ';
 fetchFile($url, $sec, "@manifest", "$outdir/MANIFEST.gz");
+unlink("$outdir/MANIFEST");
 system("gunzip -c $outdir/MANIFEST.gz > $outdir/MANIFEST");
 unlink("$outdir/MANIFEST.gz");
 print "ok\n";
