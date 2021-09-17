@@ -2,9 +2,11 @@
 
 $outdir = "sauve-persist";
 chdir($outdir);
-system("find . -type f > /tmp/xx");
+$tmpn=tempnam("/tmp/","xx");
+system("find . -type f > $tmpn");
 chdir("..");
-$files = file("/tmp/xx");
+$files = file($tmpn);
+unlink($tmpn);
 $mf = file("$outdir/MANIFEST");
 $mffiles = array();
 foreach ($mf as $l) {
