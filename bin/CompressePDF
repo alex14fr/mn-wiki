@@ -1,5 +1,5 @@
 #!/bin/sh
 set -x
 mkdir compress
-gs -dBATCH -dNOPAUSE "-sOutputFile=compress/`basename $1`" -sDEVICE=pdfwrite -dPDFSETTINGS=/ebook -dPDFA "$1"
+gs -dBATCH -dNOPAUSE "-sOutputFile=compress/`basename $1`" -sDEVICE=pdfwrite -dPDFSETTINGS=/printer -dPDFA "$1"
 
