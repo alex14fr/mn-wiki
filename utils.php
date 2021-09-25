@@ -36,6 +36,9 @@ function canonical()
 {
     global $canonicalProto, $canonicalHost;
     if (!empty($canonicalHost)) {
+		  if (empty($_SERVER["HTTP_X_FORWARDED_HOST"]) && empty($_SERVER["HTTP_HOST"])) {
+			  return;
+		  }
         if (empty($canonicalProto)) {
             $canonicalProto = ($_SERVER["HTTP_X_FORWARDED_PROTO"] ?? $_SERVER["REQUEST_SCHEME"]);
         }
