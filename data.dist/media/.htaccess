@@ -1,5 +1,0 @@
-order deny,allow
-<Files "pdf.optimized">
-deny from all
-</Files>
-allow from all

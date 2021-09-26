@@ -1,5 +1,0 @@
-<IfModule deflate_module>
-	<FilesMatch "(\.js|\.css|\.html|\.ttf)$">
-	SetOutputFilter DEFLATE
-	</FilesMatch>
-</IfModule>
