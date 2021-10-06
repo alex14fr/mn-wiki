@@ -217,18 +217,18 @@ function parse_line($l)
                     $head_lvl = 6 - $head_lvl;
                 }
                 $txt = parse_inline($header);
+					 $linkId = md5($txt);
+					 if(strpos($txt,"#") !==false) {
+						$txtspl=explode("#",$txt);
+						$txt=$txtspl[0];
+						$linkId=$txtspl[1];
+					 }
+					 $titleTag = " id=" . $linkId;
                 if ($head_lvl < $title_lvl) {
                     $title = $txt;
                     $title_lvl = $head_lvl;
                 } elseif ($head_lvl <= $toc_level && $head_lvl >= 3) {
-						 $linkId = md5($txt);
-						 if(strpos($txt,"#") !==false) {
-							$txtspl=explode("#",$txt);
-							$txt=$txtspl[0];
-							$linkId=$txtspl[1];
-						 }
                    $toc .= "<li ".($head_lvl >= 3 ? "class=subtoc" : "")."><a href=#" . $linkId . ">" . $txt . "</a>";
-						 $titleTag = " id=" . $linkId;
 					 }
                 return "<h" . $head_lvl . (empty($titleTag) ? "" : $titleTag) . ">" . $txt . "</h" . $head_lvl . ">" . ($head_lvl == 1 ? "~~TOC~~<p>" : "");
 
