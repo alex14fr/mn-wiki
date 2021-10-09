@@ -227,7 +227,7 @@ function parse_line($l)
                 if ($head_lvl < $title_lvl) {
                     $title = $txt;
                     $title_lvl = $head_lvl;
-                } elseif ($head_lvl <= $toc_level && $head_lvl >= 3) {
+                } elseif ($head_lvl <= $toc_level && $head_lvl >= 2) {
                    $toc .= "<li ".($head_lvl >= 3 ? "class=subtoc" : "")."><a href=#" . $linkId . ">" . $txt . "</a>";
 					 }
                 return "<h" . $head_lvl . (empty($titleTag) ? "" : $titleTag) . ">" . $txt . "</h" . $head_lvl . ">" . ($head_lvl == 1 ? "~~TOC~~<p>" : "");
