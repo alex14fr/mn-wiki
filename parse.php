@@ -178,7 +178,8 @@ function parse_line($l)
 {
     global $list_lvl, $title, $toc, $toc_level, $in_tbl, $title_lvl, $head_lvl, $pageId, $sectok;
 
-    $l = rtrim(htmlspecialchars($l));
+    $l = rtrim($l);
+	 $l = str_replace("\"","&quot;", str_replace("'","&#039;",str_replace("<","&lt;",str_replace(">","&gt;",$l))));
     $n = strlen($l);
 
     if ($n == 0) {
