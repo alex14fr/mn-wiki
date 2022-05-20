@@ -153,7 +153,7 @@ if ($_GET['action']!='remove' && !hash_equals(hash("sha256", $secret1 . $id . $s
     exit;
 }
 
-print str_replace(array("~~TITLE~~","~~SIDEBAR~~","~~ACTIONS~~"), "", file_get_contents("conf/htmlhead.tmpl"));
+print str_replace("~~CSSTS~~",filemtime("static/mstyle.css"),str_replace(array("~~TITLE~~","~~SIDEBAR~~","~~ACTIONS~~"), "", file_get_contents("conf/htmlhead.tmpl")));
 print "<h1>Event " . $id . "</h1>";
 backl();
 

@@ -49,7 +49,7 @@ if (!empty($_POST['pass'])) {
     exit;
 }
 
-    print "<!doctype html>\r\n<html><head><link rel=stylesheet href=static/mstyle.css?v2></head><body><article>";
+    print "<!doctype html>\r\n<html><head><link rel=stylesheet href=static/mstyle.css?".filemtime("static/mstyle.css")."></head><body><article>";
 if (!empty($_POST['newpf'])) {
     chk_xtok("admpasswd");
     $oldpf = file_get_contents($pwdFile);
