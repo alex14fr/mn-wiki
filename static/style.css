@@ -295,6 +295,7 @@ dt.ChampRes {
     margin-right: 5px;
     padding: 10px;
     border-radius: 10px;
+	 padding-top: 2px;
 }
 
 .redbox {
