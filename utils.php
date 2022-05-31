@@ -167,7 +167,7 @@ function issue_login_token($login)
 	global $clientIp, $baseUrl, $secret3, $secret2;
 
 	$sticky=base64url_encode(hash("sha256",$clientIp."|".$baseUrl."|".$_SERVER["HTTP_USER_AGENT"]."|".hash("sha256",$secret2,true),true));
-	$mask=hash("sha512","mnwiki@baseUrl@".filemtime("conf/conf.php"),true);
+	$mask=hash("sha512","mnwiki@$baseUrl@".filemtime("conf/conf.php"),true);
 	if(strlen($login)>strlen($mask)) { die("login too long"); }
 	$loginn=base64url_encode($login^$mask);
 	$strToSign="$sticky.$loginn.".time();
