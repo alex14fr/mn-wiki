@@ -77,7 +77,7 @@ function auth_login($login, $pass)
 
 function auth_getgroups()
 {
-    if (empty(get_login()) {
+    if (empty(get_login())) {
         return(array());
     }
     $lspl = auth_getline(get_login());
