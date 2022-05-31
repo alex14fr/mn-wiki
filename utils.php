@@ -194,25 +194,25 @@ function allow_login($login)
 function chk_login_tok($token) {
 	global $clientIp, $baseUrl, $secret3, $secret2;
 	$cltok=explode(".",$token);
-	print "CK LOGIN TOK $token<p>";
+	//print "CK LOGIN TOK $token<p>";
 	if(count($cltok)!==4) { 
-		print " 1<p>";
+	//	print " 1<p>";
 		return ""; 
 	}
 	$signOk=base64url_encode(hash_hmac("sha256",$cltok[0].".".$cltok[1].".".$cltok[2],$secret3,true));
 	if(!hash_equals($signOk,$cltok[3])) { die("login token verification failed (signature)"); }
 	$sticky=base64url_encode(hash("sha256",$clientIp."|".$baseUrl."|".$_SERVER["HTTP_USER_AGENT"]."|".hash("sha256",$secret2,true),true));
 	if(!hash_equals($sticky,$cltok[0])) {
-		print " 2<p>";
+	//	print " 2<p>";
 		return ""; 
 	}
 	if(!is_numeric($cltok[2]) || ($cltok[2]+86400<time())) {
-		print " 3<p>";
+	//	print " 3<p>";
 		return ""; 
 	}
 	$mask=hash("sha512","mnwiki@$baseUrl@".filemtime("conf/conf.php"),true);
 	$login=base64url_decode($cltok[1])^$mask;
-	print " 4 LOGIN=$login ".base64url_encode($login)." <p>";
+	//print " 4 LOGIN=$login ".base64url_encode($login)." <p>";
 	return $login;
 }
 
