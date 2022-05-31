@@ -179,7 +179,7 @@ function issue_login_token($login)
 function get_login_cookie_name() {
 	global $baseUrl;
 	$ret=base64url_encode(hash("md5","mnwiki@$baseUrl@".filemtime("conf/conf.php"),true));
-	print "GLCN = $ret<p>";
+	//print "GLCN = $ret<p>";
 	return $ret;
 }
 
@@ -195,13 +195,21 @@ function chk_login_tok($token) {
 	global $clientIp, $baseUrl, $secret3, $secret2;
 	$cltok=explode(".",$token);
 	print "CK LOGIN TOK $token<p>";
-	if(count($cltok)<4) 
-		return "";
+	if(count($cltok)!==4) { 
+		print " 1<p>";
+		return ""; 
+	}
 	$signOk=base64url_encode(hash_hmac("sha256",$cltok[0].".".$cltok[1].".".$cltok[2],$secret3,true));
 	if(!hash_equals($signOk,$cltok[3])) { die("login token verification failed (signature)"); }
 	$sticky=base64url_encode(hash("sha256",$clientIp."|".$baseUrl."|".$_SERVER["HTTP_USER_AGENT"]."|".hash("sha256",$secret2,true),true));
-	if(!hash_equals($sticky,$cltok[0])) return ""; 
-	if(!is_numeric($cltok[2]) || ($cltok[2]+3600<time())) return ""; 
+	if(!hash_equals($sticky,$cltok[0])) {
+		print " 2<p>";
+		return ""; 
+	}
+	if(!is_numeric($cltok[2]) || ($cltok[2]+86400<time())) {
+		print " 3<p>";
+		return ""; 
+	}
 	$mask=hash("sha512","mnwiki@baseUrl@".filemtime("conf/conf.php"),true);
 	$verifiedLogin=base64url_decode($cltok[1])^$mask;
 	return $verifiedLogin;
@@ -238,7 +246,7 @@ function chk_xtok_tok($token, $namespace = "")
 {
 	global $clientIp, $baseUrl, $secret2, $verifiedLogin;
 	$cltok=explode(".", $token);
-	if(count($cltok)<3) { die("xtok verification failed (format) - go back, refresh page and try again"); }
+	if(count($cltok)!==3) { die("xtok verification failed (format) - go back, refresh page and try again"); }
 	$signOk=base64url_encode(hash_hmac("sha256",$cltok[0].".".$cltok[1],$secret2,true));
 	if(!hash_equals($signOk,$cltok[2])) { die("xtok verification failed (signature) - go back, refresh page and try again"); }
 	$signedStrOk=base64url_encode(hash("sha256",$namespace."|".$clientIp."|".$baseUrl."|".$verifiedLogin."|".$_SERVER["HTTP_USER_AGENT"]."|".hash("sha256",$secret2,true),true));
