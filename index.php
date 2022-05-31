@@ -78,7 +78,8 @@ if (!empty($_GET['do'])) {
             exit;
         case "logout":
             auth_logout();
-            break;
+				header("Location: index.php");
+            exit;
         case "release":
             if (!empty(get_login())) {
                 if (file_get_contents("$lockDir/$pageId") === get_login()) {
