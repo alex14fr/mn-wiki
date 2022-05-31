@@ -184,7 +184,7 @@ function get_login_cookie_name() {
 function allow_login($login) 
 {
 	$tok=issue_login_token($login);
-	setcookie(get_login_cookie_name(), $tok, time()+86400, $secure=true, $httponly=true, $options=array("samesite"=>"Strict"));
+	setcookie(get_login_cookie_name(), $tok, array("samesite"=>"Strict","expires"=>time()+86400, "secure"=>true, "httponly"=>true));
 	$verifiedLogin=true;
 	$certLogin=$login;
 }
