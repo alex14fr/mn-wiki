@@ -3,7 +3,7 @@
 ~~XTOK~~
 <input type=hidden name=do value=register>
 <table class=formtable>
-<tr><td>Username<td><input name=u required>
+<tr><td>Username<td><input name=u required pattern="[a-z0-9_\-\.]{2,63}" title="Max. 63 characters, lowercase, a-z 0-9 _ - ." maxlength=63 minlength=2>
 <tr><td>Password<td><input name=p type=password required minlength=7>
 <tr><td>Password (confirm)<td><input name=p2 type=password required minlength=7>
 <tr><td>Fullname<td><input name=n required>
