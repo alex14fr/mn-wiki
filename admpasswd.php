@@ -34,9 +34,6 @@ include_once "utils.php";
 include_once "auth.php";
 canonical();
 sendCsp("script-src 'self'; connect-src 'self'");
-if (!isset($_SESSION)) {
-    session_start(["read_and_close"=>true]);
-}
 if (!auth_isAdmin()) {
     die("E");
 }

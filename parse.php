@@ -390,7 +390,7 @@ function render_page($page, $rev = "")
         if (!is_readable($fnam)) {
             header("HTTP/1.1 404 Not found");
             print "Page $pageId not found. ";
-            if (!empty($_SESSION['auth_user']) && auth_isCommittee()) {
+            if (!empty(get_login()) && auth_isCommittee()) {
                 print "<a href=\"index.php?do=edit&id=$pageId\">Create this page</a>";
             }
             exit;
@@ -449,18 +449,13 @@ function render_html($str, $pageId = "", $title = "")
 	global $editableDir;
     $actions = "";
     if (!empty($pageId)) {
-        if (!empty($_SESSION['auth_user'])) {
-			  if (auth_isAdmin()) {
-				  session_start();
-				  $_SESSION['x-xtok'] = get_random();
-				  session_write_close();
-			  }
+        if (!empty(get_login())) {
             $actions = (auth_canEdit($pageId) ? "<a href=\"index.php?do=edit&id=$pageId\">Edit this page</a>" : "") .
                        (auth_isCommittee() ? "<a href=\"index.php?do=revisions&id=$pageId\">Old revisions</a>" : "") .
                         (auth_isAdmin() ? "<a href=\"index.php?do=edit&id=sidebar\">Edit sidebar</a><a href=admpasswd.php>Edit passwd / perms</a>" : "") .
-								(auth_isAdmin() && file_exists($editableDir . "/" . $pageId) ? "<a href=\"index.php?xtok=" . $_SESSION['x-xtok'] . "&do=revokeEdit&id=$pageId\">Unset contrib-writable</a>" : "") .
-								(auth_isAdmin() && !file_exists($editableDir . "/" . $pageId) ? "<a href=\"index.php?xtok=" . $_SESSION['x-xtok'] . "&do=allowEdit&id=$pageId\">Set contrib-writable</a>" : "") .
-                        "<a href=\"index.php?do=logout&id=$pageId\">Logout " . $_SESSION['auth_user'] . "</a>";
+								(auth_isAdmin() && file_exists($editableDir . "/" . $pageId) ? "<a href=\"index.php?xtok=" . get_xtok() . "&do=revokeEdit&id=$pageId\">Unset contrib-writable</a>" : "") .
+								(auth_isAdmin() && !file_exists($editableDir . "/" . $pageId) ? "<a href=\"index.php?xtok=" . get_xtok() . "&do=allowEdit&id=$pageId\">Set contrib-writable</a>" : "") .
+                        "<a href=\"index.php?do=logout&id=$pageId\">Logout " . get_login() . "</a>";
         } else {
             $actions = "<a href=\"index.php?do=login&id=$pageId\">Login / Register</a>";
         }

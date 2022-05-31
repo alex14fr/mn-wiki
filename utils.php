@@ -47,7 +47,7 @@ function canonical()
                   $destination = "$canonicalProto://$canonicalHost" . $_SERVER["REQUEST_URI"];
                   header("HTTP/1.1 302 Found");
                   header("Location: $destination");
-                  print "<h1>HTTP/1.1 302 Found</h1><a href=\"$destination\">$destination</a>";
+                  print "<h1>302 Found</h1><a href=\"$destination\">$destination</a>";
                   exit;
         }
     }
@@ -61,7 +61,7 @@ function sendCsp($add = "")
 
 function die403($s)
 {
-    header("HTTP/1.1 403 Forbidden");
+    header("403 Forbidden");
     die($s);
 }
 
@@ -149,27 +149,104 @@ function get_random()
 
 function gen_xtok($namespace = "")
 {
-	session_start();
-    $_SESSION["xtok-$namespace"] = get_random();
-	 session_write_close();
+}
+
+function base64url_encode( $data ){
+	  return rtrim( strtr( base64_encode( $data ), '+/', '-_'), '=');
+}
+
+function base64url_decode( $data ){
+	  return base64_decode( strtr( $data, '-_', '+/') . str_repeat('=', 3 - ( 3 + strlen( $data )) % 4 ));
+}
+
+$verifiedLogin=false;
+$certLogin="";
+
+function issue_login_token($login)
+{
+	global $clientIp, $baseUrl, $secret3, $secret2;
+
+	$sticky=base64url_encode(hash("sha256",$clientIp."|".$baseUrl."|".$_SERVER["HTTP_USER_AGENT"]."|".hash("sha256",$secret2,true),true));
+	$mask=hash("sha512","mnwiki@baseUrl@".filemtime("conf/conf.php"),true);
+	if(strlen($login)>strlen($mask)) { die("login too long"); }
+	$loginn=base64url_encode($login^$mask);
+	$strToSign="$sticky.$loginn.".time();
+	$sign=base64url_encode(hash_hmac("sha256",$strToSign,$secret3,true));
+	return "$strToSign.$sign";
+}
+
+
+function get_login_cookie_name() {
+	global $baseUrl;
+	return base64url_encode(hash("md5","mnwiki@$baseUrl@".filemtime("conf/conf.php"),true));
+}
+
+function allow_login($login) 
+{
+	$tok=issue_login_token($login);
+	setcookie(get_login_cookie_name(), $tok, time()+86400, $secure=true, $httponly=true, $options=array("samesite"=>"Strict"));
+	$verifiedLogin=true;
+	$certLogin=$login;
+}
+
+function chk_login_tok($token) {
+	global $clientIp, $baseUrl, $secret3, $secret2;
+	$cltok=explode(".",$token);
+	if(count($cltok)<4) 
+		return "";
+	$signOk=base64url_encode(hash_hmac("sha256",$cltok[0].".".$cltok[1].".".$cltok[2],$secret3,true));
+	if(!hash_equals($signOk,$cltok[3])) { die("login token verification failed (signature)"); }
+	$sticky=base64url_encode(hash("sha256",$clientIp."|".$baseUrl."|".$_SERVER["HTTP_USER_AGENT"]."|".hash("sha256",$secret2,true),true));
+	if(!hash_equals($sticky,$cltok[0])) return ""; 
+	if(!is_numeric($cltok[2]) || ($cltok[2]+3600<time())) return ""; 
+	$mask=hash("sha512","mnwiki@baseUrl@".filemtime("conf/conf.php"),true);
+	$verifiedLogin=base64url_decode($cltok[1])^$mask;
+	return $verifiedLogin;
+}
+
+function get_login()
+{
+	global $verifiedLogin, $certLogin;
+	if($verifiedLogin)
+		return($certLogin);
+	else {
+		$tok=$_COOKIE[get_login_cookie_name()];
+		$verifiedLogin=true;
+		$certLogin=chk_login_tok($token);
+	}
+}
+
+function get_xtok($namespace = "")
+{
+	global $clientIp, $baseUrl, $secret2, $verifiedLogin;
+	$strToSign=base64url_encode(hash("sha256",$namespace."|".$clientIp."|".$baseUrl."|".$verifiedLogin."|".$_SERVER["HTTP_USER_AGENT"]."|".hash("sha256",$secret2,true),true)).".".time();
+	$sign=base64url_encode(hash_hmac("sha256",$strToSign,$secret2,true));
+	$tok=$strToSign.".".$sign;
+	return $tok;
 }
 
 function pr_xtok($namespace = "")
 {
-    return "<input type=hidden name=xtok value=" . $_SESSION["xtok-$namespace"] . ">";
+	$tok=get_xtok($namespace);
+   return "<input type=hidden name=xtok value=$tok>";
 }
 
-function chk_xtok($namespace = "")
+function chk_xtok_tok($token, $namespace = "")
 {
-    $k = "xtok-$namespace";
-    if (empty($_REQUEST["xtok"]) || empty($_SESSION[$k]) || !hash_equals($_SESSION[$k], $_REQUEST["xtok"])) {
-        die('xtok verification failed');
-    }
-	 session_start();
-    $_SESSION[$k] = "*invalid*";
-	 session_write_close();
+	global $clientIp, $baseUrl, $secret2, $verifiedLogin;
+	$cltok=explode(".", $token);
+	if(count($cltok)<3) { die("xtok verification failed (format) - go back, refresh page and try again"); }
+	$signOk=base64url_encode(hash_hmac("sha256",$cltok[0].".".$cltok[1],$secret2,true));
+	if(!hash_equals($signOk,$cltok[2])) { die("xtok verification failed (signature) - go back, refresh page and try again"); }
+	$signedStrOk=base64url_encode(hash("sha256",$namespace."|".$clientIp."|".$baseUrl."|".$verifiedLogin."|".$_SERVER["HTTP_USER_AGENT"]."|".hash("sha256",$secret2,true),true));
+	if(!hash_equals($signedStrOk,$cltok[0])) { die("xtok verification failed (claim) - go back, refresh page and try again"); }
+	if(!is_numeric($cltok[1]) || ($cltok[1]+3600<time())) { die("xtok verification failed (expired) - go back, refresh page and try again"); }
+	return(true);
 }
 
+function chk_xtok($namespace = "") {
+	return chk_xtok_tok($_REQUEST['xtok'], $namespace);
+}
 
 function contextDiff($dc) {
 	$dcout=array();

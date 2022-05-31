@@ -39,9 +39,6 @@ canonical();
 include_once "parse.php";
 include_once "auth.php";
 
-if (!isset($_SESSION)) {
-    session_start(["read_and_close"=>true]);
-}
 $addCsp = "";
 if (!empty($_GET['do']) && $_GET['do'] == 'edit') {
     $addCsp = "script-src 'self'; connect-src 'self'";
@@ -83,8 +80,8 @@ if (!empty($_GET['do'])) {
             auth_logout();
             break;
         case "release":
-            if ($_SESSION['auth_user']) {
-                if (file_get_contents("$lockDir/$pageId") == $_SESSION['auth_user']) {
+            if (!empty(get_login())) {
+                if (file_get_contents("$lockDir/$pageId") === get_login()) {
                     unlink("$lockDir/$pageId");
                     header("Location: " . pageLink($pageId));
                 }
@@ -107,11 +104,11 @@ if (!empty($_GET['do'])) {
             }
             if (time() < $locked_until) {
                 $locked_by = file_get_contents($lockfile);
-                if ($locked_by != $_SESSION['auth_user']) {
+                if ($locked_by !== get_login()) {
                     die("locked by $locked_by until " . date('H:i:s T', filemtime($lockfile)));
                 }
             }
-            file_put_contents($lockfile, $_SESSION['auth_user']);
+            file_put_contents($lockfile, get_login());
             if (!empty($_GET['rev'])) {
                 $rev = san_pageRev($_GET['rev']);
                 if (!is_readable("$atticDir/$pageId.$rev.txt.gz")) {
@@ -195,23 +192,17 @@ if (!empty($_GET['do'])) {
             print "added as contributor";
             exit;
 			case "allowEdit":
-				if(!auth_isAdmin() || $_GET['xtok']!=$_SESSION['x-xtok']) {
+				if(!auth_isAdmin() || !chk_xtok_tok($_GET['xtok'])) {
 					die403("unauthorized");
 				}
 				file_put_contents($editableDir . "/" . $pageId, "");
-				session_start();
-				$_SESSION['x-xtok']='null';
-				session_write_close();
 				print "Page $pageId contrib-writable.  <a href=index.php?id=$pageId>Back</a>";
 				exit;
 			case "revokeEdit":
-				if(!auth_isAdmin() || $_GET['xtok']!=$_SESSION['x-xtok']) {
+				if(!auth_isAdmin() || !chk_xtok_tok($_GET['xtok'])) {
 					die403("unauthorized");
 				}
 				unlink($editableDir . "/" . $pageId);
-				session_start();
-				$_SESSION['x-xtok']='null';
-				session_write_close();
 				print "Page $pageId not contrib-writable.  <a href=index.php?id=$pageId>Back</a>";
 				exit;
 		  case "diff":
@@ -297,12 +288,12 @@ if (!empty($_POST['do'])) {
             clearstatcache();
             $mt = filemtime("$pageDir/$pageId.txt");
             $ps = substr(san_csv($_POST['summary']), 0, 64);
-            $cline = "$mt\t$clientIp\tE\t$pageId\t" . $_SESSION['auth_user'] . "\t" . $ps . "\n";
+            $cline = "$mt\t$clientIp\tE\t$pageId\t" . get_login() . "\t" . $ps . "\n";
             file_put_contents("$metaDir/$pageId.changes", $cline, FILE_APPEND | LOCK_EX);
             unlink("$lockDir/$pageId");
 				include_once "class.Diff.php";
 				$boundary=bin2hex(openssl_random_pseudo_bytes(4));
-				$txtbase="Username:     " . $_SESSION['auth_user'] . "
+				$txtbase="Username:     " . get_login() . "
 IP:           " . $clientIp . "
 
 Summary:      " . $ps . "

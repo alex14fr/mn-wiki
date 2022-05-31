@@ -62,31 +62,25 @@ function auth_login($login, $pass)
 {
     $login = san_filename($login);
     $lspl = auth_getline($login);
-	 session_start();
     if ($lspl) {
         $hashpass = $lspl[1];
         if (password_verify($pass, $hashpass)) {
-            $_SESSION['auth_user'] = $login;
-				session_write_close();
             auth_changePassword($login, $pass);
+				allow_login($login);
             return(true);
         } else {
-            $_SESSION['auth_user'] = '';
-				session_write_close();
             return(false);
         }
     }
-    $_SESSION['auth_user'] = '';
-	 session_write_close();
     return(false);
 }
 
 function auth_getgroups()
 {
-    if (empty($_SESSION['auth_user'])) {
+    if (empty(get_login()) {
         return(array());
     }
-    $lspl = auth_getline($_SESSION['auth_user']);
+    $lspl = auth_getline(get_login());
     if ($lspl) {
         return(explode(',', trim($lspl[4])));
     }
@@ -113,7 +107,7 @@ function auth_canEdit($id)
 	if(file_exists($editableDir . "/" . $id) && auth_isContrib())
 		return true;
 
-	if(!empty($_SESSION['auth_user']) && in_array($_SESSION['auth_user'] . ":" . $id, file($permFile,FILE_IGNORE_NEW_LINES), TRUE)) 
+	if(!empty(get_login()) && in_array(get_login() . ":" . $id, file($permFile,FILE_IGNORE_NEW_LINES), TRUE)) 
 		return true;
 
 	return false;
@@ -126,9 +120,7 @@ function auth_isAdmin()
 
 function auth_logout()
 {
-	session_start();
-    $_SESSION['auth_user'] = '';
-	 session_write_close();
+	setcookie(get_login_cookie_name(), "");
 }
 
 function genrepwhash($login, $curpwd)

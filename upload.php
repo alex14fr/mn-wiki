@@ -35,9 +35,6 @@ sendCsp();
 canonical();
 include_once "auth.php";
 include_once "conf/conf.php";
-if (!isset($_SESSION)) {
-    session_start(["read_and_close"=>true]);
-}
 if (!auth_isContrib()) {
     die("not authorized");
 }
@@ -81,7 +78,7 @@ if (!empty($_FILES['fich'])) {
     if (!move_uploaded_file($_FILES["fich"]["tmp_name"], "$mediaDir/$desti")) {
         die("move_uploaded_file error");
     }
-    sendNotify("change", 'File added : ' . $desti, "File\r\n\r\n   $baseUrl$mediaPrefix/$desti\r\n\r\n has been added by " . $_SESSION['auth_user'] . ' ; IP=' . $ip . '). ');
+    sendNotify("change", 'File added : ' . $desti, "File\r\n\r\n   $baseUrl$mediaPrefix/$desti\r\n\r\n has been added by " . get_login() . ' ; IP=' . $ip . '). ');
     $msg = "File {{" . $desti . "}} added.";
 }
 
@@ -101,7 +98,7 @@ if (!empty($_POST['delete'])) {
             die("error during deletion");
         }
         touch($newname);
-        sendNotify("change", 'File deleted : ' . $dd, 'File ' . $dd . ' has been deleted by ' . $_SESSION['auth_user'] . ' ; IP=' . $ip . '). ');
+        sendNotify("change", 'File deleted : ' . $dd, 'File ' . $dd . ' has been deleted by ' . get_login() . ' ; IP=' . $ip . '). ');
         $msg = "File $dd deleted.";
     }
 }
