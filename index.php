@@ -30,9 +30,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-ini_set("zlib.output_compression", "on");
-error_reporting(E_STRICT | E_ALL);
-
 include_once "utils.php";
 canonical();
 
