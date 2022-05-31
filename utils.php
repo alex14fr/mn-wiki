@@ -213,7 +213,7 @@ function chk_login_tok($token) {
 	$mask=hash("sha512","mnwiki@baseUrl@".filemtime("conf/conf.php"),true);
 	$verifiedLogin=true;
 	$certLogin=base64url_decode($cltok[1])^$mask;
-	return $verifiedLogin;
+	return $certLogin;
 }
 
 function get_login()
