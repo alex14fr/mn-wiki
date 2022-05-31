@@ -225,6 +225,7 @@ function get_login()
 		$tok=$_COOKIE[get_login_cookie_name()];
 		$verifiedLogin=true;
 		$certLogin=chk_login_tok($tok);
+		return($certLogin);
 	}
 }
 
