@@ -210,10 +210,9 @@ function chk_login_tok($token) {
 		print " 3<p>";
 		return ""; 
 	}
-	$mask=hash("sha512","mnwiki@baseUrl@".filemtime("conf/conf.php"),true);
-	$verifiedLogin=true;
-	$certLogin=base64url_decode($cltok[1])^$mask;
-	return $certLogin;
+	$mask=hash("sha512","mnwiki@$baseUrl@".filemtime("conf/conf.php"),true);
+	$login=base64url_decode($cltok[1])^$mask;
+	return $login;
 }
 
 function get_login()
