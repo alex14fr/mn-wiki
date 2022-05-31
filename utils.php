@@ -193,6 +193,7 @@ function allow_login($login)
 
 function chk_login_tok($token) {
 	global $clientIp, $baseUrl, $secret3, $secret2;
+	if(empty($token)) return "";
 	$cltok=explode(".",$token);
 	//print "CK LOGIN TOK $token<p>";
 	if(count($cltok)!==4) { 
@@ -222,8 +223,12 @@ function get_login()
 	if($verifiedLogin)
 		return($certLogin);
 	else {
-		$tok=$_COOKIE[get_login_cookie_name()];
 		$verifiedLogin=true;
+		$certLogin="";
+		if(!isset($_COOKIE[get_login_cookie_name()])) {
+			return($certLogin);
+		}
+		$tok=$_COOKIE[get_login_cookie_name()];
 		$certLogin=chk_login_tok($tok);
 		return($certLogin);
 	}
