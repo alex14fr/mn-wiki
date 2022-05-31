@@ -178,7 +178,9 @@ function issue_login_token($login)
 
 function get_login_cookie_name() {
 	global $baseUrl;
-	return base64url_encode(hash("md5","mnwiki@$baseUrl@".filemtime("conf/conf.php"),true));
+	$ret=base64url_encode(hash("md5","mnwiki@$baseUrl@".filemtime("conf/conf.php"),true));
+	print "GLCN = $ret<p>";
+	return $ret;
 }
 
 function allow_login($login) 
@@ -192,6 +194,7 @@ function allow_login($login)
 function chk_login_tok($token) {
 	global $clientIp, $baseUrl, $secret3, $secret2;
 	$cltok=explode(".",$token);
+	print "CK LOGIN TOK $token<p>";
 	if(count($cltok)<4) 
 		return "";
 	$signOk=base64url_encode(hash_hmac("sha256",$cltok[0].".".$cltok[1].".".$cltok[2],$secret3,true));
