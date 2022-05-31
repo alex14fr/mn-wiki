@@ -215,7 +215,7 @@ function get_login()
 	else {
 		$tok=$_COOKIE[get_login_cookie_name()];
 		$verifiedLogin=true;
-		$certLogin=chk_login_tok($token);
+		$certLogin=chk_login_tok($tok);
 	}
 }
 
