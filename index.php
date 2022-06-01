@@ -50,7 +50,7 @@ if (empty($_GET['id'])) {
 
 if (empty($_GET['do']) && empty($_POST['do'])) {
 	$etag=md5(get_login().$pageId.file_get_contents("commit_id").filemtime($pageDir."/$pageId.txt"));
-	if(isset($_SERVER['HTTP_IF_NONE_MATCH']) && $etag === $_SERVER['HTTP_IF_NONE_MATCH']) {
+	if(isset($_SERVER['HTTP_IF_NONE_MATCH']) && explode("-",$etag)[0] === $_SERVER['HTTP_IF_NONE_MATCH']) {
 		header("302 Not modified");
 		exit;
 	}
@@ -200,7 +200,7 @@ if (!empty($_GET['do'])) {
 					die403("unauthorized");
 				}
 				print "<form method=post action=index.php><input type=hidden name=id value=$pageId><input type=hidden name=do value=allowEdit>";
-				pr_xtok();
+				print pr_xtok();
 				print "Confirm to set page $pageId contrib-writable.  <input type=submit value=Confirm></form><p><a href=$pageId.html>Back</a>";
 				exit;
 			case "revokeEdit":
@@ -208,7 +208,7 @@ if (!empty($_GET['do'])) {
 					die403("unauthorized");
 				}
 				print "<form method=post action=index.php><input type=hidden name=id value=$pageId><input type=hidden name=do value=revokeEdit>";
-				pr_xtok();
+				print pr_xtok();
 				print "Confirm to set page $pageId not contrib-writable.  <input type=submit value=Confirm></form><p><a href=$pageId.html>Back</a>";
 				exit;
 		  case "diff":
