@@ -49,6 +49,12 @@ if (empty($_GET['id'])) {
 }
 
 if (empty($_GET['do']) && empty($_POST['do'])) {
+	$etag=md5(get_login().$pageId.file_get_contents("commit_id").filemtime($pageDir."/$pageId.txt"));
+	if(isset($_SERVER['HTTP_IF_NONE_MATCH']) && $etag === $_SERVER['HTTP_IF_NONE_MATCH']) {
+		header("302 Not modified");
+		exit;
+	}
+	header("Etag: $etag");
 	if (empty($_GET['rev'])) {
 		 print render_page_full($pageId);
 	} else {
@@ -190,18 +196,20 @@ if (!empty($_GET['do'])) {
             print "added as contributor";
             exit;
 			case "allowEdit":
-				if(!auth_isAdmin() || !chk_xtok_tok($_GET['xtok'])) {
+				if(!auth_isAdmin()) {
 					die403("unauthorized");
 				}
-				file_put_contents($editableDir . "/" . $pageId, "");
-				print "Page $pageId contrib-writable.  <a href=index.php?id=$pageId>Back</a>";
+				print "<form method=post><input type=hidden name=id value=$pageId><input type=hidden name=do value=allowEdit>";
+				pr_xtok();
+				print "Confirm to set page $pageId contrib-writable.  <input type=submit value=Confirm></form><p><a href=$pageId.html>Back</a>";
 				exit;
 			case "revokeEdit":
-				if(!auth_isAdmin() || !chk_xtok_tok($_GET['xtok'])) {
+				if(!auth_isAdmin()) {
 					die403("unauthorized");
 				}
-				unlink($editableDir . "/" . $pageId);
-				print "Page $pageId not contrib-writable.  <a href=index.php?id=$pageId>Back</a>";
+				print "<form method=post><input type=hidden name=id value=$pageId><input type=hidden name=do value=revokeEdit>";
+				pr_xtok();
+				print "Confirm to set page $pageId not contrib-writable.  <input type=submit value=Confirm></form><p><a href=$pageId.html>Back</a>";
 				exit;
 		  case "diff":
 				if(!auth_isCommittee()) {
@@ -339,6 +347,20 @@ $txtbasehtml
             
             header("Location: " . pageLink($pageId));
             exit;
+			case "allowEdit":
+				if(!auth_isAdmin() || !chk_xtok()) {
+					die403("unauthorized");
+				}
+				file_put_contents($editableDir . "/" . $pageId, "");
+				print "Page $pageId contrib-writable.  <a href=index.php?id=$pageId>Back</a>";
+				exit;
+			case "revokeEdit":
+				if(!auth_isAdmin() || !chk_xtok()) {
+					die403("unauthorized");
+				}
+				unlink($editableDir . "/" . $pageId);
+				print "Page $pageId not contrib-writable.  <a href=index.php?id=$pageId>Back</a>";
+				exit;
     }
 }
 

@@ -453,8 +453,8 @@ function render_html($str, $pageId = "", $title = "")
             $actions = (auth_canEdit($pageId) ? "<a href=\"index.php?do=edit&id=$pageId\">Edit this page</a>" : "") .
                        (auth_isCommittee() ? "<a href=\"index.php?do=revisions&id=$pageId\">Old revisions</a>" : "") .
                         (auth_isAdmin() ? "<a href=\"index.php?do=edit&id=sidebar\">Edit sidebar</a><a href=admpasswd.php>Edit passwd / perms</a>" : "") .
-								(auth_isAdmin() && file_exists($editableDir . "/" . $pageId) ? "<a href=\"index.php?xtok=" . get_xtok() . "&do=revokeEdit&id=$pageId\">Unset contrib-writable</a>" : "") .
-								(auth_isAdmin() && !file_exists($editableDir . "/" . $pageId) ? "<a href=\"index.php?xtok=" . get_xtok() . "&do=allowEdit&id=$pageId\">Set contrib-writable</a>" : "") .
+								(auth_isAdmin() && file_exists($editableDir . "/" . $pageId) ? "<a href=\"index.php?do=revokeEdit&id=$pageId\">Unset contrib-writable</a>" : "") .
+								(auth_isAdmin() && !file_exists($editableDir . "/" . $pageId) ? "<a href=\"index.php?do=allowEdit&id=$pageId\">Set contrib-writable</a>" : "") .
                         "<a href=\"index.php?do=logout&id=$pageId\">Logout " . get_login() . "</a>";
         } else {
             $actions = "<a href=\"index.php?do=login&id=$pageId\">Login / Register</a>";
