@@ -85,7 +85,7 @@ if (!empty($_GET['do'])) {
             exit;
         case "logout":
             auth_logout();
-				header("Location: index.php");
+				header("Location: /");
             exit;
         case "release":
             if (!empty(get_login())) {
