@@ -150,7 +150,7 @@ if ($_GET['action']!='remove' && !hash_equals(hash("sha256", $secret1 . $id . $s
     exit;
 }
 
-print str_replace(array("~~CSSTS~~","~~TITLE~~","~~SIDEBAR~~","~~ACTIONS~~"),array(filemtime("static/mstyle.css"),"Event $id",backl(),"<a href=\"?action=view&id=$id&sectok=".hash("sha256",$secret1.$id.$secret2)."\">List of participants</a><br><a href=\"?id=$id&sectok=".hash("sha256",$secret1.$id.$secret2)."\">Registration form</a>"), file_get_contents("conf/htmlhead.tmpl"));
+print str_replace(array("~~CSSTS~~","~~TITLE~~","~~SIDEBAR~~","~~ACTIONS~~"),array(filemtime("static/mstyle.css"),"Event $id",backl(),"<a href=\"?action=view&id=$id&sectok=".hash("sha256",$secret1.$id.$secret2)."\">List of participants</a><a href=\"?id=$id&sectok=".hash("sha256",$secret1.$id.$secret2)."\">Registration form</a>"), file_get_contents("conf/htmlhead.tmpl"));
 print "<h1>Event " . $id . "</h1>";
 
 try {
