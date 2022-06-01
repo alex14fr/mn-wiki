@@ -54,12 +54,13 @@ if (empty($_GET['do']) && empty($_POST['do'])) {
 	if(isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
 		$ss1=substr($_SERVER['HTTP_IF_NONE_MATCH'],0,8);
 		$ss2=substr($etag,0,8);
+		header("X-aa: $ss1 $ss2");
 		if($ss1==$ss2) {
 			header("302 Not modified");
 			exit;
 		}
-		print $ss1." ".$ss2;
 	}
+	header("X-bb: ".$_SERVER['HTTP_IF_NONE_MATCH']);
 	if (empty($_GET['rev'])) {
 		 print render_page_full($pageId);
 	} else {
