@@ -176,6 +176,10 @@ li {
     background: #efefef;
 }
 
+.menu.box {
+	padding-bottom:0;
+}
+
 .box a {
     color: #111;
     display: block;
