@@ -51,11 +51,11 @@ if (empty($_GET['id'])) {
 if (empty($_GET['do']) && empty($_POST['do'])) {
 	$etag="\"".md5(get_login().$pageId.file_get_contents("commit").filemtime($pageDir."/$pageId.txt"))."\"";
 	header("Etag: $etag");
+	header("Cache-control: private, max-age=0");
 	if(isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
 		$ss1=substr($_SERVER['HTTP_IF_NONE_MATCH'],0,10);
 		$ss2=substr($etag,0,10);
 		if($ss1==$ss2) {
-			header("Cache-control: private");
 			http_response_code(304);
 			exit;
 		}
