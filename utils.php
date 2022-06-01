@@ -46,6 +46,7 @@ function canonical()
         if ($curHost !== $canonicalHost) {
                   $destination = "$canonicalProto://$canonicalHost" . $_SERVER["REQUEST_URI"];
                   header("HTTP/1.1 302 Found");
+						header("Cache-control: public, max-age=3600");
                   header("Location: $destination");
                   print "<h1>302 Found</h1><a href=\"$destination\">$destination</a>";
                   exit;
