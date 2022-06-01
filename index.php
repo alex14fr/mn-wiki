@@ -199,7 +199,7 @@ if (!empty($_GET['do'])) {
 				if(!auth_isAdmin()) {
 					die403("unauthorized");
 				}
-				print "<form method=post><input type=hidden name=id value=$pageId><input type=hidden name=do value=allowEdit>";
+				print "<form method=post action=index.php><input type=hidden name=id value=$pageId><input type=hidden name=do value=allowEdit>";
 				pr_xtok();
 				print "Confirm to set page $pageId contrib-writable.  <input type=submit value=Confirm></form><p><a href=$pageId.html>Back</a>";
 				exit;
@@ -207,7 +207,7 @@ if (!empty($_GET['do'])) {
 				if(!auth_isAdmin()) {
 					die403("unauthorized");
 				}
-				print "<form method=post><input type=hidden name=id value=$pageId><input type=hidden name=do value=revokeEdit>";
+				print "<form method=post action=index.php><input type=hidden name=id value=$pageId><input type=hidden name=do value=revokeEdit>";
 				pr_xtok();
 				print "Confirm to set page $pageId not contrib-writable.  <input type=submit value=Confirm></form><p><a href=$pageId.html>Back</a>";
 				exit;
