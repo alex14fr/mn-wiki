@@ -55,6 +55,7 @@ if (empty($_GET['do']) && empty($_POST['do'])) {
 		exit;
 	}
 	header("Etag: $etag");
+	print $_SERVER['HTTP_IF_NONE_MATCH']." $etag";
 	if (empty($_GET['rev'])) {
 		 print render_page_full($pageId);
 	} else {
