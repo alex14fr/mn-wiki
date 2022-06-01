@@ -50,7 +50,7 @@ if (empty($_GET['id'])) {
 
 if (empty($_GET['do']) && empty($_POST['do'])) {
 	$etag=md5(get_login().$pageId.file_get_contents("commit_id").filemtime($pageDir."/$pageId.txt"));
-	if(isset($_SERVER['HTTP_IF_NONE_MATCH']) && $etag === explode($_SERVER['HTTP_IF_NONE_MATCH'],"-")[0]) {
+	if(isset($_SERVER['HTTP_IF_NONE_MATCH']) && $etag === explode("-",$_SERVER['HTTP_IF_NONE_MATCH'])[0]) {
 		header("302 Not modified");
 		exit;
 	}
