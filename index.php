@@ -55,7 +55,7 @@ if (empty($_GET['do']) && empty($_POST['do'])) {
 		$ss1=substr($_SERVER['HTTP_IF_NONE_MATCH'],0,8);
 		$ss2=substr($etag,0,8);
 		if($ss1==$ss2) {
-			http_response_code(302);
+			http_response_code(304);
 			exit;
 		}
 	}
