@@ -91,7 +91,8 @@ function lastshort()
 }
 
 function fetchurl($url) {
-	return shell_exec("wget -O - ".escapeshellarg($url));
+#	return shell_exec("wget -O - ".escapeshellarg($url));
+	return file_get_contents($url);
 }
 
 function updhal()
