@@ -114,7 +114,7 @@ function updhal()
                    OR (collaboration_t:mascotnum) */
     $halurl = "https://haltools.archives-ouvertes.fr/Public/afficheRequetePubli.php?solrQuery=%28structure_t%3Amascotnum%29+OR+%28funding_t%3Amascotnum%29+OR+%28comment_t%3Amascotnum%29+OR+%28conference_t%3Amascotnum%29+OR+%28collaboration_t%3Amascotnum%29&CB_ref_biblio=oui&langue=Anglais&tri_exp=annee_publi&tri_exp2=date_depot&ordre_aff=TA&Fen=Aff&css=../css/VisuRubriqueEncadre.css";
 
-    $lines = explode(":",fetchurl($halurl));
+    $lines = explode("\n",fetchurl($halurl));
     $lines_ok = array();
     $inclure = false;
     foreach ($lines as $l) {
