@@ -92,7 +92,15 @@ function lastshort()
 
 function fetchurl($url) {
 #	return shell_exec("wget -O - ".escapeshellarg($url));
-	return file_get_contents($url);
+	if(substr($url,0,5)=="http:")
+		return file_get_contents($url);
+	else {
+		$u=explode("//",$url);
+		$uu=explode("/",$u[1]);
+		$host=$uu[0];
+		$path=substr($u[1],strlen($host));
+		return shell_exec("httpsget ".escapeshellarg($host)." 443 ".escapeshellarg($path));
+	}
 }
 
 function updhal()
