@@ -145,7 +145,7 @@ function updhal()
 }
 
 
-$t = file_get_contents("http://mascot-num.blogspot.com/feeds/posts/default");
+$t = file_get_contents("https://mascot-num.blogspot.com/feeds/posts/default");
 file_put_contents("ephemeral/feedext.rss", $t);
 file_put_contents("ephemeral/rss2.html", lastnews2());
 file_put_contents("ephemeral/rssshort.html", lastshort());
