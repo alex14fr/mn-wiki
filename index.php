@@ -303,7 +303,7 @@ if (!empty($_POST['do'])) {
             file_put_contents("$metaDir/$pageId.changes", $cline, FILE_APPEND | LOCK_EX);
             unlink("$lockDir/$pageId");
 				include_once "class.Diff.php";
-				$boundary=bin2hex(openssl_random_pseudo_bytes(4));
+				$boundary=bin2hex(random_bytes(4));
 				$txtbase="Username:     " . get_login() . "
 IP:           " . $clientIp . "
 

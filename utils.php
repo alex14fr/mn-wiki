@@ -138,14 +138,16 @@ function pageLink($id, $incbase = false)
     return  ($incbase ? $baseUrl : "") . $pagePrefix . $id . $pageSuffix;
 }
 
+if(!function_exists("random_bytes")) {
+	function random_bytes($n) {
+		$f=fopen("/dev/urandom","r");
+		return fread($f, $n);
+	}
+}
+
 function get_random()
 {
-    if (function_exists("openssl_random_pseudo_bytes")) {
-        $r = sha1(openssl_random_pseudo_bytes(32));
-    } else {
-        $r = hash("sha256", $secret1 . microtime() . mt_rand());
-    }
-    return($r);
+	  return hash("sha256",random_bytes(32));
 }
 
 function gen_xtok($namespace = "")

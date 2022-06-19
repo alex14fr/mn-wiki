@@ -90,6 +90,10 @@ function lastshort()
     return "<ul>".catOnNFirst(file_get_contents("ephemeral/feedext.rss"), 5, "entry", "lastshort_cb")."</ul>";
 }
 
+function fetchurl($url) {
+	return shell_exec("wget -O - ".escapeshellarg($url));
+}
+
 function updhal()
 {
     $blacklist = file("data/Publis.Blacklist");
@@ -101,7 +105,7 @@ function updhal()
                    OR (collaboration_t:mascotnum) */
     $halurl = "https://haltools.archives-ouvertes.fr/Public/afficheRequetePubli.php?solrQuery=%28structure_t%3Amascotnum%29+OR+%28funding_t%3Amascotnum%29+OR+%28comment_t%3Amascotnum%29+OR+%28conference_t%3Amascotnum%29+OR+%28collaboration_t%3Amascotnum%29&CB_ref_biblio=oui&langue=Anglais&tri_exp=annee_publi&tri_exp2=date_depot&ordre_aff=TA&Fen=Aff&css=../css/VisuRubriqueEncadre.css";
 
-    $lines = file($halurl);
+    $lines = explode(":",fetchurl($halurl));
     $lines_ok = array();
     $inclure = false;
     foreach ($lines as $l) {
@@ -145,7 +149,7 @@ function updhal()
 }
 
 
-$t = file_get_contents("https://mascot-num.blogspot.com/feeds/posts/default");
+$t = fetchurl("https://mascot-num.blogspot.com/feeds/posts/default");
 file_put_contents("ephemeral/feedext.rss", $t);
 file_put_contents("ephemeral/rss2.html", lastnews2());
 file_put_contents("ephemeral/rssshort.html", lastshort());
