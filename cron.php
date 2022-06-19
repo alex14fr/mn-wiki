@@ -30,33 +30,64 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
+//dirty xml parser
+function tagContents($ent, $tag) {
+	$begin=strpos($ent,"<$tag");
+	$begin2=strpos($ent,">",$begin);
+	$end=strpos($ent,"</$tag>",$begin2);
+	return substr($ent, $begin2+1, $end-$begin2-1)."\n";
+}
+
+function tagAttribute($ent, $tag, $attr, $which) {
+	$offset=0;
+	$ntries=0;
+	while($offset<strlen($ent)&&$ntries<5) {
+		$ntries++;
+		$begin=strpos($ent,"<$tag",$offset);
+		if($begin===false) return "";
+		$end=strpos($ent,">",$begin);
+		$offset=$end;
+		$tagcnt=substr($ent,$begin,$end-$begin);
+		if(strpos($tagcnt,$which)!==false) {
+			$begin2=strpos($ent,"$attr=",$begin);
+			$begin3=$begin2+strlen($attr)+2;
+			$end=strpos($ent,"'",$begin3);
+			return substr($ent,$begin3,$end-$begin3);
+		}
+	}
+}
+
+function catOnNFirst($str, $n, $tag, $func) {
+	$out="";
+	$offset=0;
+	for($i=0;$i<$n;$i++) {
+		$entryposBegin=strpos($str,"<$tag",$offset);
+		if($entryposBegin===false) break;
+		$entryposEnd=strpos($str,"</$tag>",$entryposBegin);
+		$ent=substr($str,$entryposBegin,$entryposEnd-$entryposBegin);
+		$out.=$func($ent);
+		$offset=$entryposEnd;
+	}
+	return($out);
+}
+
+function lastnews2_cb($ent) {
+	return "<div class=rssitem><div class=rsstitle>".tagContents($ent,"title")."</div><br><div class=rssdate>Published on ".date(DATE_RSS,strtotime(tagContents($ent,"published")))." by ".tagContents($ent,"name")."</div><div class=rssdesc>".html_entity_decode(tagContents($ent,"content"))."</div></div>";
+}
+
 
 function lastnews2()
 {
-    $obj = simplexml_load_file("ephemeral/feedext.rss");
-    $out = "<div class=\"rssfeed\">";
-    for ($i = 0; $i < 5; $i++) {
-        $a = $obj->entry[$i];
-        if ($a) {
-            $out .= "<div class=\"rssitem\" id=\"rssitem$i\"><div class=\"rsstitle\">" . $a->title . "</div><br/><div class=\"rssdate\">Published on: " . date(DATE_RSS, strtotime($a->published)) . " by " . $a->author->name . "</div><div id=\"desc$i\" class=\"rssdesc\">" . $a->content . "</div></div>";
-        }
-    }
-    $out .= "</div>";
-    return($out);
+    return "<div class=rssfeed>".catOnNFirst(file_get_contents("ephemeral/feedext.rss"), 5, "entry", "lastnews2_cb")."</div>";
+}
+
+function lastshort_cb($ent) {
+	return "<li><a href=\"".tagAttribute($ent,"link","href","rel='alternate'")."\"><b>".tagContents($ent,"title")."</b></a>";
 }
 
 function lastshort()
 {
-    $obj = simplexml_load_file("ephemeral/feedext.rss");
-    $out = "<ul>";
-    for ($i = 0; $i < 5; $i++) {
-        $a = $obj->entry[$i];
-        if ($a) {
-            $out .= "<li><a href=\"" . $a->link[4]->attributes()->href . "\"><strong>" . $a->title . "</strong></a>";
-        }
-    }
-    $out .= "</ul>";
-    return($out);
+    return "<ul>".catOnNFirst(file_get_contents("ephemeral/feedext.rss"), 5, "entry", "lastshort_cb")."</ul>";
 }
 
 function updhal()
