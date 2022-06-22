@@ -90,7 +90,7 @@ function lastshort()
     return "<ul>".catOnNFirst(file_get_contents("ephemeral/feedext.rss"), 5, "entry", "lastshort_cb")."</ul>";
 }
 
-function fetchurl($url) {
+function fetchurl($url, $gzip=false) {
 #	return shell_exec("wget -O - ".escapeshellarg($url));
 	if(substr($url,0,5)=="http:")
 		return file_get_contents($url);
@@ -99,7 +99,9 @@ function fetchurl($url) {
 		$uu=explode("/",$u[1]);
 		$host=$uu[0];
 		$path=substr($u[1],strlen($host));
-		return shell_exec("httpsget ".escapeshellarg($host)." 443 ".escapeshellarg($path));
+		$pre=($gzip ? "ADD_HDR='Accept-encoding: gzip' " : "");
+		$post=($gzip ? " | zcat" : "");
+		return shell_exec($pre."httpsget ".escapeshellarg($host)." 443 ".escapeshellarg($path).$post);
 	}
 }
 
@@ -114,7 +116,7 @@ function updhal()
                    OR (collaboration_t:mascotnum) */
     $halurl = "https://haltools.archives-ouvertes.fr/Public/afficheRequetePubli.php?solrQuery=%28structure_t%3Amascotnum%29+OR+%28funding_t%3Amascotnum%29+OR+%28comment_t%3Amascotnum%29+OR+%28conference_t%3Amascotnum%29+OR+%28collaboration_t%3Amascotnum%29&CB_ref_biblio=oui&langue=Anglais&tri_exp=annee_publi&tri_exp2=date_depot&ordre_aff=TA&Fen=Aff&css=../css/VisuRubriqueEncadre.css";
 
-    $lines = explode("\n",fetchurl($halurl));
+    $lines = explode("\n",fetchurl($halurl, true));
     $lines_ok = array();
     $inclure = false;
     foreach ($lines as $l) {
