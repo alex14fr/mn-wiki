@@ -160,7 +160,7 @@ function updhal()
 }
 
 
-$t = fetchurl("https://mascot-num.blogspot.com/feeds/posts/default");
+$t = fetchurl("https://mascot-num.blogspot.com/feeds/posts/default", true);
 file_put_contents("ephemeral/feedext.rss", $t);
 file_put_contents("ephemeral/rss2.html", lastnews2());
 file_put_contents("ephemeral/rssshort.html", lastshort());
