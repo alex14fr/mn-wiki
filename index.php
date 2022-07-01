@@ -356,6 +356,7 @@ $txtbasehtml
 				if(!auth_isAdmin() || !chk_xtok()) {
 					die403("unauthorized");
 				}
+            $pageId = san_pageId($_POST['id']);
 				file_put_contents($editableDir . "/" . $pageId, "");
 				print "Page $pageId contrib-writable.  <a href=index.php?id=$pageId>Back</a>";
 				exit;
@@ -363,6 +364,7 @@ $txtbasehtml
 				if(!auth_isAdmin() || !chk_xtok()) {
 					die403("unauthorized");
 				}
+            $pageId = san_pageId($_POST['id']);
 				unlink($editableDir . "/" . $pageId);
 				print "Page $pageId not contrib-writable.  <a href=index.php?id=$pageId>Back</a>";
 				exit;
