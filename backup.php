@@ -56,7 +56,7 @@ if (!empty($_POST['f']) && !empty($_POST['tok']) && !empty($_POST['time'])) {
     chdir($prefix);
 
     if ($_POST['f'] === '@manifest') {
-        passthru("find . -type f -exec stat -c '%Y\t%n\t%s' {} \; |gzip -9c");
+        passthru("find . -type f -exec stat -c '%Y\t%n\t%s' {} \; |gzip -c");
         exit;
     } elseif ($_POST['f'] === '@update') {
         header("Content-type: text/plain; charset=utf8");
