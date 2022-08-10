@@ -339,7 +339,7 @@ function parse_line($l)
 							   $pageIdx=$pageId;
 								$pageId="software_updates";
 								$fp=fopen("data/pages/software_updates.txt","r");
-								for($iii=0; $iii<3; $iii++) fgets($fp, 1024);
+								for($iii=0; $iii<2; $iii++) fgets($fp, 1024);
 								for($iii=0; $iii<5; $iii++) { 
 									$out.=parse_line(fgets($fp, 1024));
 								}
