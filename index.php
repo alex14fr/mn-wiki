@@ -296,6 +296,7 @@ if (!empty($_POST['do'])) {
             }
             $newtext = $_POST['txt'];
             file_put_contents("$pageDir/$pageId.txt", $newtext);
+				if($pageId=="software_updates") { touch("$pageDir/index.txt"); }
             clearstatcache();
             $mt = filemtime("$pageDir/$pageId.txt");
             $ps = substr(san_csv($_POST['summary']), 0, 64);
