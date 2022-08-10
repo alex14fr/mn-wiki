@@ -340,10 +340,9 @@ function parse_line($l)
 								$pageId="software_updates";
 								$out .= "<div class=greenbox><h3>Software updates</h3>";
 								$fp=fopen("data/pages/software_updates.txt","r");
-								for($iii=0; $iii<3; $iii++) fgets($fp, $z, 1024);
+								for($iii=0; $iii<3; $iii++) fgets($fp, 1024);
 								for($iii=0; $iii<5; $iii++) { 
-									fgets($fp, $z, 1024); 
-									$out.=parse_line($z);
+									$out.=parse_line(fgets($fp, 1024));
 								}
 								$out .= "</div>";
 								$pageId=$pageIdx;
