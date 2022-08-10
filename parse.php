@@ -335,7 +335,19 @@ function parse_line($l)
                         $out .= file_get_contents("ephemeral/rss2.html");
                     } elseif ($s == "rssshort") {
                         $out .= file_get_contents("ephemeral/rssshort.html");
-                    } elseif (strpos($s, "toclevel") !== false) {
+                    } elseif ($s == "swupdates" && $pageId!="software_updates") {
+							   $pageIdx=$pageId;
+								$pageId="software_updates";
+								$out .= "<div class=greenbox><h3>Software updates</h3>";
+								$fp=fopen("data/pages/software_updates.txt","r");
+								for($iii=0; $iii<3; $iii++) fgets($fp, $z, 1024);
+								for($iii=0; $iii<5; $iii++) { 
+									fgets($fp, $z, 1024); 
+									$out.=parse_line($z);
+								}
+								$out .= "</div>";
+								$pageId=$pageIdx;
+						  } elseif (strpos($s, "toclevel") !== false) {
                         $sxplod = explode(" ", $s);
                         if (count($sxplod) > 1) 
                             $toc_level = $sxplod[1];
