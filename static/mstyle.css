@@ -302,6 +302,15 @@ dt.ChampRes {
 	color: red;
 }
 
+.flexcontainer {
+	display: flex;
+	justify-content: space-around;
+}
+
+.flex div {
+	min-width: min(100%, 300px);
+}
+
 .greenbox, .redbox, .bluebox, .yellowbox {
     margin-left: 5px;
     margin-right: 5px;
