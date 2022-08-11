@@ -345,7 +345,7 @@ function parse_line($l)
 										$brk=true;
 										for($iii=0; $iii<$nnn && $brk; $iii++) {
 											if($l[$iii]!=" " || $l[$iii]!="\t") {
-												$out.= "\n\n<!--- ".$l[$iii]." -->\n\n";
+												$out.= "\n\n<!--- (".$l[$iii].") ".ord($l[$iii])." -->\n\n";
 												$brk=false;
 											}
 										}
