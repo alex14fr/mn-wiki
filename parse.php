@@ -343,7 +343,7 @@ function parse_line($l)
 									$l=fgets($fp, 1024);
 									if(($nnn=strpos($l, "*"))!==false) {
 										$brk=true;
-										for($iii=0; $iii<$nnn; $iii++) {
+										for($iii=0; $iii<$nnn && $brk; $iii++) {
 											if($l[$iii]!=" " || $l[$iii]!="\t") {
 												$out.= "\n\n<!--- ".$l[$iii]." -->\n\n";
 												$brk=false;
