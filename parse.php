@@ -341,7 +341,7 @@ function parse_line($l)
 								$fp=fopen("data/pages/software_updates.txt","r");
 								do {
 									$l=fgets($fp, 1024);
-								} while($l!==false && !preg_match("/^\s*\*\s*/",$l));
+								} while($l!==false && !preg_match("/^\s*\*/",$l));
 								$iii=0;
 								while($iii++<5 && $l!==false) {
 									$out.=parse_line($l);
