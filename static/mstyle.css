@@ -308,7 +308,7 @@ dt.ChampRes {
 }
 
 .flex div {
-	min-width: min(100%, 300px);
+	min-width: 300px;
 }
 
 .greenbox, .redbox, .bluebox, .yellowbox {
