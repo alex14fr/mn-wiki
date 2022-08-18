@@ -319,7 +319,7 @@ New: " . pageLink($pageId, true) . "
 
 				print "\n<!-- "; print_r($mailNotify); print " "; print array_key_exists("change_$pageId", $mailNotify); 
 				$reason=(array_key_exists("change_$pageId", $mailNotify) ? "change_$pageId" : "change");
-				print " $reason --->\n"; exit;
+				print " $reason --->\n"; 
             sendNotify($reason, "Page $pageId changed", "This is a multipart message in MIME format.
 
 --$boundary

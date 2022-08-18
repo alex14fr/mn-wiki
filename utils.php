@@ -115,8 +115,10 @@ function sendNotify($reason, $subj, $body, $hdrs="")
     global $mailNotify;
 
     foreach ($mailNotify[$reason] as $to) {
+		 print "\n<!-- $to -->\n";
         xmail($to, $subj, $body, $hdrs);
     }
+	 exit;
 
 	 file_put_contents($dataDir."/maillog","To: $to\r\nSubject: $subj\r\n$body\r\n\r\n",FILE_APPEND);
 }
