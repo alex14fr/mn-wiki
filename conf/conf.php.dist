@@ -24,6 +24,7 @@ function xmail($to,$subj,$content) {
 	return mail($to,$subj,$content,"From: wiki noreply <noreply@invalid>\nContent-type: text/plain; charset=utf-8\n");
 }
 $mailNotify=array("change"=>array("notify.change@my-site.test"),
+						"change_software"=>array("notify.change.soft@my-site.test"),
 						"register"=>array("notify.register@my-site.test"));
 $baseUrl="https://www.my-site.test/";
 $clientIp=($_SERVER["HTTP_X_FORWARDED_FOR"] ?? $_SERVER["REMOTE_ADDR"]);
