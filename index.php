@@ -317,6 +317,7 @@ New: " . pageLink($pageId, true) . "
 				$txtbasehtml=nl2br($txtbase);
 				$dc=contextDiff(Diff::compare(san_diff($oldtext), san_diff($newtext)));
 
+				global $mailNotify;
 				$reason=(in_array("change_$pageId", $mailNotify) ? "change_$pageId" : "change");
             sendNotify($reason, "Page $pageId changed", "This is a multipart message in MIME format.
 
