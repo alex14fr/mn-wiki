@@ -187,7 +187,7 @@ function parse_line($l)
 					require_once "Highlight/Autoloader.php";
 					spl_autoload_register("\\Highlight\\Autoloader::load");
 					$highlightOk=new \Highlight\Highlighter();
-					$out .= "<link rel=stylesheet href=Highlight/styles/default.css>";
+					$out .= "<link rel=stylesheet href=Highlight/styles/github.css>";
 				}
 				try {
 					$out .= "<pre><code class=\"hljs $codeLanguage\">".$highlightOk->highlight($codeLanguage,$codeBlock)->value."</code></pre>";
