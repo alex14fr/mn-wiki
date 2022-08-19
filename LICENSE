@@ -47,3 +47,20 @@ the CC0 1.0 Universal legal code:
 http://creativecommons.org/publicdomain/zero/1.0/legalcode
 
 */
+
+
+Includes code from
+
+/*
+Highlight.php
+
+BSD 3-Clause License
+
+Copyright © 2006-2013, Ivan Sagalaev (maniac@softwaremaniacs.org), highlight.js (original author)
+Copyright © 2013, Geert Bergman (geert@scrivo.nl), highlight.php
+
+https://github.com/scrivo/highlight.php
+
+*/
+
+
