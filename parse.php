@@ -191,7 +191,7 @@ function parse_line($l)
 				}
 				try {
 					$out .= "<pre><code class=\"hljs $codeLanguage\">".$highlightOk->highlight($codeLanguage,$codeBlock)->value."</code></pre>";
-				} catch(DomainException $e) {
+				} catch(Exception $e) {
 					$out .= " -- Invalid language -- ";
 				}
 			}
