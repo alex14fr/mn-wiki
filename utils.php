@@ -107,7 +107,7 @@ function san_csv_ext($string)
 
 function san_diff($string)
 {
-    return preg_replace("/[^ \r\na-zA-Z0-9\[\](){}\/?=\\|#~&'\"µ%§:;\^!,*+\-_\.@éèçàäëüïöûùŸÿŷŶâêîôŷûÉÈÇÀÄËÜÏÖÂÊÎÔÛÙ]/", "", $string);
+    return preg_replace("/[^ \r\na-zA-Z0-9\[\](){}\/?=\\|#~&'\"µ%§:;\^!,*+\-_\.@éèçàäëüïöûùŸÿŷŶâêîôŷûÉÈÇÀÄËÜÏÖÂÊÎÔÛÙ`]/", "", $string);
 }
 
 function sendNotify($reason, $subj, $body, $hdrs="")
