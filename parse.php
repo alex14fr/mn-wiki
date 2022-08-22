@@ -152,15 +152,15 @@ function parse_inline($l, $parseTags = true)
 						$out .= $l[$i];
 					}
 					break;
-				case "'":
-					if ($i + 1 < $n && $l[$i + 1] == "'") {
+				case "&":
+					if ($i + 11 < $n && substr($l, $i, 12)=="&#039;&#039;") {
 						$out .= "<span style=font-family:monospace;background-color:#f8f8f8>";
-						$i += 2;
-						while ($i + 1 < $n && $l[$i] != "'" && $l[$i+1] =! "'" ) {
+						$i += 12;
+						while ($i + 11 < $n && substr($l, $i, 12)!="&#039;&#039;" ) {
 							$out .= $l[$i++];
 						}
 						$out .= "</span>";
-						$i += 2;
+						$i += 12;
 					} else {
 						$out .= $l[$i];
 					}
