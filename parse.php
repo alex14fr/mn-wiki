@@ -160,7 +160,7 @@ function parse_inline($l, $parseTags = true)
 							$out .= $l[$i++];
 						}
 						$out .= "</span>";
-						$i += 12;
+						$i += 11;
 					} else {
 						$out .= $l[$i];
 					}
