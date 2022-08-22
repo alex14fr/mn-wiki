@@ -154,7 +154,7 @@ function parse_inline($l, $parseTags = true)
 					break;
 				case "&":
 					if ($i + 11 < $n && substr($l, $i, 12)=="&#039;&#039;") {
-						$out .= "<span style=\"font-family:monospace;background-color:#f8f8f8\">";
+						$out .= "<span class=inline-fixed>";
 						$i += 12;
 						while ($i + 11 < $n && substr($l, $i, 12)!="&#039;&#039;" ) {
 							$out .= $l[$i++];

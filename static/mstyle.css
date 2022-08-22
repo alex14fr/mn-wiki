@@ -436,3 +436,9 @@ dt.ChampRes {
 	background-color: rgb(255,224,224);
 }
 
+.inline-fixed {
+	background-color: #f8f8f8;
+	font-family: monospace;
+	margin-right: 1ch;
+}
+
