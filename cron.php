@@ -108,6 +108,8 @@ function fetchurl($url, $gzip=false) {
 function updhal()
 {
     $blacklist = file("data/Publis.Blacklist");
+	 if($blacklist===false)
+		 $blacklist = array();
 
     /* solr query:    (structure_t:mascotnum)
                    OR (funding_t:mascotnum)
