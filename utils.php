@@ -259,7 +259,7 @@ function get_xtok($namespace = "")
 	return $tok;
 }
 
-function pr_xtok()
+function pr_xtok($namespace = "")
 {
 	$tok=get_xtok($namespace);
    return "<input type=hidden name=xtok value=$tok>";
