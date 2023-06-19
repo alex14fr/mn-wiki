@@ -103,7 +103,7 @@ if (!empty($_POST['delete'])) {
     }
 }
 
-
+head_xtok();
 gen_xtok("upload");
 ?>
 <!doctype html>
