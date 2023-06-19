@@ -144,6 +144,10 @@ function backl()
     return "<a href=" . pageLink($id) . ">&lt;&lt; Back</a>";
 }
 
+if(empty($_REQUEST['action'])) {
+	head_xtok();
+}
+
 $id = san_pageId($_REQUEST['id']);
 if ($_GET['action']!='remove' && !hash_equals(hash("sha256", $secret1 . $id . $secret2), $_REQUEST['sectok'])) {
     print "E";
