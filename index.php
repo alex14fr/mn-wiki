@@ -71,6 +71,9 @@ if (empty($_GET['do']) && empty($_POST['do'])) {
 
 if (!empty($_GET['do'])) {
 	header("X-Robots-Tag: noindex");
+	if(in_array($_GET['do'], array('login','edit','allowEdit','revokeEdit'))) {
+		head_xtok();
+	}
     switch ($_GET['do']) {
         case "register":
         case "resendpwd":
