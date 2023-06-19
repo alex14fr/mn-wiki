@@ -240,16 +240,26 @@ function get_login()
 	}
 }
 
+$xtokCookie=false;
+
+function head_xtok()
+{
+	global $xtokCookie;
+	$xtokCookie=base64url_encode(random_bytes(16));
+	setcookie("xtok", $xtokCookie, array("samesite"=>"Strict","secure"=>true,"httponly"=>true));
+}
+
 function get_xtok($namespace = "")
 {
-	global $clientIp, $baseUrl, $secret2, $verifiedLogin;
-	$strToSign=base64url_encode(hash("sha256",$namespace."|".$clientIp."|".$baseUrl."|".$verifiedLogin."|".$_SERVER["HTTP_USER_AGENT"]."|".hash("sha256",$secret2,true),true)).".".time();
+	global $clientIp, $baseUrl, $secret2, $verifiedLogin, $xtokCookie;
+	if(!$xtokCookie) { die("xtok cookie not set"); }
+	$strToSign=base64url_encode(hash("sha256",$namespace."|".$clientIp."|".$baseUrl."|".$verifiedLogin."|".$_SERVER["HTTP_USER_AGENT"]."|".hash("sha256",$secret2,true),true)).".".time().".".$xtokCookie;
 	$sign=base64url_encode(hash_hmac("sha256",$strToSign,$secret2,true));
 	$tok=$strToSign.".".$sign;
 	return $tok;
 }
 
-function pr_xtok($namespace = "")
+function pr_xtok()
 {
 	$tok=get_xtok($namespace);
    return "<input type=hidden name=xtok value=$tok>";
@@ -259,12 +269,14 @@ function chk_xtok_tok($token, $namespace = "")
 {
 	global $clientIp, $baseUrl, $secret2, $verifiedLogin;
 	$cltok=explode(".", $token);
-	if(count($cltok)!==3) { die("xtok verification failed (format) - go back, refresh page and try again"); }
-	$signOk=base64url_encode(hash_hmac("sha256",$cltok[0].".".$cltok[1],$secret2,true));
-	if(!hash_equals($signOk,$cltok[2])) { die("xtok verification failed (signature) - go back, refresh page and try again"); }
+	if(count($cltok)!==4) { die("xtok verification failed (format) - go back, refresh page and try again"); }
+	$signOk=base64url_encode(hash_hmac("sha256",$cltok[0].".".$cltok[1].".".$cltok[2],$secret2,true));
+	if(!hash_equals($signOk,$cltok[3])) { die("xtok verification failed (signature) - go back, refresh page and try again"); }
 	$signedStrOk=base64url_encode(hash("sha256",$namespace."|".$clientIp."|".$baseUrl."|".$verifiedLogin."|".$_SERVER["HTTP_USER_AGENT"]."|".hash("sha256",$secret2,true),true));
 	if(!hash_equals($signedStrOk,$cltok[0])) { die("xtok verification failed (claim) - go back, refresh page and try again"); }
 	if(!is_numeric($cltok[1]) || ($cltok[1]+3600<time())) { die("xtok verification failed (expired) - go back, refresh page and try again"); }
+	if(!hash_equals($cltok[2],$_COOKIE['xtok'])) { die("xtok verification failed (random) - go back, refresh page and try again"); }
+	setcookie("xtok", "", array("samesite"=>"Strict","secure"=>true,"httponly"=>true));
 	return(true);
 }
 
