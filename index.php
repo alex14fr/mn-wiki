@@ -49,7 +49,7 @@ if (empty($_GET['id'])) {
 }
 
 if (empty($_GET['do']) && empty($_POST['do'])) {
-	$etag="\"".md5(get_login().$pageId.file_get_contents("commit").filemtime($pageDir."/$pageId.txt"))."\"";
+	$etag="\"".base64url_encode(md5(get_login().$pageId.file_get_contents("commit").filemtime($pageDir."/$pageId.txt"), true))."\"";
 	header("Etag: $etag");
 	header("Cache-control: private, max-age=0");
 	if(isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
