@@ -1,0 +1,2 @@
+~/go/bin/minify static/style.css  > static/style.min.css
+
