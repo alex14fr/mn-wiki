@@ -130,7 +130,7 @@ function readtmpl($id)
     if ($id === "htmlhead") {
         $out = str_replace("<!doctype html>", "<!doctype html>\n", $out);
 		  $out = str_replace("~~CSSTS~~", filemtime("static/style.min.css"), $out);
-		  if($id == 'index') {
+		  if($id == '' || $id == 'index') {
 			  global $metaDesc;
 			  $out = str_replace('~~METADESC~~', '<meta name=description content="'.$metaDesc.'">', $out);
 		  } else {
