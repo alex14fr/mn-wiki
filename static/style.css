@@ -193,18 +193,20 @@ li {
 .box ul {
     margin-bottom: 0px;
 }
-.formtable {
-    margin-bottom: 10px;
-}
-
-.formtable td {
-    padding: 10px;
-}
 
 .center {
     text-align: center;
 }
 
+.formtable {
+	margin-bottom: 10px;
+}
+
+.formtable td {
+	padding: 10px;
+}
+
+/* rss2 
 .rsstilde {
     position: relative;
     width: 80%;
@@ -238,12 +240,13 @@ li {
     margin-left: 20px;
     padding-left: 10px;
 }
+*/
 
 dt.ChampRes {
     display: none;
 }
 
-
+/*
 .big {
     font-size: 150%;
     border-left: 10px solid #eebb55;
@@ -290,10 +293,12 @@ dt.ChampRes {
     padding: .7em;
 }
 
+*/
 .aIp {
 	color: #888;
 }
 
+/*
 .add {
 	color: green;
 }
@@ -310,6 +315,7 @@ dt.ChampRes {
 .flex div {
 	min-width: 300px;
 }
+*/
 
 .greenbox, .redbox, .bluebox, .yellowbox {
     margin-left: 5px;
@@ -339,11 +345,13 @@ dt.ChampRes {
 	margin-left: 30px;
 }
 
+/*
 #txt {
     width: 100%;
     height: 70vh;
 }
 
+*/
 #preview {
     flex-grow: 1;
     width: 100%;
