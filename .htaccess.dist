@@ -5,7 +5,7 @@ RewriteRule ([a-zA-Z0-9_\-]*)\.html index.php?id=$1 [L]
 </IfModule>
 
 <IfModule deflate_module>
-<FilesMatch "(\.js|\.css|\.ttf)$">
+<FilesMatch "(\.svg|\.js|\.css|\.ttf)$">
 SetOutputFilter DEFLATE
 </FilesMatch>
 </IfModule>
