@@ -284,7 +284,7 @@ function chk_xtok_tok($token, $namespace = "")
 	$signedStrOk=base64url_encode(hash("sha256",$cook."|".$namespace."|".$clientIp."|".$baseUrl."|".$verifiedLogin."|".$_SERVER["HTTP_USER_AGENT"]."|".hash("sha256",$secret2,true),true));
 	if(!hash_equals($signedStrOk,$cltok[0])) { die("xtok verification failed (claim) - go back, refresh page and try again"); }
 	if(!is_numeric($cltok[1]) || ($cltok[1]+3600<time())) { die("xtok verification failed (expired) - go back, refresh page and try again"); }
-	setcookie("xtok", "", array("samesite"=>"Strict","secure"=>true,"httponly"=>true));
+//	setcookie("xtok", "", array("samesite"=>"Strict","secure"=>true,"httponly"=>true));
 	return(true);
 }
 
