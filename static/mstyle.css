@@ -406,6 +406,7 @@ dt.ChampRes {
         margin: 0px !important;
         padding-left: 5px;
         padding-right: 5px;
+		  line-height: 1.7;
     }
 
     main {
