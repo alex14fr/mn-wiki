@@ -1,2 +1,10 @@
+compr() {
+	zopfli --i1000 -c "$1" > "$1.gz"
+	brotli -q 11 -c "$1" > "$1.br"
+}
+set -x
 ~/go/bin/minify static/style.css  > static/style.min.css
+compr static/style.min.css
+compr static/logo.svg
+compr static/favicon.svg
 
