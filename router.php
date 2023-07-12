@@ -10,7 +10,7 @@ if(strlen($req)==5 && substr($req,0,3)=='/20' && $req[3]>=0 && $req[3]<=9 && $re
 	$id='mascot'.substr($req,1);
 } else if($req=='/dam.incertitudes') {
 	$id='forumincertitudes';
-} else if(strpos($req,'/',1)===false && strpos($req,'?')===false) {
+} else if(strpos($req,'/',1)===false && strpos($req,'?')===false && strpos($req,'.')===false) {
 	$id=substr($req,1);
 } else {
 	header('Status: 404');
