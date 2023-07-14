@@ -15,6 +15,7 @@ if($n==5 && substr($req,0,3)=='/20' && $req[3]>=0 && $req[3]<=9 && $req[4]>=0 &&
 	if(substr($req, -5, 5)=='.html') {
 		echo 'tr html ',$req,' - ';
 		$req=substr($req, 0, $n-5);
+		$n-=5;
 		echo 'tr html ',$req;
 	}
 	for($i=1; $i<$n; $i++) 
