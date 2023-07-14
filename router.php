@@ -1,5 +1,8 @@
 <?php
 $req=$_SERVER['REQUEST_URI'];
+$p=strpos($req, '?');
+if($p!==false)
+	$req=substr($req, 0, $p);
 if($req=='/github' || $req=='/github/') {
 	header('Status: 301');
 	header('Location: https://github.com/MASCOTNUM');
