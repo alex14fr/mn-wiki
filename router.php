@@ -11,11 +11,10 @@ if($n==5 && substr($req,0,3)=='/20' && $req[3]>=0 && $req[3]<=9 && $req[4]>=0 &&
 	$id='mascot'.substr($req,1);
 } else if($req=='/dam.incertitudes') {
 	$id='forumincertitudes';
-} else if(substr($req, -5, 5)=='.html') {
-	print "tr html $req - ";
-	$req=substr($req, 0, $n-5);
-	print "tr html $req";
 } else {
+	if(substr($req, -5, 5)=='.html') {
+		$req=substr($req, 0, $n-5);
+	}
 	for($i=1; $i<$n; $i++) 
 		if(!($req[$i]>='a' && $req[$i]<='z') && 
 			!($req[$i]>='A' && $req[$i]<='Z') &&
