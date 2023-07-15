@@ -471,7 +471,7 @@ function render_page($page, $rev = "")
 		$fnam = "$pageDir/$pageId.txt";
 		if (!is_readable($fnam)) {
 				header("HTTP/1.1 404 Not found");
-				print "Page $pageId not found. ";
+				print "Page not found. ";
 				if (!empty(get_login()) && auth_isCommittee()) {
 					print "<a href=\"index.php?do=edit&id=$pageId\">Create this page</a>";
 				}
