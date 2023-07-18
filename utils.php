@@ -294,7 +294,7 @@ function chk_xtok($namespace = "") {
 
 function contextDiff($dc) {
 	$dcout=array();
-	for($i=0; $i<count($dc); $i++) {
+	for($i=0; $i<count($dc); ++$i) {
 		if($dc[$i][1]==Diff::UNMODIFIED) {
 			if( ($i<count($dc)-1 && $dc[$i+1][1]!=Diff::UNMODIFIED) ||
 				 ($i<count($dc)-2 && $dc[$i+2][1]!=Diff::UNMODIFIED) ||

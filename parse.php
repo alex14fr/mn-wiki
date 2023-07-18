@@ -41,7 +41,7 @@ function parse_inline($l, $parseTags = true)
 	global $mediaPrefix,$pagePrefix,$pageSuffix;
 	$out = "";
 	$n = strlen($l);
-	for ($i = 0; $i < $n; $i++) {
+	for ($i = 0; $i < $n; ++$i) {
 		switch ($l[$i]) {
 				case "<":
 					$out .= "&lt;";
@@ -60,7 +60,7 @@ function parse_inline($l, $parseTags = true)
 						$i += 2;
 						$s = "";
 						$inlink = false;
-						for (; $i < $n - 1 && ($inlink || ($l[$i] != $c && $l[$i + 1] != $c)); $i++) {
+						for (; $i < $n - 1 && ($inlink || ($l[$i] != $c && $l[$i + 1] != $c)); ++$i) {
 								if ($l[$i] == "{" || $l[$i] == "[") {
 									$inlink = true;
 								}
@@ -91,7 +91,7 @@ function parse_inline($l, $parseTags = true)
 						}
 						for (
 								; $i < $n - 1 && $l[$i] != $clC && $l[$i + 1] != $clC;
-								$i++
+								++$i
 						) {
 								$s .= $l[$i];
 						}
@@ -233,14 +233,14 @@ function parse_line($l)
 		$n = strlen($l);
 	}
 
-	for ($i = 0; $i < $n; $i++) {
+	for ($i = 0; $i < $n; ++$i) {
 		$out = "";
 		switch ($l[$i]) {
 				case "=":
 					$head_lvl = 0;
 					for (
 						; $l[$i] == "=" && $i++ < $n;
-						$head_lvl++
+						++$head_lvl
 					);
 					for (
 						; $l[$i] == " " && $i++ <$n ;
@@ -280,7 +280,7 @@ function parse_line($l)
 					$spc_cnt = 0;
 					for (
 						; $l[$i] == " " && $i++ < $n;
-						$spc_cnt++
+						++$spc_cnt
 					);
 					if ($l[$i] == "-" || $l[$i] == "*" || $l[$i] == ".") {
 						$list_gap = ($spc_cnt - 2 * $list_lvl) / 2;
@@ -292,7 +292,7 @@ function parse_line($l)
 						}
 						for (
 								; $list_gap < 0;
-								$list_gap++
+								++$list_gap
 						) {
 								$out .= "</ul>";
 						}
@@ -312,10 +312,10 @@ function parse_line($l)
 					}
 					$out .= "<tr>";
 					$in_link = false;
-					$i++;
-					for (; $i < $n; $i++) {
+					++$i;
+					for (; $i < $n; ++$i) {
 						$s = "";
-						for (; $i < $n && ($in_link || $l[$i] != "|"); $i++) {
+						for (; $i < $n && ($in_link || $l[$i] != "|"); ++$i) {
 								if ($l[$i] == "[" || $l[$i] == "{") {
 									$in_link = true;
 								} elseif ($l[$i] == "]" || $l[$i] == "}") {
@@ -337,17 +337,17 @@ function parse_line($l)
 						$s = "";
 						for (
 								; $i < $n && $l[$i] == "~";
-								$i++
+								++$i
 						);
 						for (
 								; $i < $n && $l[$i] != "~";
-								$i++
+								++$i
 						) {
 								$s .= $l[$i];
 						}
 						for (
 								; $i < $n && $l[$i] == "~";
-								$i++
+								++$i
 						);
 						if ($s == "br") {
 								$out .= "<br>";
@@ -381,7 +381,7 @@ function parse_line($l)
 									$l=fgets($fp, 1024);
 									if(($nnn=strpos($l, "*"))!==false) {
 										$brk=true;
-										for($iii=0; $iii<$nnn && $brk; $iii++) {
+										for($iii=0; $iii<$nnn && $brk; ++$iii) {
 											if($l[$iii]!=" " && $l[$iii]!="\t") {
 												//$out.= "\n\n<!--- (".$l[$iii].") ".ord($l[$iii])." -->\n\n";
 												$brk=false;
@@ -406,13 +406,13 @@ function parse_line($l)
 					}
 					return $out;
 				case "`":
-					for($i++; $i<$n && $l[$i]=="`"; $i++);
+					for(++$i; $i<$n && $l[$i]=="`"; ++$i);
 					if($i==$n) {
 						return $l;
 					} else {
 						$codeLanguage=substr($l, $i, $n-$i);
 						$codeBlock="";
-						for($jj=0;$jj<strlen($codeLanguage);$jj++) {
+						for($jj=0;$jj<strlen($codeLanguage);++$jj) {
 							if($codeLanguage[$jj]>'z' || $codeLanguage[$jj]<'a') {
 								$codeLanguage=false;
 								return " -- CODE BLOCK ERROR -- ";

@@ -171,7 +171,7 @@ function generatePassword($length = 8)
         $char = substr($possible, mt_rand(0, $maxlength - 1), 1);
         if (!strstr($password, $char)) {
             $password .= $char;
-            $i++;
+            ++$i;
         }
     }
     return $password;
@@ -184,7 +184,7 @@ function auth_lockPasswd()
     $i = 0;
     while ($i < 10 && file_exists($lockFile) && filemtime($lockFile) + 10 > time()) {
         sleep(1);
-        $i++;
+        ++$i;
     }
     if ($i == 10) {
         die("timeout while locking passwd file");

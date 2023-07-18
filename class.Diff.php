@@ -53,14 +53,14 @@ class Diff{
     // skip any common prefix
     while ($start <= $end1 && $start <= $end2
         && $sequence1[$start] == $sequence2[$start]){
-      $start ++;
+      ++$start;
     }
 
     // skip any common suffix
     while ($end1 >= $start && $end2 >= $start
         && $sequence1[$end1] == $sequence2[$end2]){
-      $end1 --;
-      $end2 --;
+      --$end1;
+      --$end2;
     }
 
     // compute the table of longest common subsequence lengths
@@ -72,13 +72,13 @@ class Diff{
 
     // generate the full diff
     $diff = array();
-    for ($index = 0; $index < $start; $index ++){
+    for ($index = 0; $index < $start; ++$index){
       $diff[] = array($sequence1[$index], self::UNMODIFIED);
     }
     while (count($partialDiff) > 0) $diff[] = array_pop($partialDiff);
     for ($index = $end1 + 1;
         $index < ($compareCharacters ? strlen($sequence1) : count($sequence1));
-        $index ++){
+        ++$index){
       $diff[] = array($sequence1[$index], self::UNMODIFIED);
     }
 
@@ -125,13 +125,13 @@ class Diff{
     $table = array(array_fill(0, $length2 + 1, 0));
 
     // loop over the rows
-    for ($index1 = 1; $index1 <= $length1; $index1 ++){
+    for ($index1 = 1; $index1 <= $length1; ++$index1){
 
       // create the new row
       $table[$index1] = array(0);
 
       // loop over the columns
-      for ($index2 = 1; $index2 <= $length2; $index2 ++){
+      for ($index2 = 1; $index2 <= $length2; ++$index2){
 
         // store the longest common subsequence length
         if ($sequence1[$index1 + $start - 1]
@@ -178,21 +178,21 @@ class Diff{
 
         // update the diff and the indices
         $diff[] = array($sequence1[$index1 + $start - 1], self::UNMODIFIED);
-        $index1 --;
-        $index2 --;
+        --$index1;
+        --$index2;
 
       }elseif ($index2 > 0
           && $table[$index1][$index2] == $table[$index1][$index2 - 1]){
 
         // update the diff and the indices
         $diff[] = array($sequence2[$index2 + $start - 1], self::INSERTED);
-        $index2 --;
+        --$index2;
 
       }else{
 
         // update the diff and the indices
         $diff[] = array($sequence1[$index1 + $start - 1], self::DELETED);
-        $index1 --;
+        --$index1;
 
       }
 
@@ -373,7 +373,7 @@ class Diff{
           . htmlspecialchars($diff[$index][0])
           . '</span>'
           . $separator;
-      $index ++;
+      ++$index;
     }
 
     // return the HTML

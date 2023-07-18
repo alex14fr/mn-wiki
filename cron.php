@@ -42,7 +42,7 @@ function tagAttribute($ent, $tag, $attr, $which) {
 	$offset=0;
 	$ntries=0;
 	while($offset<strlen($ent)&&$ntries<5) {
-		$ntries++;
+		++$ntries;
 		$begin=strpos($ent,"<$tag",$offset);
 		if($begin===false) return "";
 		$end=strpos($ent,">",$begin);
@@ -60,7 +60,7 @@ function tagAttribute($ent, $tag, $attr, $which) {
 function catOnNFirst($str, $n, $tag, $func) {
 	$out="";
 	$offset=0;
-	for($i=0;$i<$n;$i++) {
+	for($i=0;$i<$n;++$i) {
 		$entryposBegin=strpos($str,"<$tag",$offset);
 		if($entryposBegin===false) break;
 		$entryposEnd=strpos($str,"</$tag>",$entryposBegin);
@@ -135,12 +135,12 @@ function updhal()
     array_pop($lines_ok);
     $lines = $lines_ok;
     $lines_ok = array();
-    for ($i = 0; $i < count($lines); $i++) {
+    for ($i = 0; $i < count($lines); ++$i) {
         if ((strpos($lines[$i], "<div") !== false) || (strpos($lines[$i], "<p") !== false)) {
             $lines_ok[] = $lines[$i];
         } elseif (strpos($lines[$i], "<dl") !== false) {
             $sub = $lines[$i];
-            for ($i++; ($i < count($lines)) && (strpos($lines[$i], "</dl") === false); $i++) {
+            for (++$i; ($i < count($lines)) && (strpos($lines[$i], "</dl") === false); ++$i) {
                 $sub .= $lines[$i];
             }
 
@@ -151,7 +151,7 @@ function updhal()
 
             for (
                 $j = 0; ($j < count($blacklist)) && (strpos($sub, trim($blacklist[$j])) === false);
-                $j++
+                ++$j
             );
             if ($j == count($blacklist)) {
                 $lines_ok[] = $sub;
