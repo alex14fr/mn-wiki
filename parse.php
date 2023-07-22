@@ -127,9 +127,9 @@ function parse_inline($l, $parseTags = true)
 										$asimg = true;
 								}
 						}
-						if (substr($mm[0], 0, 7) != "mailto:" && strpos($mm[0], "@") > 0) {
+						if (substr_compare($mm[0], 'mailto:', 0, 7) !== 0 && strpos($mm[0], "@") > 0) {
 								$mm[0] = "mailto:" . $mm[0];
-						} elseif (substr($mm[0], 0, 4) != "http" && substr($mm[0], 0, 3) != "ftp") {
+						} elseif (substr_compare($mm[0], 'http', 0, 4) !== 0 && substr_compare($mm[0], 'ftp', 0, 3) !== 0) {
 								if ($c == "{") {
 									$mm[0] = $mediaPrefix . san_filename($baseurl);
 								} elseif ($c == "[") {
@@ -153,10 +153,10 @@ function parse_inline($l, $parseTags = true)
 					}
 					break;
 				case "&":
-					if ($i + 11 < $n && substr($l, $i, 12)=="&#039;&#039;") {
+					if ($i + 11 < $n && substr_compare($l, '&#039;&#039;', $i, 12)===0) {
 						$out .= "<span class=inline-fixed>";
 						$i += 12;
-						while ($i + 11 < $n && substr($l, $i, 12)!="&#039;&#039;" ) {
+						while ($i + 11 < $n && substr_compare($l, '&#039;&#039;', $i, 12)!==0 ) {
 							$out .= $l[$i++];
 						}
 						$out .= "</span>";
@@ -228,7 +228,7 @@ function parse_line($l)
 		}
 	}
 
-	if (substr($l, 0, 10) == "/* toc */ ") {
+	if (substr_compare($l, '/* toc */ ', 0, 10) === 0) {
 		$l = substr($l, 10);
 		$n = strlen($l);
 	}
