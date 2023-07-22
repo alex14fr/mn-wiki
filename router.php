@@ -11,7 +11,7 @@ if($req=='/github' || $req=='/github/') {
 $id=false;
 $n=strlen($req);
 if($n==5 && substr_compare($req,'/20',0,3)===0 && $req[3]>=0 && $req[3]<=9 && $req[4]>=0 && $req[4]<=9) {
-	$id='mascot'.substr($req,1);
+	$id='mascot'.substr($req,3);
 } else if($req=='/dam.incertitudes') {
 	$id='forumincertitudes';
 } else {
