@@ -149,7 +149,7 @@ function auth_resendpwd1($email)
         if (!empty($lspl[3]) && $lspl[3] === $email) {
             $login = $lspl[0];
             $sectok = genrepwhash($login, $lspl[1]);
-            $mailtext = " Someone (probably you) claimed for lost credentials for the Wiki at $baseUrl . " . $crlf . $crlf . " Your username is $login. " . $crlf . $crlf . " To reset your password, please visit $baseUrl" . "?do=resendpwd2&u=$login&tok=$sectok " . $crlf . $crlf . " If not, you can safely ignore this message. ";
+            $mailtext = " Someone (probably you) claimed for lost credentials for the Wiki at $baseUrl . " . $crlf . $crlf . " Your username is $login. " . $crlf . $crlf . " To reset your password, please visit $baseUrl" . "/index.php?do=resendpwd2&u=$login&tok=$sectok " . $crlf . $crlf . " If not, you can safely ignore this message. ";
             xmail($email, "Password reset", $mailtext);
             return(true);
         }
