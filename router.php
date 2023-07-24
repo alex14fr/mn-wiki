@@ -33,7 +33,10 @@ if($id===false) {
 	print 'The requested resource has not been found. ';
 	exit;
 } else {
-	parse_str($_SERVER['QUERY_STRING'], $tab);
+	$req=$_SERVER['REQUEST_URI'];
+	if($p!==false) 
+		$qs=substr($req,$p+1);
+	parse_str($qs, $tab);
 	foreach($tab as $k=>$v) {
 		$_GET[$k]=$_REQUEST[$k]=$v;
 	}
