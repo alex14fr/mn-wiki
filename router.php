@@ -34,6 +34,9 @@ if($id===false) {
 	exit;
 } else {
 	$_GET['id']=$id;
+	print '<!--';
+	print_r($_GET);
+	print '>';
 	include 'index.php';
 }
 
