@@ -33,6 +33,10 @@ if($id===false) {
 	print 'The requested resource has not been found. ';
 	exit;
 } else {
+	parse_str($_SERVER['QUERY_STRING'], $tab);
+	foreach($tab as $k=>$v) {
+		$_GET[$k]=$_REQUEST[$k]=$v;
+	}
 	$_GET['id']=$id;
 	include 'index.php';
 }
