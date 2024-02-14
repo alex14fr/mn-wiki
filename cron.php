@@ -111,12 +111,12 @@ function updhal()
 	 if($blacklist===false)
 		 $blacklist = array();
 
-    /* solr query:    (structure_t:mascotnum)
-                   OR (funding_t:mascotnum)
-                   OR (comment_t:mascotnum)
-                   OR (conference_t:mascotnum)
-                   OR (collaboration_t:mascotnum) */
-    $halurl = "https://haltools.archives-ouvertes.fr/Public/afficheRequetePubli.php?solrQuery=%28structure_t%3Amascotnum%29+OR+%28funding_t%3Amascotnum%29+OR+%28comment_t%3Amascotnum%29+OR+%28conference_t%3Amascotnum%29+OR+%28collaboration_t%3Amascotnum%29&CB_ref_biblio=oui&langue=Anglais&tri_exp=annee_publi&tri_exp2=date_depot&ordre_aff=TA&Fen=Aff&css=../css/VisuRubriqueEncadre.css";
+    /* solr query:    (structId_i:(82792 OR 1189703))
+                   OR (funding_t:(mascotnum OR rtuq OR gdr2172))
+                   OR (comment_t:(mascotnum OR rtuq OR gdr2172))
+                   OR (conference_t:(mascotnum OR rtuq))
+                   OR (collaboration_t:(mascotnum OR rtuq OR gdr2172)) */
+    $halurl = "https://haltools.archives-ouvertes.fr/Public/afficheRequetePubli.php?solrQuery=%28structId_i%3A%2882792+OR+1189703%29%29+OR+%28funding_t%3A%28mascotnum+OR+rtuq+OR+gdr2172%29%29+OR+%28comment_t%3A%28mascotnum+OR+rtuq+OR+gdr2172%29%29+OR+%28conference_t%3A%28mascotnum+OR+rtuq%29%29+OR+%28collaboration_t%3A%28mascotnum+OR+rtuq+OR+gdr2172%29%29&CB_ref_biblio=oui&langue=Anglais&tri_exp=annee_publi&tri_exp2=date_depot&ordre_aff=TA&Fen=Aff&css=../css/VisuRubriqueEncadre.css";
 
     $lines = explode("\n",fetchurl($halurl, true));
     $lines_ok = array();
