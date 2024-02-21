@@ -23,8 +23,8 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="17.625"
-     inkscape:cx="26.553191"
-     inkscape:cy="22.297872"
+     inkscape:cx="24.567376"
+     inkscape:cy="24.283688"
      inkscape:window-width="1920"
      inkscape:window-height="1050"
      inkscape:window-x="0"
@@ -35,9 +35,21 @@
      d="M -0.01386833,0.04220284 H 12.686132 V 12.742203 H -0.01386833 Z"
      fill="#3e6182"
      id="path1" />
-  <path
-     d="m 6.3499997,11.386729 q -1.3015193,0 -2.258519,-0.298789 Q 3.1344811,10.789152 2.5220013,10.276941 1.9095216,9.7505027 1.6032818,9.0391008 1.3161818,8.3276985 1.3161818,7.502472 V 1.3132716 h 1.8565793 v 6.0326918 q 0,1.4797167 0.8804396,2.1484346 0.8804396,0.668719 2.296799,0.668719 0.7081797,0 1.2823794,-0.156509 Q 8.2257189,9.835871 8.646799,9.494398 9.0678783,9.1529253 9.2975588,8.6264875 9.5272388,8.0858217 9.5272388,7.3459634 V 1.3132716 H 11.383818 V 7.502472 q 0,0.8252265 -0.30624,1.5366288 -0.2871,0.7114019 -0.91872,1.2378402 -0.6124791,0.512211 -1.5694791,0.810999 -0.9378597,0.298789 -2.2393792,0.298789 z"
-     id="text3"
-     style="font-size:15.3565px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#e6e6e6;stroke:#2d2d2d;stroke-width:0.515697"
-     aria-label="U" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.71098px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#e6e6e6;stroke:#2d2d2d;stroke-width:0.267702;stroke-dasharray:none"
+     x="6.2087107"
+     y="4.4109311"
+     id="text1"
+     transform="scale(1.0120508,0.98809269)"><tspan
+       sodipodi:role="line"
+       id="tspan1"
+       style="font-size:5.71098px;text-align:center;text-anchor:middle;fill:#e6e6e6;stroke-width:0.267702;stroke-dasharray:none"
+       x="6.2087107"
+       y="4.4109311">RT</tspan><tspan
+       sodipodi:role="line"
+       style="font-size:5.71098px;text-align:center;text-anchor:middle;fill:#e6e6e6;stroke-width:0.267702;stroke-dasharray:none"
+       x="6.2087107"
+       y="11.549656"
+       id="tspan2">UQ</tspan></text>
 </svg>
