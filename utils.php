@@ -315,7 +315,7 @@ function rmhtmltags($str) {
 		$c=$str[$i];
 		if($c==='<') $b=false;
 		else if($c==='>') $b=true;
-		if($b) $s.=$c;
+		if($b && $c !== '>') $s.=$c;
 	}
 	return($s);
 }
