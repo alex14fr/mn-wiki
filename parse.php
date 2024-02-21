@@ -264,7 +264,7 @@ function parse_line($l)
 					}
 					$titleTag = " id=" . $linkId;
 					if ($head_lvl < $title_lvl) {
-						$title = $txt;
+						$title = rmhtmltags($txt);
 						$title_lvl = $head_lvl;
 					} elseif ($head_lvl <= $toc_level && $head_lvl >= 2) {
 						$toc .= "<li ".($head_lvl >= 3 ? "class=subtoc" : "")."><a href=#" . $linkId . ">" . $txt . "</a>";

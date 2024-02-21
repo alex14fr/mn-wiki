@@ -306,3 +306,16 @@ function contextDiff($dc) {
 	}
 	return($dcout);
 }
+
+function rmhtmltags($str) {
+	$n=strlen($str);
+	$s="";
+	$b=true;
+	for($i=0; $i<$n; $i++) {
+		$c=$str[$i];
+		if($c==='<') $b=false;
+		else if($c==='>') $b=true;
+		if($b) $s.=$c;
+	}
+	return($s);
+}
