@@ -528,7 +528,7 @@ function render_page_cache($page, $rev = "")
 
 function render_html($str, $pageId = "", $title = "")
 {
-	global $editableDir;
+	global $editableDir, $baseUrl;
 	$actions = "";
 	if (!empty($pageId)) {
 		if (!empty(get_login())) {
@@ -543,8 +543,8 @@ function render_html($str, $pageId = "", $title = "")
 		}
 	}
 	$pgh = str_replace(
-		array("~~ACTIONS~~","~~TITLE~~","~~SIDEBAR~~"),
-		array($actions, $title, render_page_cache("sidebar")),
+		array("~~ACTIONS~~","~~TITLE~~","~~SIDEBAR~~","~~CANONICAL~~"),
+		array($actions, $title, render_page_cache("sidebar"), $baseUrl.$pageId),
 		readtmpl("htmlhead")
 	);
 	return $pgh . $str . readtmpl("htmlfoot");
