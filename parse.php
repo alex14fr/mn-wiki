@@ -544,7 +544,7 @@ function render_html($str, $pageId = "", $title = "")
 	}
 	$pgh = str_replace(
 		array("~~ACTIONS~~","~~TITLE~~","~~SIDEBAR~~","~~CANONICAL~~"),
-		array($actions, $title, render_page_cache("sidebar"), $baseUrl.$pageId),
+		array($actions, $title, render_page_cache("sidebar"), $baseUrl.($pageId === "index" ? "" : $pageId)),
 		readtmpl("htmlhead")
 	);
 	return $pgh . $str . readtmpl("htmlfoot");
