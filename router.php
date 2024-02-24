@@ -10,6 +10,7 @@ if($req=='/github' || $req=='/github/') {
 }
 $id=false;
 $n=strlen($req);
+$redirhtml=false;
 if($n==5 && substr_compare($req,'/20',0,3)===0 && $req[3]>=0 && $req[3]<=9 && $req[4]>=0 && $req[4]<=9) {
 	$id='mascot'.substr($req,3);
 } else if($req=='/dam.incertitudes') {
@@ -18,6 +19,7 @@ if($n==5 && substr_compare($req,'/20',0,3)===0 && $req[3]>=0 && $req[3]<=9 && $r
 	if(substr_compare($req, '.html', -5, 5)===0) {
 		$req=substr($req, 0, $n-5);
 		$n-=5;
+		$redirhtml=true;
 	}
 	for($i=1; $i<$n; ++$i) 
 		if(!($req[$i]>='a' && $req[$i]<='z') && 
@@ -32,6 +34,9 @@ if($id===false) {
 	header('Status: 404');
 	print 'The requested resource has not been found. ';
 	exit;
+} else if($redirhtml) {
+	header('Status: 302');
+	header('Location: '.$id);
 } else {
 	$req=$_SERVER['REQUEST_URI'];
 	if($p!==false) 
