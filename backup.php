@@ -56,7 +56,20 @@ if (!empty($_POST['f']) && !empty($_POST['tok']) && !empty($_POST['time'])) {
     chdir($prefix);
 
     if ($_POST['f'] === '@manifest') {
-        passthru("find . -type f -exec stat -c '%Y\t%n\t%s' {} \; |gzip -c");
+		  $dirs=['.'];
+		  while(count($dirs)>0) {
+				$d=array_pop($dirs);
+				$dd=opendir($d);
+				while($dde=readdir($dd)) {
+					if($dde==='.' || $dde==='..') continue;
+					$ddee=$dd.'/'.$dde;
+					if(is_dir($ddee)) {
+						array_push($dirs, $ddee);
+					} else if(is_file($ddee)) {
+						print filemtime($ddee)."\t".$ddee."\t".filesize($ddee)."\n";
+					}
+				}
+		  }
         exit;
     } elseif ($_POST['f'] === '@update') {
         header("Content-type: text/plain; charset=utf8");
