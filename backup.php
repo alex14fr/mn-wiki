@@ -62,7 +62,7 @@ if (!empty($_POST['f']) && !empty($_POST['tok']) && !empty($_POST['time'])) {
 				$dd=opendir($d);
 				while($dde=readdir($dd)) {
 					if($dde==='.' || $dde==='..') continue;
-					$ddee=$dd.'/'.$dde;
+					$ddee=$d.'/'.$dde;
 					if(is_dir($ddee)) {
 						array_push($dirs, $ddee);
 					} else if(is_file($ddee)) {
