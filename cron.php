@@ -100,7 +100,9 @@ function fetchurl($url, $gzip=false) {
 		$path=substr($u[1],strlen($host));
 		$pr=proc_open(['/bin/httpsget',$host,'443',$path],[1=>['file','/tmp/x.gz','w']],$pipes,null,['ADD_HDR'=>'Accept-encoding: gzip']);
 		proc_close($pr);
-		return implode('', gzfile('/tmp/x.gz'));
+		$str=implode("", gzfile("/tmp/x.gz"));
+		unlink("/tmp/x.gz");
+		return $str;
 	}
 }
 
