@@ -72,6 +72,7 @@ foreach ($lines as $l) {
 if($tarmode) {
 	print "fetching tar file...\n";
 	$hdl=popen("tar xv -C $outdir","w");
+	//$fout=fopen("/tmp/back.tar","w");
 	fetchFile($url, $sec, "@tar@$toFetch", $hdl, true);
 }
 

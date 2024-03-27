@@ -77,7 +77,7 @@ if (!empty($_POST['f']) && !empty($_POST['tok']) && !empty($_POST['time'])) {
 			header("Content-type: application/x-tar");
 			header("Content-disposition: attachment; filename=backup-mnwiki-".date("YmdHis").".tar");
 			$fstdout=fopen("php://output","w");
-			foreach(explode('\n', $flist) as $ff) {
+			foreach(explode("\n", $flist) as $ff) {
 				tarf($fstdout, $ff);
 			}
 			tarend($fstdout);
