@@ -71,15 +71,15 @@ if (!empty($_POST['f']) && !empty($_POST['tok']) && !empty($_POST['time'])) {
 				}
 		  }
         exit;
-    } elseif ($_POST['f'] === '@update') {
-        header("Content-type: text/plain; charset=utf8");
-        passthru("./update_htdocs 2>&1");
-        exit;
     } elseif (substr($_POST['f'],0,5) === "@tar@") {
-			file_put_contents("/tmp/flist", substr($_POST['f'],5));
+		 	include "libtar.php";
+			$flist=substr($_POST['f'],5);
 			header("Content-type: application/x-tar");
 			header("Content-disposition: attachment; filename=backup-mnwiki-".date("YmdHis").".tar");
-			passthru("tar c -T /tmp/flist");
+			foreach(explode('\n', $flist) as $ff) {
+				tarf(STDOUT, $ff);
+			}
+			tarend(STDOUT);
 			exit;
 	 } else {
         $rp = realpath($_POST['f']);
