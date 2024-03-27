@@ -91,7 +91,6 @@ function lastshort()
 }
 
 function fetchurl($url, $gzip=false) {
-#	return shell_exec("wget -O - ".escapeshellarg($url));
 	if(substr($url,0,5)=="http:")
 		return file_get_contents($url);
 	else {
@@ -99,9 +98,9 @@ function fetchurl($url, $gzip=false) {
 		$uu=explode("/",$u[1]);
 		$host=$uu[0];
 		$path=substr($u[1],strlen($host));
-		$pre=($gzip ? "ADD_HDR='Accept-encoding: gzip' " : "");
-		$post=($gzip ? " | zcat" : "");
-		return shell_exec($pre."httpsget ".escapeshellarg($host)." 443 ".escapeshellarg($path).$post);
+		$pr=proc_open(['/bin/httpsget',$host,'443',$path],[1=>['file','/tmp/x.gz','w']],$pipes,null,['ADD_HDR'=>'Accept-encoding: gzip']);
+		proc_close($pr);
+		return implode('', gzfile('/tmp/x.gz'));
 	}
 }
 
